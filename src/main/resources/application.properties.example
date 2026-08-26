@@ -1,0 +1,21 @@
+spring.application.name=mates
+server.port=4002
+ 
+# --- Base de datos MySQL ---
+# Cree antes la base con: CREATE DATABASE mates;
+# Copie este archivo a application.properties (en la misma carpeta) y
+# complete sus propias credenciales locales. application.properties esta
+# en el .gitignore, asi que ese archivo con sus datos reales no se sube.
+spring.datasource.url=jdbc:mysql://localhost:3306/mates_ecommerce?useSSL=false&serverTimezone=UTC
+spring.datasource.driverClassName=com.mysql.cj.jdbc.Driver
+spring.datasource.username=TU_USUARIO_MYSQL
+spring.datasource.password=TU_PASSWORD_MYSQL
+ 
+# --- JPA / Hibernate ---
+spring.jpa.database=mysql
+spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
+# update: crea/actualiza las tablas automaticamente a partir de las entidades.
+# Util para la cursada; en un proyecto real se usarian migraciones (Flyway/Liquibase).
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true

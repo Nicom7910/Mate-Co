@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-MatesApplication<mates>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.uade.tpo.mates.MatesApplication",
+      "projectName": "mates",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
