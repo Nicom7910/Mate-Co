@@ -1,6 +1,13 @@
 package com.uade.tpo.mates.entity;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,22 +21,62 @@ import lombok.Data;
 
 @Entity
 @Data
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String email;
-    @Column
+    @Column(nullable = false)
     private String name;
-    @Column
-    private String surname;
 
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    @JsonIgnore
+    private String password;
+
+    @Column
+    private String phone;
+
+    @Column
+    private String address;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Order> orders;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

@@ -2,7 +2,6 @@ package com.uade.tpo.mates.controllers.products;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.mates.entity.Product;
 import com.uade.tpo.mates.exceptions.CategoryNotFoundException;
+import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 import com.uade.tpo.mates.service.ProductService;
 
 @RestController
@@ -37,12 +37,10 @@ public class ProductsController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long productId) {
-        Optional<Product> result = productService.getProductById(productId);
-        if (result.isPresent())
-            return ResponseEntity.ok(result.get());
-
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Product> getProductById(@PathVariable Long productId) throws ProductNotFoundException {
+        Product product = productService.getProductById(productId)
+                .orElseThrow(ProductNotFoundException::new);
+        return ResponseEntity.ok(product);
     }
 
     @GetMapping("/category/{categoryId}")

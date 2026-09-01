@@ -1,7 +1,6 @@
 package com.uade.tpo.mates.controllers.categories;
 
 import java.net.URI;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.mates.entity.Category;
 import com.uade.tpo.mates.exceptions.CategoryDuplicateException;
+import com.uade.tpo.mates.exceptions.CategoryNotFoundException;
 import com.uade.tpo.mates.service.CategoryService;
 
 @RestController
@@ -36,12 +36,10 @@ public class CategoriesController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<Category> getCategoryById(@PathVariable Long categoryId) {
-        Optional<Category> result = categoryService.getCategoryById(categoryId);
-        if (result.isPresent())
-            return ResponseEntity.ok(result.get());
-
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long categoryId) throws CategoryNotFoundException {
+        Category category = categoryService.getCategoryById(categoryId)
+                .orElseThrow(CategoryNotFoundException::new);
+        return ResponseEntity.ok(category);
     }
 
     @PostMapping
