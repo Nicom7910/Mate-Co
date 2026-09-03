@@ -15,6 +15,7 @@ public class GlobalExceptionHandler {
             CategoryDuplicateException.class,
             CategoryNotFoundException.class,
             ProductNotFoundException.class,
+            OrderNotFoundException.class,
             InsufficientStockException.class,
             UserNotFoundException.class,
             UserAlreadyExistsException.class,
