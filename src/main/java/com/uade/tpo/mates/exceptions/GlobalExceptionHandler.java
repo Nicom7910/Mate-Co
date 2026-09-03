@@ -20,7 +20,9 @@ public class GlobalExceptionHandler {
             UserAlreadyExistsException.class,
             CartEmptyException.class,
             ProductNotInCartException.class,
-            OrderNotFoundException.class
+            InvalidQuantityException.class,
+            InvalidProductDataException.class,
+            ProductHasOrdersException.class
     })
     public ResponseEntity<ErrorResponse> handleKnownExceptions(Exception ex) {
         ResponseStatus responseStatus = ex.getClass().getAnnotation(ResponseStatus.class);

@@ -30,6 +30,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/categories/**", "/products/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/categories", "/products").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/products/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/products/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/orders", "/orders/user/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))

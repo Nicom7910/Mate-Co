@@ -1,6 +1,7 @@
 package com.uade.tpo.mates.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,4 +46,17 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
     private Category category;
+
+    @Column
+    private Integer discountPercentage;
+
+    public BigDecimal getFinalPrice() {
+        if (discountPercentage == null || discountPercentage == 0)
+            return price;
+
+        BigDecimal factor = BigDecimal.valueOf(100 - discountPercentage)
+                .divide(BigDecimal.valueOf(100));
+
+        return price.multiply(factor).setScale(2, RoundingMode.HALF_UP);
+    }
 }

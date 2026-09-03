@@ -9,6 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import com.uade.tpo.mates.controllers.products.ProductRequest;
 import com.uade.tpo.mates.entity.Product;
 import com.uade.tpo.mates.exceptions.CategoryNotFoundException;
+import com.uade.tpo.mates.exceptions.InvalidProductDataException;
+import com.uade.tpo.mates.exceptions.ProductHasOrdersException;
+import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 
 public interface ProductService {
 
@@ -18,5 +21,10 @@ public interface ProductService {
 
     List<Product> getProductsByCategory(Long categoryId);
 
-    Product createProduct(ProductRequest request) throws CategoryNotFoundException;
+    Product createProduct(ProductRequest request) throws CategoryNotFoundException, InvalidProductDataException;
+
+    Product updateProduct(Long productId, ProductRequest request)
+            throws ProductNotFoundException, CategoryNotFoundException, InvalidProductDataException;
+
+    void deleteProduct(Long productId) throws ProductNotFoundException, ProductHasOrdersException;
 }

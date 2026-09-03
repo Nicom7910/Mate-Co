@@ -16,6 +16,7 @@ import com.uade.tpo.mates.entity.Product;
 import com.uade.tpo.mates.entity.User;
 import com.uade.tpo.mates.exceptions.CartEmptyException;
 import com.uade.tpo.mates.exceptions.InsufficientStockException;
+import com.uade.tpo.mates.exceptions.InvalidQuantityException;
 import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 import com.uade.tpo.mates.exceptions.ProductNotInCartException;
 import com.uade.tpo.mates.repository.OrderRepository;
@@ -34,9 +35,12 @@ public class CartServiceImpl implements CartService {
         return orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PENDING);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Order addItem(User user, AddCartItemRequest request)
-            throws ProductNotFoundException, InsufficientStockException {
+            throws ProductNotFoundException, InsufficientStockException, InvalidQuantityException {
+
+        if (request.getQuantity() == null || request.getQuantity() <= 0)
+            throw new InvalidQuantityException();
 
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(ProductNotFoundException::new);
@@ -64,7 +68,7 @@ public class CartServiceImpl implements CartService {
                     .order(cart)
                     .product(product)
                     .quantity(request.getQuantity())
-                    .unitPrice(product.getPrice())
+                    .unitPrice(product.getFinalPrice())
                     .build();
             cart.getItems().add(detail);
         }
@@ -73,7 +77,7 @@ public class CartServiceImpl implements CartService {
         return orderRepository.save(cart);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Order updateItemQuantity(User user, Long productId, Integer quantity)
             throws CartEmptyException, ProductNotInCartException, InsufficientStockException {
 
@@ -97,7 +101,7 @@ public class CartServiceImpl implements CartService {
         return orderRepository.save(cart);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Order removeItem(User user, Long productId) throws CartEmptyException, ProductNotInCartException {
         Order cart = orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PENDING)
                 .orElseThrow(CartEmptyException::new);
@@ -113,7 +117,7 @@ public class CartServiceImpl implements CartService {
         return orderRepository.save(cart);
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Order checkout(User user) throws CartEmptyException, InsufficientStockException {
         Order cart = orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PENDING)
                 .orElseThrow(CartEmptyException::new);

@@ -26,11 +26,13 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) throws UserAlreadyExistsException {
-        if (repository.existsByEmail(request.getEmail()))
+        if (repository.existsByEmail(request.getEmail()) || repository.existsByUsername(request.getUsername()))
             throw new UserAlreadyExistsException();
 
         var user = new User();
+        user.setUsername(request.getUsername());
         user.setName(request.getName());
+        user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPhone(request.getPhone());

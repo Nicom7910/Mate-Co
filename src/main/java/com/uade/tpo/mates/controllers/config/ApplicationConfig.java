@@ -29,9 +29,6 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        // Constructor con UserDetailsService: la forma recomendada actual en
-        // Spring Security (el constructor vacio + setUserDetailsService esta
-        // deprecado).
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;

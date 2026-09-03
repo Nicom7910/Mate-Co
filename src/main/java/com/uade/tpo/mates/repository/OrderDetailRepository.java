@@ -11,4 +11,6 @@ import com.uade.tpo.mates.entity.OrderDetail;
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> {
 
     List<OrderDetail> findByOrderId(Long orderId);
+
+    boolean existsByProductId(Long productId);
 }

@@ -12,4 +12,5 @@ public class ProductRequest {
     private Integer stock;
     private String imageUrl;
     private Long categoryId;
+    private Integer discountPercentage;
 }

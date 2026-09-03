@@ -19,6 +19,7 @@ import com.uade.tpo.mates.entity.Order;
 import com.uade.tpo.mates.entity.User;
 import com.uade.tpo.mates.exceptions.CartEmptyException;
 import com.uade.tpo.mates.exceptions.InsufficientStockException;
+import com.uade.tpo.mates.exceptions.InvalidQuantityException;
 import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 import com.uade.tpo.mates.exceptions.ProductNotInCartException;
 import com.uade.tpo.mates.service.CartService;
@@ -41,7 +42,7 @@ public class CartController {
     @PostMapping("/items")
     public ResponseEntity<OrderResponse> addItem(@AuthenticationPrincipal User user,
             @RequestBody AddCartItemRequest request)
-            throws ProductNotFoundException, InsufficientStockException {
+            throws ProductNotFoundException, InsufficientStockException, InvalidQuantityException {
         return ResponseEntity.ok(OrderResponse.from(cartService.addItem(user, request)));
     }
 
