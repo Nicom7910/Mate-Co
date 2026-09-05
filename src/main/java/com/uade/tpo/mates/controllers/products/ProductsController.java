@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uade.tpo.mates.controllers.MessageResponse;
 import com.uade.tpo.mates.entity.Product;
 import com.uade.tpo.mates.exceptions.CategoryNotFoundException;
 import com.uade.tpo.mates.exceptions.InvalidProductDataException;
@@ -68,9 +69,11 @@ public class ProductsController {
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId)
+    public ResponseEntity<MessageResponse> deleteProduct(@PathVariable Long productId)
             throws ProductNotFoundException, ProductHasOrdersException {
         productService.deleteProduct(productId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(MessageResponse.builder()
+                .message("Producto eliminado con exito")
+                .build());
     }
 }

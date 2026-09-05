@@ -148,4 +148,11 @@ public class CartServiceImpl implements CartService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         cart.setTotal(total);
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public void clearCart(User user) throws CartEmptyException {
+        Order cart = orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PENDING)
+                .orElseThrow(CartEmptyException::new);
+        orderRepository.delete(cart);
+    }
 }

@@ -25,4 +25,6 @@ public interface CartService {
                         throws CartEmptyException, ProductNotInCartException;
 
         Order checkout(User user) throws CartEmptyException, InsufficientStockException;
+
+        void clearCart(User user) throws CartEmptyException;
 }

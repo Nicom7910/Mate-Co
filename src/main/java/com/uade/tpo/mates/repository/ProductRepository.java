@@ -17,4 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query("select p from Product p where p.stock > 0")
     List<Product> findAvailable();
+
+    boolean existsByCategoryId(Long categoryId);
 }

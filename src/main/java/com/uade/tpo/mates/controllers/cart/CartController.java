@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.uade.tpo.mates.controllers.MessageResponse;
 import com.uade.tpo.mates.controllers.orders.OrderResponse;
 import com.uade.tpo.mates.entity.Order;
 import com.uade.tpo.mates.entity.User;
@@ -66,5 +67,14 @@ public class CartController {
     public ResponseEntity<OrderResponse> checkout(@AuthenticationPrincipal User user)
             throws CartEmptyException, InsufficientStockException {
         return ResponseEntity.ok(OrderResponse.from(cartService.checkout(user)));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<MessageResponse> clearCart(@AuthenticationPrincipal User user)
+            throws CartEmptyException {
+        cartService.clearCart(user);
+        return ResponseEntity.ok(MessageResponse.builder()
+                .message("Carrito vaciado con exito")
+                .build());
     }
 }
