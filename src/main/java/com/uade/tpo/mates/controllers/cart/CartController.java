@@ -24,6 +24,8 @@ import com.uade.tpo.mates.exceptions.InvalidQuantityException;
 import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 import com.uade.tpo.mates.exceptions.ProductNotInCartException;
 import com.uade.tpo.mates.service.CartService;
+import org.springframework.web.bind.annotation.PatchMapping;
+import com.uade.tpo.mates.exceptions.InvalidOrderStatusException;
 
 @RestController
 @RequestMapping("cart")
@@ -63,10 +65,11 @@ public class CartController {
         return ResponseEntity.ok(OrderResponse.from(cartService.removeItem(user, productId)));
     }
 
-    @PostMapping("/checkout")
-    public ResponseEntity<OrderResponse> checkout(@AuthenticationPrincipal User user)
-            throws CartEmptyException, InsufficientStockException {
-        return ResponseEntity.ok(OrderResponse.from(cartService.checkout(user)));
+    @PatchMapping
+    public ResponseEntity<OrderResponse> updateCartStatus(@AuthenticationPrincipal User user,
+            @RequestBody UpdateCartStatusRequest request)
+            throws CartEmptyException, InsufficientStockException, InvalidOrderStatusException {
+        return ResponseEntity.ok(OrderResponse.from(cartService.updateStatus(user, request.getStatus())));
     }
 
     @DeleteMapping

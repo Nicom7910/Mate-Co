@@ -16,6 +16,7 @@ import com.uade.tpo.mates.entity.Product;
 import com.uade.tpo.mates.entity.User;
 import com.uade.tpo.mates.exceptions.CartEmptyException;
 import com.uade.tpo.mates.exceptions.InsufficientStockException;
+import com.uade.tpo.mates.exceptions.InvalidOrderStatusException;
 import com.uade.tpo.mates.exceptions.InvalidQuantityException;
 import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 import com.uade.tpo.mates.exceptions.ProductNotInCartException;
@@ -118,7 +119,12 @@ public class CartServiceImpl implements CartService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Order checkout(User user) throws CartEmptyException, InsufficientStockException {
+    public Order updateStatus(User user, OrderStatus status)
+            throws CartEmptyException, InsufficientStockException, InvalidOrderStatusException {
+
+        if (status != OrderStatus.PAID)
+            throw new InvalidOrderStatusException();
+
         Order cart = orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PENDING)
                 .orElseThrow(CartEmptyException::new);
 
