@@ -1,0 +1,17 @@
+.section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.section-title__text {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 1.875rem;
+}
+
+.section-title__link {
+  font-weight: 700;
+  color: var(--copper);
+}

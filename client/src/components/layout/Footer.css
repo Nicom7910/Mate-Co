@@ -1,0 +1,19 @@
+.footer {
+  background: var(--ink);
+  color: var(--tan);
+}
+
+.footer__inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding-block: 1.75rem;
+  font-size: 0.875rem;
+}
+
+.footer__logo {
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  font-weight: 700;
+}

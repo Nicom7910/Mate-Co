@@ -1,0 +1,91 @@
+:root {
+  --cream: #f6efe2;
+  --card: #fbf7ee;
+  --border: #e1d4ba;
+  --tan: #e8dcc4;
+  --ink: #2b2118;
+  --body: #5a4a3a;
+  --muted: #6b5b4a;
+  --green: #3f5b3a;
+  --copper: #a4561f;
+  --danger: #8c3b1c;
+  --font-title: "Fraunces", Georgia, serif;
+  --font-text: "DM Sans", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.85;
+}
+
+.container {
+  width: 100%;
+  max-width: 75rem;
+  margin: 0 auto;
+  padding-inline: 2rem;
+}
+
+.section {
+  padding-block: 1.5rem;
+}
+
+.section--last {
+  padding-bottom: 3rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0 1.75rem;
+  border: 1.5px solid transparent;
+  border-radius: 50rem;
+  font-weight: 700;
+}
+
+.btn--small {
+  min-height: 2.75rem;
+  padding: 0 1.25rem;
+}
+
+.btn--primary {
+  background: var(--green);
+  color: #fff;
+}
+
+.btn--outline {
+  border-color: var(--ink);
+}
+
+.btn--outline-green {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+/* Mensajes de carga / error */
+.message {
+  margin: 0;
+  padding: 1rem 0;
+  color: var(--body);
+}
+
+.message--error {
+  color: var(--danger);
+}

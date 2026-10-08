@@ -1,0 +1,16 @@
+.cart-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 0.5rem;
+  font-weight: 700;
+}
+
+.cart-link__badge {
+  padding: 0.125rem 0.5rem;
+  border-radius: 50rem;
+  background: var(--copper);
+  color: #fff;
+  font-size: 0.8125rem;
+}
