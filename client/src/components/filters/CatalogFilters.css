@@ -1,0 +1,16 @@
+.catalog-filters {
+  display: flex;
+  flex: 0 0 13.75rem;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--card);
+}
+
+.filter-title {
+  padding: 0 0 0.75rem;
+  font-weight: 700;
+}

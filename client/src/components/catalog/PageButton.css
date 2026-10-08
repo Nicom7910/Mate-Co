@@ -1,0 +1,27 @@
+.page-button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--input-border);
+  border-radius: 0.625rem;
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.page-button:hover:not(:disabled) {
+  border-color: var(--green);
+}
+
+.page-button--active {
+  border-color: var(--green);
+  background: var(--green);
+  color: var(--card);
+}
+
+.page-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

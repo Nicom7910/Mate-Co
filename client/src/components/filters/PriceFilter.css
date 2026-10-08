@@ -1,0 +1,20 @@
+.price-filter__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--body);
+}
+
+.price-filter__field input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  border: 1.5px solid var(--input-border);
+  border-radius: 0.75rem;
+  background: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+}

@@ -6,6 +6,7 @@
   --ink: #2b2118;
   --body: #5a4a3a;
   --muted: #6b5b4a;
+  --input-border: #cdbe9f;
   --green: #3f5b3a;
   --copper: #a4561f;
   --danger: #8c3b1c;
@@ -40,6 +41,10 @@ a:hover {
   max-width: 75rem;
   margin: 0 auto;
   padding-inline: 2rem;
+}
+.page {
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;
 }
 
 .section {

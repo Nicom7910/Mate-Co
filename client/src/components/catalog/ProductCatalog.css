@@ -1,0 +1,11 @@
+.catalog {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.catalog__results {
+  flex: 1 1 35rem;
+  min-width: 0;
+}

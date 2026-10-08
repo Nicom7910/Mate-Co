@@ -1,0 +1,19 @@
+.category-filter {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.category-filter__option {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+}
+
+.category-filter__option input {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--green);
+}
