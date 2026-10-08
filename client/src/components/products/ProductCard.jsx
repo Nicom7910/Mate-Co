@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import formatPrice from "../../utils/formatPrice.js";
 import ProductImage from "./ProductImage.jsx";
+import DiscountBadge from "./DiscountBadge.jsx";
 import "./ProductCard.css";
 
 const ProductCard = ({ product }) => {
@@ -19,9 +20,7 @@ const ProductCard = ({ product }) => {
     <Link to={`/products/${id}`} className="product-card">
       <div className="product-card__image">
         <ProductImage src={imageUrl} alt={name} />
-        {hasDiscount && (
-          <span className="product-card__badge">-{discountPercentage}%</span>
-        )}
+        {hasDiscount && <DiscountBadge percentage={discountPercentage} />}
       </div>
       <div className="product-card__info">
         <span className="product-card__category">{category?.name}</span>

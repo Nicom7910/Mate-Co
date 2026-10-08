@@ -1,0 +1,26 @@
+.purchase-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.purchase-actions__button {
+  flex: 1 1 14rem;
+  justify-content: center;
+  min-height: 3.25rem;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.purchase-actions__button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.purchase-actions__hint {
+  margin: 1rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}

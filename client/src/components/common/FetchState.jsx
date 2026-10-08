@@ -8,7 +8,7 @@ const FetchState = ({
   if (error) {
     return (
       <p className="message message--error">
-        No pudimos conectar con el servidor ({error}).
+        No pudimos cargar la información ({error}).
       </p>
     );
   }

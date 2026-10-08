@@ -1,0 +1,35 @@
+.quantity-selector__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.quantity-selector__control {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--input-border);
+  border-radius: 50rem;
+  background: var(--card);
+}
+
+.quantity-selector__control button {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.quantity-selector__control button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.quantity-selector__control output {
+  min-width: 2.75rem;
+  text-align: center;
+  font-weight: 700;
+}

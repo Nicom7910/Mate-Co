@@ -1,0 +1,16 @@
+.product-gallery {
+  position: relative;
+  display: flex;
+  flex: 1 1 26rem;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 28.75rem;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  background: var(--tan);
+}
+
+.product-gallery .product-image--placeholder {
+  width: 56%;
+}
