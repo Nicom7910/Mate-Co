@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import CartLink from "./CartLink.jsx";
-import LinkButton from "../common/LinkButton.jsx";
+import AuthButton from "./AuthButton.jsx";
 import "./Header.css";
 
 const NAV_LINKS = [
@@ -12,7 +12,7 @@ const NAV_LINKS = [
 const getLinkClass = ({ isActive }) =>
   isActive ? "header__link header__link--active" : "header__link";
 
-const Header = () => (
+const Header = ({ token, onLogout }) => (
   <header className="header">
     <div className="container header__inner">
       <Link to="/" className="header__logo">
@@ -27,9 +27,7 @@ const Header = () => (
       </nav>
       <div className="header__actions">
         <CartLink />
-        <LinkButton to="/login" variant="outline-green" small>
-          Ingresar
-        </LinkButton>
+        <AuthButton token={token} onLogout={onLogout} />
       </div>
     </div>
   </header>

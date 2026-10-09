@@ -1,0 +1,11 @@
+.auth-switch {
+  margin: 1.5rem 0 0;
+  text-align: center;
+  color: var(--body);
+}
+
+.auth-switch a {
+  color: var(--copper);
+  font-weight: 700;
+  text-decoration: underline;
+}

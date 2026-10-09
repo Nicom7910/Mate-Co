@@ -1,0 +1,9 @@
+.auth-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.25rem;
+}
+
+.auth-form__full {
+  grid-column: 1 / -1;
+}
