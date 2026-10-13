@@ -14,3 +14,14 @@
   padding: 0 0 0.75rem;
   font-weight: 700;
 }
+
+@media (max-width: 60rem) {
+  .catalog-filters {
+    display: none;
+    flex: 1 1 100%;
+  }
+
+  .catalog-filters--open {
+    display: flex;
+  }
+}

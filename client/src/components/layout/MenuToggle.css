@@ -1,0 +1,19 @@
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1.5px solid var(--input-border);
+  border-radius: 0.75rem;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+@media (max-width: 48rem) {
+  .menu-toggle {
+    display: flex;
+  }
+}

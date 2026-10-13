@@ -1,0 +1,30 @@
+.filters-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex: 1 1 100%;
+  min-height: 2.75rem;
+  border: 1.5px solid var(--input-border);
+  border-radius: 50rem;
+  background: var(--card);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filters-toggle__count {
+  padding: 0.125rem 0.5rem;
+  border-radius: 50rem;
+  background: var(--copper);
+  color: #fff;
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 60rem) {
+  .filters-toggle {
+    display: flex;
+  }
+}
