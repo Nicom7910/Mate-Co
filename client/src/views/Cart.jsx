@@ -1,14 +1,7 @@
 import CartBody from "../components/cart/CartBody.jsx";
 import CartTitle from "../components/cart/CartTitle.jsx";
 
-const Cart = ({
-  loggedIn,
-  cart,
-  onChangeQuantity,
-  onRemove,
-  onClear,
-  onCheckout,
-}) => (
+const Cart = ({ loggedIn, cart, onChangeQuantity, onRemove, onClear }) => (
   <section className="container page">
     <CartTitle />
     <CartBody
@@ -17,7 +10,6 @@ const Cart = ({
       onChangeQuantity={onChangeQuantity}
       onRemove={onRemove}
       onClear={onClear}
-      onCheckout={onCheckout}
     />
   </section>
 );

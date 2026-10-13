@@ -1,0 +1,10 @@
+.checkout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.checkout > form {
+  flex: 1 1 24rem;
+}

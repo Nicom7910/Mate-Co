@@ -1,11 +1,7 @@
-import { useState } from "react";
 import CartDetail from "./CartDetail.jsx";
 import CartNotice from "./CartNotice.jsx";
-import OrderConfirmed from "./OrderConfirmed.jsx";
 
 const CartBody = ({ loggedIn, cart, ...actions }) => {
-  const [confirmedOrder, setConfirmedOrder] = useState(null);
-
   if (!loggedIn)
     return (
       <CartNotice
@@ -14,7 +10,6 @@ const CartBody = ({ loggedIn, cart, ...actions }) => {
         buttonText="Ingresar"
       />
     );
-  if (confirmedOrder) return <OrderConfirmed order={confirmedOrder} />;
   if (!cart || cart.items.length === 0) {
     return (
       <CartNotice
@@ -24,9 +19,7 @@ const CartBody = ({ loggedIn, cart, ...actions }) => {
       />
     );
   }
-  return (
-    <CartDetail cart={cart} onConfirmed={setConfirmedOrder} {...actions} />
-  );
+  return <CartDetail cart={cart} {...actions} />;
 };
 
 export default CartBody;

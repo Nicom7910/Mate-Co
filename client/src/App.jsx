@@ -20,6 +20,7 @@ import AdminProductNew from "./views/AdminProductNew.jsx";
 import AdminCategories from "./views/AdminCategories.jsx";
 import AdminCategoryEdit from "./views/AdminCategoryEdit.jsx";
 import AdminCategoryNew from "./views/AdminCategoryNew.jsx";
+import Checkout from "./views/Checkout.jsx";
 
 const App = () => {
   const [token, setToken] = useState(getToken);
@@ -75,6 +76,21 @@ const App = () => {
                 onChangeQuantity={cart.changeQuantity}
                 onRemove={cart.removeItem}
                 onClear={cart.clear}
+              />
+            )
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            admin ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Checkout
+                loggedIn={Boolean(token)}
+                user={currentUser.user}
+                loading={currentUser.loading}
+                cart={cart.cart}
                 onCheckout={cart.checkout}
               />
             )

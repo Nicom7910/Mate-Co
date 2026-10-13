@@ -1,12 +1,11 @@
+import { Link } from "react-router-dom";
 import useAction from "../../hooks/useAction.js";
 import formatPrice from "../../utils/formatPrice.js";
 import CartError from "./CartError.jsx";
 import "./CartSummary.css";
 
-const CartSummary = ({ count, total, onCheckout, onClear, onConfirmed }) => {
-  const checkout = useAction(onCheckout, onConfirmed);
+const CartSummary = ({ count, total, onClear }) => {
   const clear = useAction(onClear);
-  const busy = checkout.sending || clear.sending;
 
   return (
     <aside className="cart-summary">
@@ -17,19 +16,14 @@ const CartSummary = ({ count, total, onCheckout, onClear, onConfirmed }) => {
         </span>
         <strong className="cart-summary__total">{formatPrice(total)}</strong>
       </p>
-      <CartError message={checkout.error ?? clear.error} />
-      <button
-        type="button"
-        className="btn btn--primary cart-summary__button"
-        disabled={busy}
-        onClick={() => checkout.run()}
-      >
-        {checkout.sending ? "Confirmando..." : "Confirmar compra"}
-      </button>
+      <CartError message={clear.error} />
+      <Link to="/checkout" className="btn btn--primary cart-summary__button">
+        Confirmar compra
+      </Link>
       <button
         type="button"
         className="btn btn--outline cart-summary__button"
-        disabled={busy}
+        disabled={clear.sending}
         onClick={() => clear.run()}
       >
         Vaciar carrito
