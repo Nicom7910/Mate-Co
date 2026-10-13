@@ -25,6 +25,7 @@ const App = () => {
   const [token, setToken] = useState(getToken);
   const cart = useCart(token);
   const currentUser = useCurrentUser(token);
+  const admin = isAdmin(currentUser.user);
 
   const handleLogin = (newToken) => {
     saveToken(newToken);
@@ -46,7 +47,7 @@ const App = () => {
             token={token}
             onLogout={handleLogout}
             cartCount={cart.count}
-            isAdmin={isAdmin(currentUser.user)}
+            isAdmin={admin}
           />
         }
       >
@@ -55,20 +56,28 @@ const App = () => {
         <Route
           path="/products/:id"
           element={
-            <Product loggedIn={Boolean(token)} onAddToCart={cart.addItem} />
+            <Product
+              loggedIn={Boolean(token)}
+              isAdmin={admin}
+              onAddToCart={cart.addItem}
+            />
           }
         />
         <Route
           path="/cart"
           element={
-            <Cart
-              loggedIn={Boolean(token)}
-              cart={cart.cart}
-              onChangeQuantity={cart.changeQuantity}
-              onRemove={cart.removeItem}
-              onClear={cart.clear}
-              onCheckout={cart.checkout}
-            />
+            admin ? (
+              <Navigate to="/" replace />
+            ) : (
+              <Cart
+                loggedIn={Boolean(token)}
+                cart={cart.cart}
+                onChangeQuantity={cart.changeQuantity}
+                onRemove={cart.removeItem}
+                onClear={cart.clear}
+                onCheckout={cart.checkout}
+              />
+            )
           }
         />
         <Route

@@ -3,7 +3,7 @@ import PurchaseActions from "./PurchaseActions.jsx";
 import StockBadge from "./StockBadge.jsx";
 import "./ProductInfo.css";
 
-const ProductInfo = ({ product, loggedIn, onAddToCart }) => {
+const ProductInfo = ({ product, loggedIn, isAdmin, onAddToCart }) => {
   const { id, name, description, price, finalPrice, stock, category } = product;
 
   return (
@@ -18,6 +18,7 @@ const ProductInfo = ({ product, loggedIn, onAddToCart }) => {
           productId={id}
           stock={stock}
           loggedIn={loggedIn}
+          isAdmin={isAdmin}
           onAddToCart={onAddToCart}
         />
       </div>

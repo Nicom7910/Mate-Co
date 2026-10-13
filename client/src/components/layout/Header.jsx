@@ -31,7 +31,7 @@ const Header = ({ token, onLogout, cartCount, isAdmin }) => (
         )}
       </nav>
       <div className="header__actions">
-        <CartLink count={cartCount} />
+        {!isAdmin && <CartLink count={cartCount} />}
         <AuthButton token={token} onLogout={onLogout} />
       </div>
     </div>
