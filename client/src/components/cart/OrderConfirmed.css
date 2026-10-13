@@ -1,0 +1,24 @@
+.order-confirmed {
+  padding: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: var(--card);
+}
+
+.order-confirmed__title {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-title);
+  font-size: 2rem;
+  color: var(--green);
+}
+
+.order-confirmed__text {
+  margin: 0 0 1.5rem;
+  color: var(--body);
+}
+
+.order-confirmed__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

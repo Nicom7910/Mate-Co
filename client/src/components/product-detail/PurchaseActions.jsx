@@ -1,22 +1,32 @@
 import { useState } from "react";
+import useAction from "../../hooks/useAction.js";
+import AddToCartButton from "./AddToCartButton.jsx";
+import AddToCartMessage from "./AddToCartMessage.jsx";
 import QuantitySelector from "./QuantitySelector.jsx";
 import "./PurchaseActions.css";
 
-const PurchaseActions = ({ stock }) => {
+const PurchaseActions = ({ productId, stock, loggedIn, onAddToCart }) => {
   const [quantity, setQuantity] = useState(1);
+  const [added, setAdded] = useState(false);
+  const { run, sending, error } = useAction(onAddToCart, () => setAdded(true));
+
+  const handleAdd = () => {
+    setAdded(false);
+    run(productId, quantity);
+  };
 
   return (
     <>
       <div className="purchase-actions">
         <QuantitySelector value={quantity} max={stock} onChange={setQuantity} />
-        <button
-          type="button"
-          className="btn btn--primary purchase-actions__button"
-          disabled={stock === 0}
-        >
-          Agregar al carrito
-        </button>
+        <AddToCartButton
+          loggedIn={loggedIn}
+          disabled={stock === 0 || sending}
+          sending={sending}
+          onClick={handleAdd}
+        />
       </div>
+      <AddToCartMessage error={error} added={added} />
       {stock > 0 && (
         <p className="purchase-actions__hint">
           Podés llevar hasta {stock} {stock === 1 ? "unidad" : "unidades"} por

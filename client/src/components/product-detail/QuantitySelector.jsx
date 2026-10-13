@@ -1,6 +1,6 @@
 import "./QuantitySelector.css";
 
-const QuantitySelector = ({ value, max, onChange }) => (
+const QuantitySelector = ({ value, max = Infinity, onChange }) => (
   <div className="quantity-selector">
     <span className="quantity-selector__label">Cantidad</span>
     <div className="quantity-selector__control">

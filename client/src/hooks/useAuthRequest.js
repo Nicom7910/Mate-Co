@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import sendJson from "../api/sendJson.js";
+import request from "../api/request.js";
 
 const useAuthRequest = (path, onLogin, errorText) => {
   const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ const useAuthRequest = (path, onLogin, errorText) => {
   const send = (values) => {
     setSending(true);
     setError(null);
-    sendJson(path, "POST", values)
+    request(path, { method: "POST", body: values })
       .then((data) => {
         onLogin(data.access_token);
         navigate("/");

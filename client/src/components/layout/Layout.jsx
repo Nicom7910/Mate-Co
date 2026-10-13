@@ -3,9 +3,9 @@ import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import "./Layout.css";
 
-const Layout = ({ token, onLogout }) => (
+const Layout = ({ token, onLogout, cartCount }) => (
   <div className="layout">
-    <Header token={token} onLogout={onLogout} />
+    <Header token={token} onLogout={onLogout} cartCount={cartCount} />
     <main className="layout__main">
       <Outlet />
     </main>

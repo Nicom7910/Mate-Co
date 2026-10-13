@@ -17,30 +17,32 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderResponse {
-    private Long id;
-    private LocalDateTime orderDate;
-    private OrderStatus status;
-    private BigDecimal total;
-    private String userName;
-    private List<OrderItemResponse> items;
+        private Long id;
+        private LocalDateTime orderDate;
+        private OrderStatus status;
+        private BigDecimal total;
+        private String userName;
+        private List<OrderItemResponse> items;
 
-    public static OrderResponse from(Order order) {
-        List<OrderItemResponse> items = order.getItems().stream()
-                .map(detail -> OrderItemResponse.builder()
-                        .productName(detail.getProduct().getName())
-                        .quantity(detail.getQuantity())
-                        .unitPrice(detail.getUnitPrice())
-                        .subtotal(detail.getSubtotal())
-                        .build())
-                .toList();
+        public static OrderResponse from(Order order) {
+                List<OrderItemResponse> items = order.getItems().stream()
+                                .map(detail -> OrderItemResponse.builder()
+                                                .productId(detail.getProduct().getId())
+                                                .productName(detail.getProduct().getName())
+                                                .imageUrl(detail.getProduct().getImageUrl())
+                                                .quantity(detail.getQuantity())
+                                                .unitPrice(detail.getUnitPrice())
+                                                .subtotal(detail.getSubtotal())
+                                                .build())
+                                .toList();
 
-        return OrderResponse.builder()
-                .id(order.getId())
-                .orderDate(order.getOrderDate())
-                .status(order.getStatus())
-                .total(order.getTotal())
-                .userName(order.getUser().getName())
-                .items(items)
-                .build();
-    }
+                return OrderResponse.builder()
+                                .id(order.getId())
+                                .orderDate(order.getOrderDate())
+                                .status(order.getStatus())
+                                .total(order.getTotal())
+                                .userName(order.getUser().getName())
+                                .items(items)
+                                .build();
+        }
 }

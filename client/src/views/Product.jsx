@@ -1,8 +1,8 @@
 import ProductDetail from "../components/product-detail/ProductDetail.jsx";
 
-const Product = () => (
+const Product = ({ loggedIn, onAddToCart }) => (
   <section className="container page">
-    <ProductDetail />
+    <ProductDetail loggedIn={loggedIn} onAddToCart={onAddToCart} />
   </section>
 );
 

@@ -1,0 +1,16 @@
+.cart-notice {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: var(--card);
+}
+
+.cart-notice__text {
+  margin: 0;
+  font-size: 1.125rem;
+  color: var(--body);
+}

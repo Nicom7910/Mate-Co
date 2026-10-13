@@ -6,7 +6,7 @@ import ProductGallery from "./ProductGallery.jsx";
 import ProductInfo from "./ProductInfo.jsx";
 import "./ProductDetail.css";
 
-const ProductDetail = () => {
+const ProductDetail = ({ loggedIn, onAddToCart }) => {
   const { id } = useParams();
   const { data: product, loading, error } = useFetch(`/products/${id}`);
 
@@ -25,7 +25,11 @@ const ProductDetail = () => {
               name={product.name}
               discountPercentage={product.discountPercentage}
             />
-            <ProductInfo product={product} />
+            <ProductInfo
+              product={product}
+              loggedIn={loggedIn}
+              onAddToCart={onAddToCart}
+            />
           </div>
         </>
       )}

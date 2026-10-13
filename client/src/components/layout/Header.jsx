@@ -12,7 +12,7 @@ const NAV_LINKS = [
 const getLinkClass = ({ isActive }) =>
   isActive ? "header__link header__link--active" : "header__link";
 
-const Header = ({ token, onLogout }) => (
+const Header = ({ token, onLogout, cartCount }) => (
   <header className="header">
     <div className="container header__inner">
       <Link to="/" className="header__logo">
@@ -26,7 +26,7 @@ const Header = ({ token, onLogout }) => (
         ))}
       </nav>
       <div className="header__actions">
-        <CartLink />
+        <CartLink count={cartCount} />
         <AuthButton token={token} onLogout={onLogout} />
       </div>
     </div>
