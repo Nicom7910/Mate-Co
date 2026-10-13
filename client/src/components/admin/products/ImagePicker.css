@@ -1,0 +1,38 @@
+.image-picker__body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.image-picker__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10rem;
+  height: 10rem;
+  overflow: hidden;
+  border: 1.5px solid var(--input-border);
+  border-radius: 1rem;
+  background: var(--tan);
+}
+
+.image-picker__controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.image-picker__input {
+  max-width: 100%;
+  font-family: inherit;
+  font-size: 0.9375rem;
+}
+
+.image-picker__hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}

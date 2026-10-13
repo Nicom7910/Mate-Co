@@ -7,13 +7,14 @@ const readBody = (response) =>
 
 const request = (path, { method = "GET", body, token, signal } = {}) => {
   const headers = {};
-  if (body) headers["Content-Type"] = "application/json";
+  const isFile = body instanceof FormData;
+  if (body && !isFile) headers["Content-Type"] = "application/json";
   if (token) headers.Authorization = `Bearer ${token}`;
 
   return fetch(`${API_URL}${path}`, {
     method,
     headers,
-    body: body ? JSON.stringify(body) : undefined,
+    body: body && !isFile ? JSON.stringify(body) : body,
     signal,
   }).then((response) =>
     readBody(response).then((data) => {

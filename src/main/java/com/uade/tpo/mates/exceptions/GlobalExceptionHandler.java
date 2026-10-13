@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -28,7 +29,9 @@ public class GlobalExceptionHandler {
             InvalidUserDataException.class,
             InvalidOrderStatusException.class,
             OrderNotCancellableException.class,
-            CancellationPeriodExpiredException.class
+            CancellationPeriodExpiredException.class,
+            InvalidImageException.class,
+            ImageStorageException.class
     })
     public ResponseEntity<ErrorResponse> handleKnownExceptions(Exception ex) {
         ResponseStatus responseStatus = ex.getClass().getAnnotation(ResponseStatus.class);
@@ -42,5 +45,16 @@ public class GlobalExceptionHandler {
                 .build();
 
         return ResponseEntity.status(status).body(body);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleMaxUploadSize() {
+        ErrorResponse body = ErrorResponse.builder()
+                .status(413)
+                .message("La imagen es demasiado grande (maximo 5 MB)")
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity.status(413).body(body);
     }
 }

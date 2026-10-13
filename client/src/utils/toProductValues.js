@@ -3,7 +3,6 @@ const toProductValues = (product) => ({
   description: product?.description ?? "",
   price: product?.price ?? "",
   stock: product?.stock ?? "",
-  imageUrl: product?.imageUrl ?? "",
   categoryId: product?.category ? String(product.category.id) : "",
   discountPercentage: product?.discountPercentage ?? "",
 });

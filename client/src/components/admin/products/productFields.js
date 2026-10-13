@@ -12,11 +12,4 @@ export const PRODUCT_FIELDS = [
     step: "1",
     required: false,
   },
-  {
-    name: "imageUrl",
-    label: "URL de la imagen (opcional)",
-    type: "url",
-    wide: true,
-    required: false,
-  },
 ];
