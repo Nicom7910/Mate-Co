@@ -1,0 +1,18 @@
+.order-status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 50rem;
+  background: var(--tan);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.order-status--paid,
+.order-status--delivered {
+  background: #dfe9d8;
+  color: var(--green);
+}
+
+.order-status--cancelled {
+  background: #f1d9cf;
+  color: var(--danger);
+}

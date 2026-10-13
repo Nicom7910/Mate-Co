@@ -32,6 +32,11 @@ public class UsersController {
         return ResponseEntity.ok(updated);
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<User> getMyProfile(@AuthenticationPrincipal User user) {
+        return ResponseEntity.ok(user);
+    }
+
     @GetMapping
     public ResponseEntity<Page<User>> getUsers(
             @RequestParam(required = false) Integer page,

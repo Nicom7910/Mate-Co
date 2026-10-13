@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.uade.tpo.mates.exceptions.UserAlreadyExistsException;
 import com.uade.tpo.mates.service.AuthenticationService;
+import com.uade.tpo.mates.exceptions.InvalidUserDataException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +21,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request)
-            throws UserAlreadyExistsException {
+            throws UserAlreadyExistsException, InvalidUserDataException {
         return ResponseEntity.ok(service.register(request));
     }
 

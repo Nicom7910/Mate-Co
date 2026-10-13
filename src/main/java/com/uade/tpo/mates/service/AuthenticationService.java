@@ -4,6 +4,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.uade.tpo.mates.controllers.auth.AuthenticationRequest;
 import com.uade.tpo.mates.controllers.auth.AuthenticationResponse;
@@ -13,6 +14,7 @@ import com.uade.tpo.mates.entity.Role;
 import com.uade.tpo.mates.entity.User;
 import com.uade.tpo.mates.exceptions.UserAlreadyExistsException;
 import com.uade.tpo.mates.repository.UserRepository;
+import com.uade.tpo.mates.exceptions.InvalidUserDataException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,7 +27,12 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) throws UserAlreadyExistsException {
+    public AuthenticationResponse register(RegisterRequest request)
+            throws UserAlreadyExistsException, InvalidUserDataException {
+        if (!StringUtils.hasText(request.getName()) || !StringUtils.hasText(request.getLastName())
+                || !StringUtils.hasText(request.getPhone()) || !StringUtils.hasText(request.getAddress()))
+            throw new InvalidUserDataException();
+
         if (repository.existsByEmail(request.getEmail()) || repository.existsByUsername(request.getUsername()))
             throw new UserAlreadyExistsException();
 

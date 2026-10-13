@@ -1,0 +1,8 @@
+.profile-account {
+  margin: 0 0 1.5rem;
+  color: var(--body);
+}
+
+.profile-account strong {
+  color: var(--ink);
+}

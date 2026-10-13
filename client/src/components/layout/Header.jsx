@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { to: "/", label: "Inicio" },
   { to: "/products", label: "Productos" },
   { to: "/orders", label: "Mis pedidos" },
+  { to: "/profile", label: "Mi perfil" },
 ];
 
 const getLinkClass = ({ isActive }) =>

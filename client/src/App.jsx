@@ -9,6 +9,8 @@ import Register from "./views/Register.jsx";
 import Product from "./views/Product.jsx";
 import useCart from "./hooks/useCart.js";
 import Cart from "./views/Cart.jsx";
+import Orders from "./views/Orders.jsx";
+import Profile from "./views/Profile.jsx";
 
 const App = () => {
   const [token, setToken] = useState(getToken);
@@ -57,8 +59,10 @@ const App = () => {
             />
           }
         />
+        <Route path="/orders" element={<Orders token={token} />} />
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register onLogin={handleLogin} />} />
+        <Route path="/profile" element={<Profile token={token} />} />
       </Route>
     </Routes>
   );

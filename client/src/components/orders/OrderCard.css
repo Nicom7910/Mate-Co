@@ -1,0 +1,27 @@
+.order-card {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: var(--card);
+}
+
+.order-card__lines {
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.order-card__total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  color: var(--body);
+}
+
+.order-card__total strong {
+  font-size: 1.375rem;
+  color: var(--ink);
+}

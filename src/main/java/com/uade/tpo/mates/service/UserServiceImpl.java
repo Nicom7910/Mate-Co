@@ -1,6 +1,7 @@
 package com.uade.tpo.mates.service;
 
 import java.util.Optional;
+import org.springframework.util.StringUtils;
 
 import org.springframework.data.domain.Page;
 
@@ -20,8 +21,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     public User updateProfile(User user, UpdateProfileRequest request) throws InvalidUserDataException {
-        if (request.getName() == null || request.getName().isBlank()
-                || request.getLastName() == null || request.getLastName().isBlank())
+        if (!StringUtils.hasText(request.getName()) || !StringUtils.hasText(request.getLastName())
+                || !StringUtils.hasText(request.getPhone()) || !StringUtils.hasText(request.getAddress()))
             throw new InvalidUserDataException();
 
         user.setName(request.getName());

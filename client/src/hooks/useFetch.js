@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { API_URL } from "../api/config.js";
+import request from "../api/request.js";
 
-const useFetch = (path) => {
+const useFetch = (path, token) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -9,11 +9,7 @@ const useFetch = (path) => {
   useEffect(() => {
     const controller = new AbortController();
 
-    fetch(`${API_URL}${path}`, { signal: controller.signal })
-      .then((response) => {
-        if (!response.ok) throw new Error(`Error ${response.status}`);
-        return response.json();
-      })
+    request(path, { token, signal: controller.signal })
       .then((json) => setData(json))
       .catch((err) => {
         if (err.name !== "AbortError") setError(err.message);
@@ -23,7 +19,7 @@ const useFetch = (path) => {
       });
 
     return () => controller.abort();
-  }, [path]);
+  }, [path, token]);
 
   return { data, loading, error };
 };
