@@ -26,7 +26,9 @@ public class GlobalExceptionHandler {
             ProductHasOrdersException.class,
             CategoryHasProductsException.class,
             InvalidUserDataException.class,
-            InvalidOrderStatusException.class
+            InvalidOrderStatusException.class,
+            OrderNotCancellableException.class,
+            CancellationPeriodExpiredException.class
     })
     public ResponseEntity<ErrorResponse> handleKnownExceptions(Exception ex) {
         ResponseStatus responseStatus = ex.getClass().getAnnotation(ResponseStatus.class);

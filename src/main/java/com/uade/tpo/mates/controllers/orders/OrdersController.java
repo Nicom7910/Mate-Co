@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PatchMapping;
 
 import com.uade.tpo.mates.entity.Order;
 import com.uade.tpo.mates.entity.Role;
 import com.uade.tpo.mates.entity.User;
 import com.uade.tpo.mates.exceptions.OrderNotFoundException;
 import com.uade.tpo.mates.service.OrderService;
+import com.uade.tpo.mates.exceptions.CancellationPeriodExpiredException;
+import com.uade.tpo.mates.exceptions.OrderNotCancellableException;
 
 @RestController
 @RequestMapping("orders")
@@ -66,5 +69,12 @@ public class OrdersController {
                 .map(OrderResponse::from)
                 .toList();
         return ResponseEntity.ok(orders);
+    }
+
+    @PatchMapping("/{orderId}/cancel")
+    public ResponseEntity<OrderResponse> cancelOrder(@AuthenticationPrincipal User user,
+            @PathVariable Long orderId)
+            throws OrderNotFoundException, OrderNotCancellableException, CancellationPeriodExpiredException {
+        return ResponseEntity.ok(OrderResponse.from(orderService.cancelOrder(user, orderId)));
     }
 }

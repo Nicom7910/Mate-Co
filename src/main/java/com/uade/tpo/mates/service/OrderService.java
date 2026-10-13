@@ -7,6 +7,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import com.uade.tpo.mates.entity.Order;
+import com.uade.tpo.mates.entity.User;
+import com.uade.tpo.mates.exceptions.CancellationPeriodExpiredException;
+import com.uade.tpo.mates.exceptions.OrderNotCancellableException;
+import com.uade.tpo.mates.exceptions.OrderNotFoundException;
 
 public interface OrderService {
 
@@ -15,4 +19,7 @@ public interface OrderService {
     Optional<Order> getOrderById(Long orderId);
 
     List<Order> getOrdersByUser(Long userId);
+
+    Order cancelOrder(User user, Long orderId)
+            throws OrderNotFoundException, OrderNotCancellableException, CancellationPeriodExpiredException;
 }

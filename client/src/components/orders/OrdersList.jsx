@@ -1,3 +1,4 @@
+import request from "../../api/request.js";
 import useFetch from "../../hooks/useFetch.js";
 import confirmedOrders from "../../utils/confirmedOrders.js";
 import toList from "../../utils/toList.js";
@@ -6,11 +7,13 @@ import OrdersEmpty from "./OrdersEmpty.jsx";
 import OrdersResults from "./OrdersResults.jsx";
 
 const OrdersList = ({ token, admin }) => {
-  const { data, loading, error } = useFetch(
+  const { data, loading, error, reload } = useFetch(
     admin ? "/orders" : "/orders/me",
     token,
   );
   const orders = confirmedOrders(toList(data));
+  const cancelOrder = (id) =>
+    request(`/orders/${id}/cancel`, { method: "PATCH", token });
 
   return (
     <FetchState
@@ -21,7 +24,12 @@ const OrdersList = ({ token, admin }) => {
       {orders.length === 0 ? (
         <OrdersEmpty admin={admin} />
       ) : (
-        <OrdersResults orders={orders} admin={admin} />
+        <OrdersResults
+          orders={orders}
+          admin={admin}
+          onCancel={admin ? undefined : cancelOrder}
+          onCancelled={reload}
+        />
       )}
     </FetchState>
   );
