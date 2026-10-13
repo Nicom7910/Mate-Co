@@ -1,3 +1,4 @@
+import usePageChange from "../../../hooks/usePageChange.js";
 import ADMIN_PAGE_SIZE from "../../../utils/adminPageSize.js";
 import paginate from "../../../utils/paginate.js";
 import Pagination from "../../catalog/Pagination.jsx";
@@ -13,6 +14,8 @@ const ProductsResults = ({
   onDeleted,
   onDeleteError,
 }) => {
+  const { targetRef, changePage } = usePageChange(onPageChange);
+
   if (total === 0)
     return <p className="message">Todavía no hay productos cargados.</p>;
   if (products.length === 0)
@@ -26,23 +29,25 @@ const ProductsResults = ({
 
   return (
     <>
-      <ResultsCount
-        page={current}
-        pageSize={ADMIN_PAGE_SIZE}
-        count={products.length}
-        total={total}
-        noun="productos"
-      />
-      <ProductsTable
-        products={items}
-        onDelete={onDelete}
-        onDeleted={onDeleted}
-        onDeleteError={onDeleteError}
-      />
+      <div ref={targetRef} className="scroll-target">
+        <ResultsCount
+          page={current}
+          pageSize={ADMIN_PAGE_SIZE}
+          count={products.length}
+          total={total}
+          noun="productos"
+        />
+        <ProductsTable
+          products={items}
+          onDelete={onDelete}
+          onDeleted={onDeleted}
+          onDeleteError={onDeleteError}
+        />
+      </div>
       <Pagination
         page={current}
         totalPages={totalPages}
-        onChange={onPageChange}
+        onChange={changePage}
       />
     </>
   );

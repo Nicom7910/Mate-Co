@@ -42,6 +42,7 @@ a:hover {
   margin: 0 auto;
   padding-inline: 2rem;
 }
+
 .page {
   padding-top: 2.5rem;
   padding-bottom: 3.5rem;
@@ -53,6 +54,10 @@ a:hover {
 
 .section--last {
   padding-bottom: 3rem;
+}
+
+.scroll-target {
+  scroll-margin-top: 1rem;
 }
 
 .btn {
@@ -84,7 +89,6 @@ a:hover {
   color: var(--green);
 }
 
-/* Mensajes de carga / error */
 .message {
   margin: 0;
   padding: 1rem 0;

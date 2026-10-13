@@ -1,4 +1,5 @@
 import { useState } from "react";
+import usePageChange from "../../hooks/usePageChange.js";
 import paginate from "../../utils/paginate.js";
 import Pagination from "../catalog/Pagination.jsx";
 import OrderCard from "./OrderCard.jsx";
@@ -9,15 +10,20 @@ const PAGE_SIZE = 10;
 const OrdersResults = ({ orders, admin }) => {
   const [page, setPage] = useState(1);
   const { items, totalPages, current } = paginate(orders, page, PAGE_SIZE);
+  const { targetRef, changePage } = usePageChange(setPage);
 
   return (
     <>
-      <ul className="orders-list">
+      <ul ref={targetRef} className="orders-list scroll-target">
         {items.map((order) => (
           <OrderCard key={order.id} order={order} showCustomer={admin} />
         ))}
       </ul>
-      <Pagination page={current} totalPages={totalPages} onChange={setPage} />
+      <Pagination
+        page={current}
+        totalPages={totalPages}
+        onChange={changePage}
+      />
     </>
   );
 };

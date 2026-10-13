@@ -1,5 +1,6 @@
 import useCatalogFilters from "../../hooks/useCatalogFilters.js";
 import useFetch from "../../hooks/useFetch.js";
+import usePageChange from "../../hooks/usePageChange.js";
 import filterProducts from "../../utils/filterProducts.js";
 import paginate from "../../utils/paginate.js";
 import toList from "../../utils/toList.js";
@@ -19,6 +20,7 @@ const ProductCatalog = () => {
   const { filters, setFilter, page, setPage } = useCatalogFilters();
   const visible = filterProducts(toList(products.data), filters);
   const { items, totalPages, current } = paginate(visible, page, PAGE_SIZE);
+  const { targetRef, changePage } = usePageChange(setPage);
 
   return (
     <>
@@ -39,11 +41,13 @@ const ProductCatalog = () => {
             error={products.error}
             loadingText="Cargando productos..."
           >
-            <ProductGrid products={items} />
+            <div ref={targetRef} className="scroll-target">
+              <ProductGrid products={items} />
+            </div>
             <Pagination
               page={current}
               totalPages={totalPages}
-              onChange={setPage}
+              onChange={changePage}
             />
           </FetchState>
         </div>

@@ -1,3 +1,4 @@
+import usePageChange from "../../../hooks/usePageChange.js";
 import ADMIN_PAGE_SIZE from "../../../utils/adminPageSize.js";
 import paginate from "../../../utils/paginate.js";
 import Pagination from "../../catalog/Pagination.jsx";
@@ -13,6 +14,8 @@ const CategoriesResults = ({
   onDeleted,
   onDeleteError,
 }) => {
+  const { targetRef, changePage } = usePageChange(onPageChange);
+
   if (total === 0)
     return <p className="message">Todavía no hay categorías cargadas.</p>;
   if (categories.length === 0)
@@ -28,23 +31,25 @@ const CategoriesResults = ({
 
   return (
     <>
-      <ResultsCount
-        page={current}
-        pageSize={ADMIN_PAGE_SIZE}
-        count={categories.length}
-        total={total}
-        noun="categorías"
-      />
-      <CategoriesTable
-        categories={items}
-        onDelete={onDelete}
-        onDeleted={onDeleted}
-        onDeleteError={onDeleteError}
-      />
+      <div ref={targetRef} className="scroll-target">
+        <ResultsCount
+          page={current}
+          pageSize={ADMIN_PAGE_SIZE}
+          count={categories.length}
+          total={total}
+          noun="categorías"
+        />
+        <CategoriesTable
+          categories={items}
+          onDelete={onDelete}
+          onDeleted={onDeleted}
+          onDeleteError={onDeleteError}
+        />
+      </div>
       <Pagination
         page={current}
         totalPages={totalPages}
-        onChange={onPageChange}
+        onChange={changePage}
       />
     </>
   );
