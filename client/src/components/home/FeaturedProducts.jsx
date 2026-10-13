@@ -1,10 +1,11 @@
 import useFetch from "../../hooks/useFetch.js";
+import featuredProducts from "../../utils/featuredProducts.js";
 import toList from "../../utils/toList.js";
 import FetchState from "../common/FetchState.jsx";
 import SectionTitle from "../common/SectionTitle.jsx";
-import ProductGrid from "../products/ProductGrid.jsx";
+import FeaturedCarousel from "./FeaturedCarousel.jsx";
 
-const FEATURED_COUNT = 4;
+const FEATURED_COUNT = 12;
 
 const FeaturedProducts = () => {
   const { data, loading, error } = useFetch("/products");
@@ -21,7 +22,9 @@ const FeaturedProducts = () => {
         error={error}
         loadingText="Cargando productos..."
       >
-        <ProductGrid products={toList(data).slice(0, FEATURED_COUNT)} />
+        <FeaturedCarousel
+          products={featuredProducts(toList(data), FEATURED_COUNT)}
+        />
       </FetchState>
     </section>
   );

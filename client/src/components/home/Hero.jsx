@@ -2,7 +2,7 @@ import mate from "../../assets/mate.svg";
 import LinkButton from "../common/LinkButton.jsx";
 import "./Hero.css";
 
-const Hero = () => (
+const Hero = ({ loggedIn }) => (
   <section className="container hero">
     <div className="hero__text">
       <span className="hero__eyebrow">Tienda de mates</span>
@@ -15,9 +15,11 @@ const Hero = () => (
         <LinkButton to="/products" variant="primary">
           Ver productos
         </LinkButton>
-        <LinkButton to="/register" variant="outline">
-          Crear cuenta
-        </LinkButton>
+        {!loggedIn && (
+          <LinkButton to="/register" variant="outline">
+            Crear cuenta
+          </LinkButton>
+        )}
       </div>
     </div>
     <div className="hero__image">

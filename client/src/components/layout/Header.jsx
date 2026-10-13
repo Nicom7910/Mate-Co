@@ -6,7 +6,7 @@ import "./Header.css";
 const NAV_LINKS = [
   { to: "/", label: "Inicio" },
   { to: "/products", label: "Productos" },
-  { to: "/orders", label: "Mis pedidos" },
+  { to: "/orders", label: "Mis pedidos", adminLabel: "Pedidos" },
   { to: "/profile", label: "Mi perfil" },
 ];
 
@@ -23,9 +23,9 @@ const Header = ({ token, onLogout, cartCount, isAdmin }) => (
       </Link>
       <nav className="header__nav">
         {(isAdmin ? [...NAV_LINKS, ADMIN_LINK] : NAV_LINKS).map(
-          ({ to, label }) => (
+          ({ to, label, adminLabel }) => (
             <NavLink key={to} to={to} end={to === "/"} className={getLinkClass}>
-              {label}
+              {(isAdmin && adminLabel) || label}
             </NavLink>
           ),
         )}

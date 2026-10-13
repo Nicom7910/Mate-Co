@@ -50,7 +50,7 @@ const App = () => {
           />
         }
       >
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home loggedIn={Boolean(token)} />} />
         <Route path="/products" element={<Catalog />} />
         <Route
           path="/products/:id"
@@ -71,7 +71,16 @@ const App = () => {
             />
           }
         />
-        <Route path="/orders" element={<Orders token={token} />} />
+        <Route
+          path="/orders"
+          element={
+            <Orders
+              token={token}
+              user={currentUser.user}
+              loading={currentUser.loading}
+            />
+          }
+        />
         <Route path="/profile" element={<Profile token={token} />} />
         <Route
           path="/admin"

@@ -1,0 +1,62 @@
+.carousel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "prev page next"
+    ".    dots .";
+  align-items: center;
+  gap: 1.25rem 1rem;
+}
+
+.carousel > .carousel-arrow--prev {
+  grid-area: prev;
+}
+.carousel > .carousel-arrow--next {
+  grid-area: next;
+}
+.carousel > .carousel-dots {
+  grid-area: dots;
+}
+
+.carousel__page {
+  grid-area: page;
+  animation: carousel-in 0.35s ease;
+}
+
+.carousel__page .product-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 72rem) {
+  .carousel__page .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 40rem) {
+  .carousel {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "page page page"
+      "prev dots next";
+  }
+}
+
+@keyframes carousel-in {
+  from {
+    opacity: 0;
+    transform: translateX(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel__page {
+    animation: none;
+  }
+}

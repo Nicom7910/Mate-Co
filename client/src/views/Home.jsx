@@ -2,9 +2,9 @@ import CategoriesSection from "../components/home/CategoriesSection.jsx";
 import FeaturedProducts from "../components/home/FeaturedProducts.jsx";
 import Hero from "../components/home/Hero.jsx";
 
-const Home = () => (
+const Home = ({ loggedIn }) => (
   <>
-    <Hero />
+    <Hero loggedIn={loggedIn} />
     <CategoriesSection />
     <FeaturedProducts />
   </>
