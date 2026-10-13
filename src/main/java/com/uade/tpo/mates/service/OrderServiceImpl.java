@@ -1,6 +1,5 @@
 package com.uade.tpo.mates.service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,13 +19,17 @@ import com.uade.tpo.mates.entity.User;
 import com.uade.tpo.mates.exceptions.CancellationPeriodExpiredException;
 import com.uade.tpo.mates.exceptions.OrderNotCancellableException;
 import com.uade.tpo.mates.exceptions.OrderNotFoundException;
+import com.uade.tpo.mates.exceptions.OrderNotShippableException;
 import com.uade.tpo.mates.repository.OrderRepository;
 import com.uade.tpo.mates.repository.ProductRepository;
+import com.uade.tpo.mates.util.BusinessDays;
 
 @Service
 public class OrderServiceImpl implements OrderService {
 
     private static final int CANCELLATION_BUSINESS_DAYS = 15;
+
+    private static final int DELIVERY_BUSINESS_DAYS = 3;
 
     @Autowired
     private OrderRepository orderRepository;
@@ -71,17 +74,37 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.save(order);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public Order shipOrder(Long orderId) throws OrderNotFoundException, OrderNotShippableException {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(OrderNotFoundException::new);
+
+        if (order.getStatus() != OrderStatus.PAID)
+            throw new OrderNotShippableException();
+
+        order.setStatus(OrderStatus.SHIPPED);
+        order.setShippedDate(LocalDateTime.now());
+        return orderRepository.save(order);
+    }
+
+    @Transactional
+    public int deliverShippedOrders() {
+        List<Order> delivered = orderRepository.findByStatus(OrderStatus.SHIPPED).stream()
+                .filter(order -> order.getShippedDate() != null && isDeliveryDue(order.getShippedDate()))
+                .toList();
+
+        delivered.forEach(order -> order.setStatus(OrderStatus.DELIVERED));
+        orderRepository.saveAll(delivered);
+        return delivered.size();
+    }
+
     private boolean isInCancellationPeriod(LocalDateTime orderDate) {
-        LocalDate lastDay = orderDate.toLocalDate();
-        int added = 0;
-
-        while (added < CANCELLATION_BUSINESS_DAYS) {
-            lastDay = lastDay.plusDays(1);
-            DayOfWeek day = lastDay.getDayOfWeek();
-            if (day != DayOfWeek.SATURDAY && day != DayOfWeek.SUNDAY)
-                added++;
-        }
-
+        LocalDate lastDay = BusinessDays.add(orderDate.toLocalDate(), CANCELLATION_BUSINESS_DAYS);
         return !LocalDate.now().isAfter(lastDay);
+    }
+
+    private boolean isDeliveryDue(LocalDateTime shippedDate) {
+        LocalDate deliveryDay = BusinessDays.add(shippedDate.toLocalDate(), DELIVERY_BUSINESS_DAYS);
+        return !LocalDate.now().isBefore(deliveryDay);
     }
 }

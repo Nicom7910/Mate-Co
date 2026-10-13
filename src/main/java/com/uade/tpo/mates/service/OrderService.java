@@ -11,6 +11,7 @@ import com.uade.tpo.mates.entity.User;
 import com.uade.tpo.mates.exceptions.CancellationPeriodExpiredException;
 import com.uade.tpo.mates.exceptions.OrderNotCancellableException;
 import com.uade.tpo.mates.exceptions.OrderNotFoundException;
+import com.uade.tpo.mates.exceptions.OrderNotShippableException;
 
 public interface OrderService {
 
@@ -22,4 +23,8 @@ public interface OrderService {
 
     Order cancelOrder(User user, Long orderId)
             throws OrderNotFoundException, OrderNotCancellableException, CancellationPeriodExpiredException;
+
+    Order shipOrder(Long orderId) throws OrderNotFoundException, OrderNotShippableException;
+
+    int deliverShippedOrders();
 }

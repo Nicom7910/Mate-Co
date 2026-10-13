@@ -14,6 +14,8 @@ const OrdersList = ({ token, admin }) => {
   const orders = confirmedOrders(toList(data));
   const cancelOrder = (id) =>
     request(`/orders/${id}/cancel`, { method: "PATCH", token });
+  const shipOrder = (id) =>
+    request(`/orders/${id}/ship`, { method: "PATCH", token });
 
   return (
     <FetchState
@@ -29,6 +31,8 @@ const OrdersList = ({ token, admin }) => {
           admin={admin}
           onCancel={admin ? undefined : cancelOrder}
           onCancelled={reload}
+          onShip={admin ? shipOrder : undefined}
+          onShipped={reload}
         />
       )}
     </FetchState>

@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/products/**", "/categories/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/products/**", "/categories/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/orders", "/orders/user/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/orders/*/ship").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/products", "/products/**", "/categories", "/categories/**",
                                 "/uploads/**")
                         .permitAll()

@@ -16,3 +16,8 @@
   background: #f1d9cf;
   color: var(--danger);
 }
+
+.order-status--shipped {
+  background: #f3e6c9;
+  color: var(--copper);
+}

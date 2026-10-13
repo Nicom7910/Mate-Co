@@ -1,0 +1,42 @@
+.ship-order {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.ship-order .message {
+  padding: 0 0 0.75rem;
+}
+
+.ship-order__confirm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ship-order__ask {
+  font-size: 0.9375rem;
+  color: var(--body);
+}
+
+.ship-order__button {
+  min-height: 2.75rem;
+  padding: 0 1.25rem;
+  border: 1.5px solid var(--input-border);
+  border-radius: 50rem;
+  background: transparent;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.ship-order__button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.ship-order__button--primary {
+  border-color: var(--green);
+  color: var(--green);
+}

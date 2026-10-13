@@ -20,6 +20,7 @@ public class OrderResponse {
         private Long id;
         private LocalDateTime orderDate;
         private OrderStatus status;
+        private LocalDateTime shippedDate;
         private BigDecimal total;
         private String userName;
         private List<OrderItemResponse> items;
@@ -40,6 +41,7 @@ public class OrderResponse {
                                 .id(order.getId())
                                 .orderDate(order.getOrderDate())
                                 .status(order.getStatus())
+                                .shippedDate(order.getShippedDate())
                                 .total(order.getTotal())
                                 .userName(order.getUser().getName())
                                 .items(items)

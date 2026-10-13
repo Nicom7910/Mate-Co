@@ -22,6 +22,7 @@ import com.uade.tpo.mates.exceptions.OrderNotFoundException;
 import com.uade.tpo.mates.service.OrderService;
 import com.uade.tpo.mates.exceptions.CancellationPeriodExpiredException;
 import com.uade.tpo.mates.exceptions.OrderNotCancellableException;
+import com.uade.tpo.mates.exceptions.OrderNotShippableException;
 
 @RestController
 @RequestMapping("orders")
@@ -76,5 +77,11 @@ public class OrdersController {
             @PathVariable Long orderId)
             throws OrderNotFoundException, OrderNotCancellableException, CancellationPeriodExpiredException {
         return ResponseEntity.ok(OrderResponse.from(orderService.cancelOrder(user, orderId)));
+    }
+
+    @PatchMapping("/{orderId}/ship")
+    public ResponseEntity<OrderResponse> shipOrder(@PathVariable Long orderId)
+            throws OrderNotFoundException, OrderNotShippableException {
+        return ResponseEntity.ok(OrderResponse.from(orderService.shipOrder(orderId)));
     }
 }

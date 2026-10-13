@@ -46,6 +46,8 @@ public class Order {
     @Column(nullable = false)
     private BigDecimal total;
 
+    private LocalDateTime shippedDate;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
