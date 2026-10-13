@@ -1,4 +1,7 @@
-const filterProducts = (products, { category, search, minPrice, maxPrice }) =>
+const filterProducts = (
+  products,
+  { category = "", search = "", minPrice = "", maxPrice = "" },
+) =>
   products.filter((product) => {
     const price = product.finalPrice ?? product.price;
     const matchesCategory =
@@ -8,6 +11,7 @@ const filterProducts = (products, { category, search, minPrice, maxPrice }) =>
       .includes(search.trim().toLowerCase());
     const matchesMin = minPrice === "" || price >= Number(minPrice);
     const matchesMax = maxPrice === "" || price <= Number(maxPrice);
+
     return matchesCategory && matchesSearch && matchesMin && matchesMax;
   });
 

@@ -5,10 +5,10 @@ const FormField = ({
   name,
   value,
   onChange,
-  type = "text",
-  placeholder,
-  autoComplete,
   wide = false,
+  required = true,
+  type = "text",
+  ...inputProps
 }) => (
   <div className={wide ? "form-field auth-form__full" : "form-field"}>
     <label htmlFor={name} className="form-field__label">
@@ -20,10 +20,9 @@ const FormField = ({
       type={type}
       value={value}
       onChange={onChange}
-      placeholder={placeholder}
-      autoComplete={autoComplete}
-      required
+      required={required}
       className="form-field__input"
+      {...inputProps}
     />
   </div>
 );

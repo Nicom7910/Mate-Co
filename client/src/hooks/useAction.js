@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useAction = (action, onSuccess) => {
+const useAction = (action, onSuccess, onError) => {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(null);
 
@@ -9,7 +9,10 @@ const useAction = (action, onSuccess) => {
     setError(null);
     action(...args)
       .then((result) => onSuccess?.(result))
-      .catch((err) => setError(err.message))
+      .catch((err) => {
+        setError(err.message);
+        onError?.(err.message);
+      })
       .finally(() => setSending(false));
   };
 

@@ -1,0 +1,39 @@
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.admin-actions__delete {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-actions__ask {
+  font-size: 0.9375rem;
+  color: var(--body);
+}
+
+.admin-action {
+  padding: 0.375rem 0.875rem;
+  border: 1.5px solid var(--input-border);
+  border-radius: 50rem;
+  background: transparent;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.admin-action:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.admin-action--danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}

@@ -1,11 +1,16 @@
 import "./SearchBar.css";
 
-const SearchBar = ({ value, onChange }) => (
+const SearchBar = ({
+  value,
+  onChange,
+  placeholder = "Buscar productos por nombre...",
+  label = "Buscar productos",
+}) => (
   <input
     type="search"
     className="search-bar"
-    placeholder="Buscar productos por nombre..."
-    aria-label="Buscar productos"
+    placeholder={placeholder}
+    aria-label={label}
     value={value}
     onChange={(event) => onChange(event.target.value)}
   />

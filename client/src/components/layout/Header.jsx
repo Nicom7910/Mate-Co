@@ -10,21 +10,25 @@ const NAV_LINKS = [
   { to: "/profile", label: "Mi perfil" },
 ];
 
+const ADMIN_LINK = { to: "/admin", label: "Admin" };
+
 const getLinkClass = ({ isActive }) =>
   isActive ? "header__link header__link--active" : "header__link";
 
-const Header = ({ token, onLogout, cartCount }) => (
+const Header = ({ token, onLogout, cartCount, isAdmin }) => (
   <header className="header">
     <div className="container header__inner">
       <Link to="/" className="header__logo">
         Mate&amp;Co
       </Link>
       <nav className="header__nav">
-        {NAV_LINKS.map(({ to, label }) => (
-          <NavLink key={to} to={to} end={to === "/"} className={getLinkClass}>
-            {label}
-          </NavLink>
-        ))}
+        {(isAdmin ? [...NAV_LINKS, ADMIN_LINK] : NAV_LINKS).map(
+          ({ to, label }) => (
+            <NavLink key={to} to={to} end={to === "/"} className={getLinkClass}>
+              {label}
+            </NavLink>
+          ),
+        )}
       </nav>
       <div className="header__actions">
         <CartLink count={cartCount} />

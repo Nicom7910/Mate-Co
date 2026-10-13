@@ -1,0 +1,12 @@
+.admin-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.admin-filters .search-bar {
+  flex: 1 1 16rem;
+  width: auto;
+  margin-bottom: 0;
+}
