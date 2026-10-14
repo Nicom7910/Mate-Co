@@ -4,6 +4,7 @@ import "./AdminNav.css";
 const SECTIONS = [
   { to: "/admin/products", label: "Productos" },
   { to: "/admin/categories", label: "Categorías" },
+  { to: "/admin/stats", label: "Estadísticas" },
 ];
 
 const getTabClass = ({ isActive }) =>

@@ -2,14 +2,16 @@
   display: flex;
   gap: 0.5rem;
   margin-bottom: 2rem;
+  overflow-x: auto;
+  overflow-y: hidden;
   border-bottom: 1px solid var(--border);
 }
 
 .admin-nav__tab {
   padding: 0.75rem 1.25rem;
-  margin-bottom: -1px;
   border-bottom: 3px solid transparent;
   font-weight: 700;
+  white-space: nowrap;
   color: var(--body);
 }
 

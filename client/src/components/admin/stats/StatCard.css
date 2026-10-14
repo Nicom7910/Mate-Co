@@ -1,0 +1,29 @@
+.stat-card {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: var(--card);
+}
+
+.stat-card__label {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.stat-card__value {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-title);
+  font-size: 2rem;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.stat-card__hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}

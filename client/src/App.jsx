@@ -21,6 +21,7 @@ import AdminCategories from "./views/AdminCategories.jsx";
 import AdminCategoryEdit from "./views/AdminCategoryEdit.jsx";
 import AdminCategoryNew from "./views/AdminCategoryNew.jsx";
 import Checkout from "./views/Checkout.jsx";
+import AdminStats from "./views/AdminStats.jsx";
 
 const App = () => {
   const [token, setToken] = useState(getToken);
@@ -139,6 +140,7 @@ const App = () => {
             path="categories/:id/edit"
             element={<AdminCategoryEdit token={token} />}
           />
+          <Route path="stats" element={<AdminStats token={token} />} />
         </Route>
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register onLogin={handleLogin} />} />
