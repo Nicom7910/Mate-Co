@@ -15,7 +15,7 @@ const OrderLine = ({ item }) => {
           {quantity} × {formatPrice(unitPrice)}
         </p>
       </div>
-      <strong>{formatPrice(subtotal)}</strong>
+      <strong className="order-line__subtotal">{formatPrice(subtotal)}</strong>
     </li>
   );
 };

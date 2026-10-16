@@ -1,5 +1,6 @@
 import useForm from "../../../hooks/useForm.js";
-import useProductImage from "../../../hooks/useProductImage.js";
+import useProductImages from "../../../hooks/useProductImages.js";
+import getProductImages from "../../../utils/getProductImages.js";
 import toProductValues from "../../../utils/toProductValues.js";
 import AuthForm from "../../auth/AuthForm.jsx";
 import FormError from "../../auth/FormError.jsx";
@@ -11,7 +12,7 @@ import { PRODUCT_FIELDS } from "./productFields.js";
 
 const ProductForm = ({ product, categories, onSubmit, sending, error }) => {
   const { values, handleChange } = useForm(toProductValues(product));
-  const image = useProductImage(product?.imageUrl);
+  const images = useProductImages(getProductImages(product));
   const categoryOptions = categories.map(({ id, name }) => ({
     value: String(id),
     label: name,
@@ -19,7 +20,7 @@ const ProductForm = ({ product, categories, onSubmit, sending, error }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    onSubmit({ ...values, imageUrl: image.currentUrl }, image.file);
+    onSubmit(values, images.items);
   };
 
   return (
@@ -41,7 +42,7 @@ const ProductForm = ({ product, categories, onSubmit, sending, error }) => {
         placeholder="Elegí una categoría"
         wide
       />
-      <ImagePicker image={image} />
+      <ImagePicker images={images} />
       <FormError message={error} />
       <SubmitButton text="Guardar producto" sending={sending} />
     </AuthForm>

@@ -1,23 +1,19 @@
-import ProductImage from "../../products/ProductImage.jsx";
-import ImagePickerControls from "./ImagePickerControls.jsx";
+import ImagePickerInput from "./ImagePickerInput.jsx";
+import ImagePickerList from "./ImagePickerList.jsx";
 import "./ImagePicker.css";
 
-const ImagePicker = ({ image }) => (
+const ImagePicker = ({ images }) => (
   <div className="image-picker auth-form__full">
-    <span className="form-field__label">Imagen del producto (opcional)</span>
-    <div className="image-picker__body">
-      <div className="image-picker__preview">
-        <ProductImage
-          key={image.preview}
-          src={image.preview}
-          alt="Vista previa de la imagen"
-        />
-      </div>
-      <ImagePickerControls image={image} />
-    </div>
-    {image.error && (
+    <span className="form-field__label">Fotos del producto (opcional)</span>
+    <ImagePickerList
+      items={images.items}
+      onRemove={images.remove}
+      onMakeMain={images.makeMain}
+    />
+    <ImagePickerInput images={images} />
+    {images.error && (
       <p className="form-field__error" role="alert">
-        {image.error}
+        {images.error}
       </p>
     )}
   </div>

@@ -1,6 +1,7 @@
 package com.uade.tpo.mates.service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,12 +51,15 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(CategoryNotFoundException::new);
 
+        List<String> imageUrls = resolveImageUrls(request);
+
         Product product = Product.builder()
                 .name(request.getName())
                 .description(request.getDescription())
                 .price(request.getPrice())
                 .stock(request.getStock() != null ? request.getStock() : 0)
-                .imageUrl(request.getImageUrl())
+                .imageUrl(imageUrls.isEmpty() ? null : imageUrls.get(0))
+                .imageUrls(imageUrls)
                 .category(category)
                 .discountPercentage(request.getDiscountPercentage())
                 .build();
@@ -78,7 +82,10 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock() != null ? request.getStock() : 0);
-        product.setImageUrl(request.getImageUrl());
+        List<String> imageUrls = resolveImageUrls(request);
+        product.setImageUrl(imageUrls.isEmpty() ? null : imageUrls.get(0));
+        product.getImageUrls().clear();
+        product.getImageUrls().addAll(imageUrls);
         product.setCategory(category);
         product.setDiscountPercentage(request.getDiscountPercentage());
 
@@ -105,5 +112,21 @@ public class ProductServiceImpl implements ProductService {
         Integer discount = request.getDiscountPercentage();
         if (discount != null && (discount < 0 || discount > 100))
             throw new InvalidProductDataException();
+    }
+
+    // Usa la lista imageUrls; si no viene, cae al imageUrl suelto (compatibilidad).
+    private List<String> resolveImageUrls(ProductRequest request) {
+        List<String> urls = new ArrayList<>();
+
+        if (request.getImageUrls() != null) {
+            for (String url : request.getImageUrls()) {
+                if (url != null && !url.isBlank())
+                    urls.add(url.trim());
+            }
+        } else if (request.getImageUrl() != null && !request.getImageUrl().isBlank()) {
+            urls.add(request.getImageUrl().trim());
+        }
+
+        return urls;
     }
 }

@@ -7,14 +7,20 @@ import useAction from "./useAction.js";
 const useProductSave = (token, productId) => {
   const navigate = useNavigate();
 
-  const save = (values, file) =>
-    (file ? uploadImage(file, token) : Promise.resolve(values.imageUrl)).then(
-      (imageUrl) =>
-        request(productId ? `/products/${productId}` : "/products", {
-          method: productId ? "PUT" : "POST",
-          body: toProductBody({ ...values, imageUrl }),
-          token,
-        }),
+  const uploadAll = (images) =>
+    Promise.all(
+      images.map(({ url, file }) =>
+        file ? uploadImage(file, token) : Promise.resolve(url),
+      ),
+    );
+
+  const save = (values, images) =>
+    uploadAll(images).then((imageUrls) =>
+      request(productId ? `/products/${productId}` : "/products", {
+        method: productId ? "PUT" : "POST",
+        body: toProductBody({ ...values, imageUrls }),
+        token,
+      }),
     );
 
   return useAction(save, () => navigate("/admin/products"));

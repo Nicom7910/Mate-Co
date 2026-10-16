@@ -22,7 +22,11 @@ const Header = ({ token, onLogout, cartCount, isAdmin }) => {
           id="header-menu"
           className={`header__menu ${menuOpen ? "header__menu--open" : ""}`}
         >
-          <HeaderNav isAdmin={isAdmin} onNavigate={closeMenu} />
+          <HeaderNav
+            loggedIn={Boolean(token)}
+            isAdmin={isAdmin}
+            onNavigate={closeMenu}
+          />
           <div className="header__auth" onClick={closeMenu}>
             <AuthButton token={token} onLogout={onLogout} />
           </div>

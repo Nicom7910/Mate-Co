@@ -1,6 +1,7 @@
 package com.uade.tpo.mates.controllers.products;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import lombok.Data;
 
@@ -11,6 +12,7 @@ public class ProductRequest {
     private BigDecimal price;
     private Integer stock;
     private String imageUrl;
+    private List<String> imageUrls;
     private Long categoryId;
     private Integer discountPercentage;
 }

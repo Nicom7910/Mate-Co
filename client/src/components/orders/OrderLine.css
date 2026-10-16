@@ -16,3 +16,6 @@
   font-size: 0.875rem;
   color: var(--muted);
 }
+.order-line__subtotal {
+  white-space: nowrap;
+}
