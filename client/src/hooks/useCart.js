@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import request from "../api/request.js";
 import countUnits from "../utils/countUnits.js";
 
-const useCart = (token) => {
+const useCart = (token, enabled = true) => {
   const [cart, setCart] = useState(null);
 
   useEffect(() => {
-    if (!token) return;
+    if (!token || !enabled) return;
     const controller = new AbortController();
 
     request("/cart", { token, signal: controller.signal })
@@ -14,7 +14,7 @@ const useCart = (token) => {
       .catch(() => {});
 
     return () => controller.abort();
-  }, [token]);
+  }, [token, enabled]);
 
   const update = (path, method, body) =>
     request(path, { method, body, token }).then((data) => setCart(data));

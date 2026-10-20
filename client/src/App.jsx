@@ -25,9 +25,9 @@ import AdminStats from "./views/AdminStats.jsx";
 
 const App = () => {
   const [token, setToken] = useState(getToken);
-  const cart = useCart(token);
   const currentUser = useCurrentUser(token);
   const admin = isAdmin(currentUser.user);
+  const cart = useCart(token, Boolean(currentUser.user) && !admin);
 
   const handleLogin = (newToken) => {
     saveToken(newToken);
