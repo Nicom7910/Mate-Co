@@ -8,5 +8,9 @@
 
 .submit-button:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.submit-button--sending:disabled {
   cursor: wait;
 }

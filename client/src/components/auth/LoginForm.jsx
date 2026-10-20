@@ -1,9 +1,12 @@
 import useAuthRequest from "../../hooks/useAuthRequest.js";
 import useForm from "../../hooks/useForm.js";
+import useShownErrors from "../../hooks/useShownErrors.js";
+import validateLogin from "../../utils/validateLogin.js";
 import AuthForm from "./AuthForm.jsx";
 import FormError from "./FormError.jsx";
 import FormField from "./FormField.jsx";
 import SubmitButton from "./SubmitButton.jsx";
+import SubmitHint from "./SubmitHint.jsx";
 
 const FIELDS = [
   {
@@ -30,24 +33,31 @@ const LoginForm = ({ onLogin }) => {
     "Email o contraseña incorrectos.",
   );
 
+  const errors = validateLogin(values);
+  const { shown, handleBlur } = useShownErrors(errors);
+  const invalid = Object.keys(errors).length > 0;
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    send(values);
+    if (!invalid) send(values);
   };
 
   return (
-    <AuthForm onSubmit={handleSubmit}>
+    <AuthForm onSubmit={handleSubmit} noValidate>
       {FIELDS.map((field) => (
         <FormField
           key={field.name}
           {...field}
           value={values[field.name]}
           onChange={handleChange}
+          onBlur={handleBlur}
+          error={shown[field.name]}
           wide
         />
       ))}
       <FormError message={error} />
-      <SubmitButton text="Ingresar" sending={sending} />
+      <SubmitHint show={invalid} text="Completá tu email y contraseña para ingresar." />
+      <SubmitButton text="Ingresar" sending={sending} disabled={invalid} />
     </AuthForm>
   );
 };
