@@ -107,7 +107,17 @@ const App = () => {
             />
           }
         />
-        <Route path="/profile" element={<Profile token={token} />} />
+        <Route
+          path="/profile"
+          element={
+            <Profile
+              token={token}
+              user={currentUser.user}
+              loading={currentUser.loading}
+              onSaved={currentUser.update}
+            />
+          }
+        />
         <Route
           path="/admin"
           element={

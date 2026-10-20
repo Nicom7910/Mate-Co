@@ -24,7 +24,7 @@ const useCurrentUser = (token) => {
     setLoading(false);
   };
 
-  return { user, loading, reset };
+  return { user, loading, reset, update: setUser };
 };
 
 export default useCurrentUser;

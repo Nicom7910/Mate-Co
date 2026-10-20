@@ -20,7 +20,7 @@ const FIELDS = [
   },
 ];
 
-const ProfileForm = ({ user, token }) => {
+const ProfileForm = ({ user, token, onSaved }) => {
   const { values, handleChange } = useForm({
     name: user.name,
     lastName: user.lastName,
@@ -30,7 +30,10 @@ const ProfileForm = ({ user, token }) => {
   const [saved, setSaved] = useState(false);
   const save = (data) =>
     request("/users/me", { method: "PUT", body: data, token });
-  const { run, sending, error } = useAction(save, () => setSaved(true));
+  const { run, sending, error } = useAction(save, (updated) => {
+    onSaved(updated);
+    setSaved(true);
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();
