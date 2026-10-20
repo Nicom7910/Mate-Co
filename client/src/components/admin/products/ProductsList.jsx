@@ -16,7 +16,6 @@ const ProductsList = ({ token }) => {
   const [deleteError, setDeleteError] = useState(null);
   const all = toList(products.data);
 
-  // Cada vez que cambia un filtro se vuelve a la página 1
   const setFilter = (name, value) => {
     setFilters((previous) => ({ ...previous, [name]: value }));
     setPage(1);
