@@ -20,6 +20,7 @@ import com.uade.tpo.mates.exceptions.InvalidOrderStatusException;
 import com.uade.tpo.mates.exceptions.InvalidQuantityException;
 import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 import com.uade.tpo.mates.exceptions.ProductNotInCartException;
+import com.uade.tpo.mates.exceptions.ProductUnavailableException;
 import com.uade.tpo.mates.repository.OrderRepository;
 import com.uade.tpo.mates.repository.ProductRepository;
 
@@ -45,6 +46,10 @@ public class CartServiceImpl implements CartService {
 
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(ProductNotFoundException::new);
+
+        // Un producto dado de baja no se puede agregar al carrito.
+        if (!product.isActive())
+            throw new ProductNotFoundException();
 
         Order cart = orderRepository.findByUserIdAndStatus(user.getId(), OrderStatus.PENDING)
                 .orElseGet(() -> Order.builder()
@@ -120,7 +125,8 @@ public class CartServiceImpl implements CartService {
 
     @Transactional(rollbackFor = Exception.class)
     public Order updateStatus(User user, OrderStatus status)
-            throws CartEmptyException, InsufficientStockException, InvalidOrderStatusException {
+            throws CartEmptyException, InsufficientStockException, InvalidOrderStatusException,
+            ProductUnavailableException {
 
         if (status != OrderStatus.PAID)
             throw new InvalidOrderStatusException();
@@ -130,6 +136,11 @@ public class CartServiceImpl implements CartService {
 
         if (cart.getItems().isEmpty())
             throw new CartEmptyException();
+
+        for (OrderDetail item : cart.getItems()) {
+            if (!item.getProduct().isActive())
+                throw new ProductUnavailableException();
+        }
 
         for (OrderDetail item : cart.getItems()) {
             if (item.getProduct().getStock() < item.getQuantity())

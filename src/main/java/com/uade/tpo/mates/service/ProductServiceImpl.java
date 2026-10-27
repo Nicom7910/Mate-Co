@@ -34,8 +34,10 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
-    public Page<Product> getProducts(PageRequest pageable) {
-        return productRepository.findAll(pageable);
+    public Page<Product> getProducts(PageRequest pageable, boolean includeInactive) {
+        return includeInactive
+                ? productRepository.findAll(pageable)
+                : productRepository.findByActiveTrue(pageable);
     }
 
     public Optional<Product> getProductById(Long productId) {
@@ -43,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public List<Product> getProductsByCategory(Long categoryId) {
-        return productRepository.findByCategoryId(categoryId);
+        return productRepository.findByCategoryIdAndActiveTrue(categoryId);
     }
 
     public Product createProduct(ProductRequest request) throws CategoryNotFoundException, InvalidProductDataException {
@@ -90,6 +92,14 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(category);
         product.setDiscountPercentage(request.getDiscountPercentage());
 
+        return productRepository.save(product);
+    }
+
+    public Product updateStatus(Long productId, boolean active) throws ProductNotFoundException {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(ProductNotFoundException::new);
+
+        product.setActive(active);
         return productRepository.save(product);
     }
 

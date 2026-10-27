@@ -5,8 +5,15 @@ import ProductImage from "../products/ProductImage.jsx";
 import "./CartItemRow.css";
 
 const CartItemRow = ({ item, onChangeQuantity, onRemove }) => {
-  const { productId, productName, imageUrl, unitPrice, quantity, subtotal } =
-    item;
+  const {
+    productId,
+    productName,
+    imageUrl,
+    unitPrice,
+    quantity,
+    subtotal,
+    available = true,
+  } = item;
 
   return (
     <li className="cart-item">
@@ -18,6 +25,11 @@ const CartItemRow = ({ item, onChangeQuantity, onRemove }) => {
           {productName}
         </Link>
         <span className="cart-item__price">{formatPrice(unitPrice)} c/u</span>
+        {!available && (
+          <span className="cart-item__unavailable" role="alert">
+            Este producto ya no está disponible. Quitalo para continuar.
+          </span>
+        )}
         <button
           type="button"
           className="cart-item__remove"
@@ -27,6 +39,7 @@ const CartItemRow = ({ item, onChangeQuantity, onRemove }) => {
         </button>
       </div>
       <QuantitySelector
+        disabled={!available}
         value={quantity}
         onChange={(value) => onChangeQuantity(productId, value)}
       />

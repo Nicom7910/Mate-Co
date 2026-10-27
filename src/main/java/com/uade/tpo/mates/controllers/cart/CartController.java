@@ -23,6 +23,7 @@ import com.uade.tpo.mates.exceptions.InsufficientStockException;
 import com.uade.tpo.mates.exceptions.InvalidQuantityException;
 import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 import com.uade.tpo.mates.exceptions.ProductNotInCartException;
+import com.uade.tpo.mates.exceptions.ProductUnavailableException;
 import com.uade.tpo.mates.service.CartService;
 import org.springframework.web.bind.annotation.PatchMapping;
 import com.uade.tpo.mates.exceptions.InvalidOrderStatusException;
@@ -68,7 +69,8 @@ public class CartController {
     @PatchMapping
     public ResponseEntity<OrderResponse> updateCartStatus(@AuthenticationPrincipal User user,
             @RequestBody UpdateCartStatusRequest request)
-            throws CartEmptyException, InsufficientStockException, InvalidOrderStatusException {
+            throws CartEmptyException, InsufficientStockException, InvalidOrderStatusException,
+            ProductUnavailableException {
         return ResponseEntity.ok(OrderResponse.from(cartService.updateStatus(user, request.getStatus())));
     }
 

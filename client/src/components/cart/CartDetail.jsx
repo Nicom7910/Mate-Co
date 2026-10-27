@@ -13,6 +13,7 @@ const CartDetail = ({ cart, onChangeQuantity, onRemove, onClear }) => (
     <CartSummary
       count={countUnits(cart)}
       total={cart.total}
+      blocked={cart.items.some((item) => item.available === false)}
       onClear={onClear}
     />
   </div>

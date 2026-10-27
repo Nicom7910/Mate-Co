@@ -25,6 +25,7 @@ public class GlobalExceptionHandler {
             InvalidQuantityException.class,
             InvalidProductDataException.class,
             ProductHasOrdersException.class,
+            ProductUnavailableException.class,
             CategoryHasProductsException.class,
             InvalidUserDataException.class,
             InvalidOrderStatusException.class,

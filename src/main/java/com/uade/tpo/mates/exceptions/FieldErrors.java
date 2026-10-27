@@ -21,6 +21,12 @@ public class FieldErrors {
         return errors.containsKey(field);
     }
 
+    public FieldErrors require(boolean valid, String field, String message) {
+        if (!valid)
+            add(field, message);
+        return this;
+    }
+
     public FieldErrors requireText(String field, String value, String message) {
         if (!StringUtils.hasText(value))
             add(field, message);

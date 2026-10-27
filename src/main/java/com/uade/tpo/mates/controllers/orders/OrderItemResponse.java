@@ -18,4 +18,6 @@ public class OrderItemResponse {
     private Integer quantity;
     private BigDecimal unitPrice;
     private BigDecimal subtotal;
+    // false si el producto fue dado de baja después de agregarlo al carrito
+    private boolean available;
 }

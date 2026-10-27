@@ -15,7 +15,7 @@ import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 
 public interface ProductService {
 
-    Page<Product> getProducts(PageRequest pageRequest);
+    Page<Product> getProducts(PageRequest pageRequest, boolean includeInactive);
 
     Optional<Product> getProductById(Long productId);
 
@@ -25,6 +25,8 @@ public interface ProductService {
 
     Product updateProduct(Long productId, ProductRequest request)
             throws ProductNotFoundException, CategoryNotFoundException, InvalidProductDataException;
+
+    Product updateStatus(Long productId, boolean active) throws ProductNotFoundException;
 
     void deleteProduct(Long productId) throws ProductNotFoundException, ProductHasOrdersException;
 }

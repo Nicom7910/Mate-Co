@@ -34,6 +34,7 @@ public class OrderResponse {
                                                 .quantity(detail.getQuantity())
                                                 .unitPrice(detail.getUnitPrice())
                                                 .subtotal(detail.getSubtotal())
+                                                .available(detail.getProduct().isActive())
                                                 .build())
                                 .toList();
 

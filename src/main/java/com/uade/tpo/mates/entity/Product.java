@@ -64,6 +64,13 @@ public class Product {
     @Column
     private Integer discountPercentage;
 
+    // Baja lógica: un producto inactivo no se ve en el catálogo ni se puede comprar,
+    // pero sigue existiendo para los pedidos que ya lo incluyen.
+    // El default de la columna evita que los productos viejos queden inactivos.
+    @Column(nullable = false, columnDefinition = "boolean default true")
+    @Builder.Default
+    private boolean active = true;
+
     public BigDecimal getFinalPrice() {
         if (discountPercentage == null || discountPercentage == 0)
             return price;

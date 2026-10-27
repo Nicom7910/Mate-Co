@@ -12,6 +12,7 @@ import com.uade.tpo.mates.exceptions.InvalidOrderStatusException;
 import com.uade.tpo.mates.exceptions.InvalidQuantityException;
 import com.uade.tpo.mates.exceptions.ProductNotFoundException;
 import com.uade.tpo.mates.exceptions.ProductNotInCartException;
+import com.uade.tpo.mates.exceptions.ProductUnavailableException;
 
 public interface CartService {
 
@@ -27,7 +28,8 @@ public interface CartService {
                         throws CartEmptyException, ProductNotInCartException;
 
         Order updateStatus(User user, OrderStatus status)
-                        throws CartEmptyException, InsufficientStockException, InvalidOrderStatusException;
+                        throws CartEmptyException, InsufficientStockException, InvalidOrderStatusException,
+                        ProductUnavailableException;
 
         void clearCart(User user) throws CartEmptyException;
 }

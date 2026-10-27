@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/users", "/users/*").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/categories", "/products", "/images").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/products/**", "/categories/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/products/*/status").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/products/**", "/categories/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/orders", "/orders/user/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/orders/*/ship").hasAuthority("ADMIN")
