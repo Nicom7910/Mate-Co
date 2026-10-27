@@ -1,7 +1,6 @@
 .order-line {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1rem;
   padding-block: 0.75rem;
   border-top: 1px solid var(--border);
@@ -18,4 +17,24 @@
 }
 .order-line__subtotal {
   white-space: nowrap;
+}
+
+.order-line__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 3.5rem;
+  height: 3.5rem;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: var(--tan);
+}
+
+.order-line__image .product-image--placeholder {
+  width: 2rem;
+}
+
+.order-line__info {
+  flex: 1;
+  min-width: 0;
 }

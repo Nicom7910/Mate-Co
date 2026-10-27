@@ -1,13 +1,18 @@
 import { Link } from "react-router-dom";
 import formatPrice from "../../utils/formatPrice.js";
+import ProductImage from "../products/ProductImage.jsx";
 import "./OrderLine.css";
 
 const OrderLine = ({ item }) => {
-  const { productId, productName, quantity, unitPrice, subtotal } = item;
+  const { productId, productName, imageUrl, quantity, unitPrice, subtotal } =
+    item;
 
   return (
     <li className="order-line">
-      <div>
+      <div className="order-line__image">
+        <ProductImage src={imageUrl} alt={productName} />
+      </div>
+      <div className="order-line__info">
         <Link to={`/products/${productId}`} className="order-line__name">
           {productName}
         </Link>

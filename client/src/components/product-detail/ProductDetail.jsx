@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../hooks/useFetch.js";
 import getProductImages from "../../utils/getProductImages.js";
 import FetchState from "../common/FetchState.jsx";
+import RelatedProducts from "../products/RelatedProducts.jsx";
 import Breadcrumb from "./Breadcrumb.jsx";
 import ProductGallery from "./ProductGallery.jsx";
 import ProductInfo from "./ProductInfo.jsx";
@@ -33,6 +34,7 @@ const ProductDetail = ({ loggedIn, isAdmin, onAddToCart }) => {
               onAddToCart={onAddToCart}
             />
           </div>
+          <RelatedProducts product={product} />
         </>
       )}
     </FetchState>

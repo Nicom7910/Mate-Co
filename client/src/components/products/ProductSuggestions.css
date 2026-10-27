@@ -1,0 +1,15 @@
+.product-suggestions {
+  margin-top: 3.5rem;
+}
+
+.product-suggestions .product-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 56rem) {
+  .product-suggestions .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
