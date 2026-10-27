@@ -1,4 +1,4 @@
-import mate from "../../assets/mate.svg";
+import matero from "../../assets/matero.jpg";
 import LinkButton from "../common/LinkButton.jsx";
 import "./Hero.css";
 
@@ -23,7 +23,7 @@ const Hero = ({ loggedIn }) => (
       </div>
     </div>
     <div className="hero__image">
-      <img src={mate} alt="" />
+      <img src={matero} alt="Set matero de cuero con mate, bombilla y termo" />
     </div>
   </section>
 );

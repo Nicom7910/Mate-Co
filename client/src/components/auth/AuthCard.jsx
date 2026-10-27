@@ -1,3 +1,4 @@
+import matero from "../../assets/matero.jpg";
 import "./AuthCard.css";
 
 const AuthCard = ({ title, subtitle, wide = false, children }) => (
@@ -7,6 +8,7 @@ const AuthCard = ({ title, subtitle, wide = false, children }) => (
       <p className="auth-card__subtitle">{subtitle}</p>
       {children}
     </div>
+    <img src={matero} alt="" className="auth-card-page__photo" />
   </section>
 );
 

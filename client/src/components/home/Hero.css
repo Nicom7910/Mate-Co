@@ -42,16 +42,18 @@
 }
 
 .hero__image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex: 1 1 23.75rem;
   min-width: 0;
-  height: 21.25rem;
+  height: 25rem;
+  overflow: hidden;
   border-radius: 1.75rem;
-  background: var(--tan);
+  background: #120b08;
 }
 
 .hero__image img {
-  width: 62%;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
 }

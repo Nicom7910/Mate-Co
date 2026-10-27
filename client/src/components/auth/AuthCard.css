@@ -1,9 +1,27 @@
 .auth-card-page {
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  gap: 2rem;
+}
+
+.auth-card-page__photo {
+  display: none;
+}
+
+@media (min-width: 72rem) {
+  .auth-card-page__photo {
+    display: block;
+    flex: 0 0 20rem;
+    width: 20rem;
+    border-radius: 1.5rem;
+    object-fit: cover;
+    object-position: center;
+  }
 }
 
 .auth-card {
+  align-self: flex-start;
   width: 100%;
   max-width: 27.5rem;
   padding: 2.5rem 2.25rem;
