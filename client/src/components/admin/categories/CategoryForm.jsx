@@ -9,10 +9,20 @@ import SubmitButton from "../../auth/SubmitButton.jsx";
 import SubmitHint from "../../auth/SubmitHint.jsx";
 import { CATEGORY_FIELDS } from "./categoryFields.js";
 
-const CategoryForm = ({ category, onSubmit, sending, error }) => {
-  const { values, handleChange } = useForm(toCategoryValues(category));
+const CategoryForm = ({
+  category,
+  onSubmit,
+  sending,
+  error,
+  fieldErrors,
+  onFieldChange,
+}) => {
+  const { values, handleChange } = useForm(
+    toCategoryValues(category),
+    onFieldChange,
+  );
   const errors = validateCategory(values);
-  const { shown, handleBlur } = useShownErrors(errors);
+  const { shown, handleBlur } = useShownErrors(errors, fieldErrors);
   const invalid = Object.keys(errors).length > 0;
 
   const handleSubmit = (event) => {

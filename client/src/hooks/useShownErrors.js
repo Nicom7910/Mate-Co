@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-// Muestra el error de un campo recién después de que el usuario pasó por él.
-const useShownErrors = (errors) => {
+// Los errores de validación local se muestran recién cuando el usuario pasó por
+// el campo. Los que manda el servidor (serverErrors) se muestran siempre, porque
+// ya son consecuencia de un envío.
+const useShownErrors = (errors, serverErrors = {}) => {
   const [touched, setTouched] = useState({});
 
   const handleBlur = (event) => {
@@ -9,9 +11,12 @@ const useShownErrors = (errors) => {
     setTouched((previous) => ({ ...previous, [name]: true }));
   };
 
-  const shown = Object.fromEntries(
-    Object.entries(errors).filter(([name]) => touched[name]),
-  );
+  const shown = {
+    ...Object.fromEntries(
+      Object.entries(errors).filter(([name]) => touched[name]),
+    ),
+    ...serverErrors,
+  };
 
   return { shown, handleBlur };
 };

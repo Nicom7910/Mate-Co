@@ -11,6 +11,7 @@ import com.uade.tpo.mates.entity.Category;
 import com.uade.tpo.mates.exceptions.CategoryDuplicateException;
 import com.uade.tpo.mates.exceptions.CategoryHasProductsException;
 import com.uade.tpo.mates.exceptions.CategoryNotFoundException;
+import com.uade.tpo.mates.exceptions.FieldErrors;
 import com.uade.tpo.mates.repository.CategoryRepository;
 import com.uade.tpo.mates.repository.ProductRepository;
 
@@ -32,9 +33,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public Category createCategory(String name, String description) throws CategoryDuplicateException {
-        if (categoryRepository.findByName(name).isPresent())
-            throw new CategoryDuplicateException();
-        return categoryRepository.save(new Category(name, description));
+        validateName(name, null);
+        return categoryRepository.save(new Category(name.trim(), description));
     }
 
     public void deleteCategory(Long categoryId) throws CategoryNotFoundException, CategoryHasProductsException {
@@ -52,12 +52,23 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(CategoryNotFoundException::new);
 
-        Optional<Category> existing = categoryRepository.findByName(name);
-        if (existing.isPresent() && !existing.get().getId().equals(categoryId))
-            throw new CategoryDuplicateException();
+        validateName(name, categoryId);
 
-        category.setName(name);
+        category.setName(name.trim());
         category.setDescription(description);
         return categoryRepository.save(category);
+    }
+
+    private void validateName(String name, Long currentId) {
+        FieldErrors errors = new FieldErrors()
+                .requireText("name", name, "Ingresá el nombre de la categoría.");
+
+        if (!errors.has("name")) {
+            Optional<Category> existing = categoryRepository.findByName(name.trim());
+            if (existing.isPresent() && !existing.get().getId().equals(currentId))
+                errors.add("name", "Ya existe una categoría con ese nombre.");
+        }
+
+        errors.throwIfAny();
     }
 }

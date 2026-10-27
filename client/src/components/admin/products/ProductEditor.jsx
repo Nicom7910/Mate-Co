@@ -7,7 +7,13 @@ import "./ProductEditor.css";
 
 const ProductEditor = ({ token, product }) => {
   const { data, loading, error } = useFetch("/categories");
-  const { run, sending, error: saveError } = useProductSave(token, product?.id);
+  const {
+    run,
+    sending,
+    error: saveError,
+    fieldErrors,
+    clearFieldError,
+  } = useProductSave(token, product?.id);
   const categories = toList(data);
 
   return (
@@ -28,6 +34,8 @@ const ProductEditor = ({ token, product }) => {
             onSubmit={run}
             sending={sending}
             error={saveError}
+            fieldErrors={fieldErrors}
+            onFieldChange={clearFieldError}
           />
         )}
       </FetchState>

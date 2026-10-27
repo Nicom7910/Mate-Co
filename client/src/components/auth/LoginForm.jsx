@@ -39,7 +39,7 @@ const LoginForm = ({ onLogin }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!invalid) send(values);
+    if (!invalid) send({ ...values, email: values.email.trim() });
   };
 
   return (

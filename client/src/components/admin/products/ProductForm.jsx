@@ -11,11 +11,22 @@ import SubmitHint from "../../auth/SubmitHint.jsx";
 import ImagePicker from "./ImagePicker.jsx";
 import ProductFields from "./ProductFields.jsx";
 
-const ProductForm = ({ product, categories, onSubmit, sending, error }) => {
-  const { values, handleChange } = useForm(toProductValues(product));
+const ProductForm = ({
+  product,
+  categories,
+  onSubmit,
+  sending,
+  error,
+  fieldErrors,
+  onFieldChange,
+}) => {
+  const { values, handleChange } = useForm(
+    toProductValues(product),
+    onFieldChange,
+  );
   const images = useProductImages(getProductImages(product));
   const errors = validateProduct(values);
-  const { shown, handleBlur } = useShownErrors(errors);
+  const { shown, handleBlur } = useShownErrors(errors, fieldErrors);
   const invalid = Object.keys(errors).length > 0;
 
   const handleSubmit = (event) => {

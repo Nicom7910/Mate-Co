@@ -48,6 +48,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(body);
     }
 
+    @ExceptionHandler(InvalidFieldsException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidFields(InvalidFieldsException ex) {
+        ErrorResponse body = ErrorResponse.builder()
+                .status(400)
+                .message(ex.getMessage())
+                .errors(ex.getErrors())
+                .timestamp(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity.badRequest().body(body);
+    }
+
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<ErrorResponse> handleMaxUploadSize() {
         ErrorResponse body = ErrorResponse.builder()

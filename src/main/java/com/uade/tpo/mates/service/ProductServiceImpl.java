@@ -14,6 +14,7 @@ import com.uade.tpo.mates.controllers.products.ProductRequest;
 import com.uade.tpo.mates.entity.Category;
 import com.uade.tpo.mates.entity.Product;
 import com.uade.tpo.mates.exceptions.CategoryNotFoundException;
+import com.uade.tpo.mates.exceptions.FieldErrors;
 import com.uade.tpo.mates.exceptions.InvalidProductDataException;
 import com.uade.tpo.mates.exceptions.ProductHasOrdersException;
 import com.uade.tpo.mates.exceptions.ProductNotFoundException;
@@ -54,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
         List<String> imageUrls = resolveImageUrls(request);
 
         Product product = Product.builder()
-                .name(request.getName())
+                .name(request.getName().trim())
                 .description(request.getDescription())
                 .price(request.getPrice())
                 .stock(request.getStock() != null ? request.getStock() : 0)
@@ -78,7 +79,7 @@ public class ProductServiceImpl implements ProductService {
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(CategoryNotFoundException::new);
 
-        product.setName(request.getName());
+        product.setName(request.getName().trim());
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock() != null ? request.getStock() : 0);
@@ -102,16 +103,24 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(product);
     }
 
-    private void validateProductData(ProductRequest request) throws InvalidProductDataException {
+    private void validateProductData(ProductRequest request) {
+        FieldErrors errors = new FieldErrors()
+                .requireText("name", request.getName(), "Ingresá el nombre del producto.");
+
         if (request.getPrice() == null || request.getPrice().compareTo(BigDecimal.ZERO) <= 0)
-            throw new InvalidProductDataException();
+            errors.add("price", "Ingresá un precio mayor a 0.");
 
         if (request.getStock() != null && request.getStock() < 0)
-            throw new InvalidProductDataException();
+            errors.add("stock", "El stock no puede ser negativo.");
 
         Integer discount = request.getDiscountPercentage();
         if (discount != null && (discount < 0 || discount > 100))
-            throw new InvalidProductDataException();
+            errors.add("discountPercentage", "El descuento tiene que estar entre 0 y 100.");
+
+        if (request.getCategoryId() == null)
+            errors.add("categoryId", "Elegí una categoría.");
+
+        errors.throwIfAny();
     }
 
     // Usa la lista imageUrls; si no viene, cae al imageUrl suelto (compatibilidad).

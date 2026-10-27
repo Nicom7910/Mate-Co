@@ -1,8 +1,8 @@
 import isBlank from "./isBlank.js";
 import isEmail from "./isEmail.js";
+import phoneError from "./phoneError.js";
 
 export const MIN_PASSWORD_LENGTH = 8;
-const MIN_PHONE_DIGITS = 8;
 
 const validateRegister = (values) => {
   const errors = {};
@@ -19,9 +19,8 @@ const validateRegister = (values) => {
   if (values.password.length < MIN_PASSWORD_LENGTH)
     errors.password = `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`;
 
-  if (isBlank(values.phone)) errors.phone = "Ingresá tu teléfono.";
-  else if (values.phone.replace(/\D/g, "").length < MIN_PHONE_DIGITS)
-    errors.phone = `El teléfono debe tener al menos ${MIN_PHONE_DIGITS} números.`;
+  const phone = phoneError(values.phone);
+  if (phone) errors.phone = phone;
 
   if (isBlank(values.address)) errors.address = "Ingresá tu dirección.";
 

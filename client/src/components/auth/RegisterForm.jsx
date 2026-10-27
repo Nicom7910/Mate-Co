@@ -68,20 +68,21 @@ const INITIAL_VALUES = {
 };
 
 const RegisterForm = ({ onLogin }) => {
-  const { values, handleChange } = useForm(INITIAL_VALUES);
-  const { send, error, sending } = useAuthRequest(
-    "/api/v1/auth/register",
-    onLogin,
-    "No pudimos crear la cuenta. Puede que el email o el usuario ya estén registrados.",
-  );
+  const { send, error, sending, fieldErrors, clearFieldError } =
+    useAuthRequest(
+      "/api/v1/auth/register",
+      onLogin,
+      "No pudimos crear la cuenta. Probá de nuevo en unos minutos.",
+    );
+  const { values, handleChange } = useForm(INITIAL_VALUES, clearFieldError);
 
   const errors = validateRegister(values);
-  const { shown, handleBlur } = useShownErrors(errors);
+  const { shown, handleBlur } = useShownErrors(errors, fieldErrors);
   const invalid = Object.keys(errors).length > 0;
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!invalid) send(values);
+    if (!invalid) send({ ...values, email: values.email.trim() });
   };
 
   return (
