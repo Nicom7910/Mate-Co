@@ -1,12 +1,10 @@
 import { useState } from "react";
+import useFieldErrors from "./useFieldErrors.js";
 
-// Ejecuta una acción async y expone: sending, error general y los errores por
-// campo que devuelve el backend (fieldErrors). clearFieldError borra el de un
-// campo cuando el usuario lo vuelve a editar.
 const useAction = (action, onSuccess, onError) => {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(null);
-  const [fieldErrors, setFieldErrors] = useState({});
+  const { fieldErrors, setFieldErrors, clearFieldError } = useFieldErrors();
 
   const run = (...args) => {
     setSending(true);
@@ -21,13 +19,6 @@ const useAction = (action, onSuccess, onError) => {
       })
       .finally(() => setSending(false));
   };
-
-  const clearFieldError = (name) =>
-    setFieldErrors((previous) => {
-      if (!(name in previous)) return previous;
-      const { [name]: _removed, ...rest } = previous;
-      return rest;
-    });
 
   return { run, sending, error, fieldErrors, clearFieldError };
 };

@@ -2,7 +2,16 @@ import { Link } from "react-router-dom";
 import "./CartLink.css";
 
 const CartLink = ({ count = 0 }) => (
-  <Link to="/cart" className="cart-link" aria-label="Carrito">
+  <Link
+    to="/cart"
+    className="cart-link"
+    aria-label={
+      count > 0
+        ? `Carrito, ${count} ${count === 1 ? "unidad" : "unidades"}`
+        : "Carrito"
+    }
+    title="Carrito"
+  >
     <svg
       width="22"
       height="22"
@@ -18,7 +27,6 @@ const CartLink = ({ count = 0 }) => (
       <circle cx="18" cy="20" r="1.5" />
       <path d="M2 3h3l2.4 12h11l2.1-8H6" />
     </svg>
-    Carrito
     {count > 0 && <span className="cart-link__badge">{count}</span>}
   </Link>
 );

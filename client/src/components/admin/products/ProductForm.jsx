@@ -27,7 +27,6 @@ const ProductForm = ({
   const productImages = useProductImages(getProductImages(product));
   const errors = validateProduct(values, productImages.items.length);
   const { shown, handleBlur, touch } = useShownErrors(errors, fieldErrors);
-  // Al quitar una foto, si no queda ninguna se marca el error en rojo.
   const images = {
     ...productImages,
     add: (files) => {

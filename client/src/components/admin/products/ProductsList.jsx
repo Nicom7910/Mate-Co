@@ -20,8 +20,6 @@ const ProductsList = ({ token }) => {
     setFilters((previous) => ({ ...previous, [name]: value }));
     setPage(1);
   };
-  // "Eliminar" hace una baja lógica: el producto queda inactivo, no se borra,
-  // así los pedidos que ya lo incluyen conservan su historial.
   const deleteProduct = (id) =>
     request(`/products/${id}/status`, {
       method: "PATCH",

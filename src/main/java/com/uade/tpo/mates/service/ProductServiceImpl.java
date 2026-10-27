@@ -130,14 +130,12 @@ public class ProductServiceImpl implements ProductService {
         if (request.getCategoryId() == null)
             errors.add("categoryId", "Elegí una categoría.");
 
-        // Un producto no se publica sin foto.
         if (resolveImageUrls(request).isEmpty())
             errors.add("imageUrls", "Subí al menos una foto del producto.");
 
         errors.throwIfAny();
     }
 
-    // Usa la lista imageUrls; si no viene, cae al imageUrl suelto (compatibilidad).
     private List<String> resolveImageUrls(ProductRequest request) {
         List<String> urls = new ArrayList<>();
 

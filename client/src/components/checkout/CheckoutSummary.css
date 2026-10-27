@@ -20,7 +20,7 @@
 
 .checkout-summary__line {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   gap: 1rem;
   padding-block: 0.75rem;
   border-top: 1px solid var(--border);
@@ -28,7 +28,34 @@
 }
 
 .checkout-summary__line strong {
+  margin-left: auto;
   white-space: nowrap;
+}
+
+.checkout-summary__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 3.5rem;
+  height: 3.5rem;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: var(--tan);
+}
+
+.checkout-summary__image .product-image--placeholder {
+  width: 2rem;
+}
+
+.checkout-summary__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.checkout-summary__name {
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .checkout-summary__quantity {

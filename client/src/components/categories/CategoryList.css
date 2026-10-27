@@ -1,5 +1,31 @@
 .category-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 1.25rem;
+  --gap: 1.25rem;
+  --cols: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
+}
+
+.category-list > * {
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  min-width: 0;
+}
+
+@media (min-width: 36rem) {
+  .category-list {
+    --cols: var(--cols-2);
+  }
+}
+
+@media (min-width: 56rem) {
+  .category-list {
+    --cols: var(--cols-3);
+  }
+}
+
+@media (min-width: 72rem) {
+  .category-list {
+    --cols: var(--cols-4);
+  }
 }

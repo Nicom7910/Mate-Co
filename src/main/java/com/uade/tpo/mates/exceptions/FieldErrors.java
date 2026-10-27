@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
-// Junta los errores de varios campos y los lanza todos juntos.
 public class FieldErrors {
 
     private static final int MIN_PHONE_DIGITS = 8;

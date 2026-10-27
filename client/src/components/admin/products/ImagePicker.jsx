@@ -2,8 +2,6 @@ import ImagePickerInput from "./ImagePickerInput.jsx";
 import ImagePickerList from "./ImagePickerList.jsx";
 import "./ImagePicker.css";
 
-// La foto es obligatoria: sin ninguna se muestra un aviso (gris al principio,
-// rojo cuando ya hubo un intento o el servidor la rechazó).
 const ImagePicker = ({ images, error }) => (
   <div className="image-picker auth-form__full">
     <span className="form-field__label">Fotos del producto</span>

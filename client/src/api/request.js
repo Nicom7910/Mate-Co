@@ -20,7 +20,6 @@ const request = (path, { method = "GET", body, token, signal } = {}) => {
     readBody(response).then((data) => {
       if (!response.ok) {
         const error = new Error(data?.message ?? `Error ${response.status}`);
-        // Errores por campo que manda el backend: { email: "Ya existe...", ... }
         error.fields = data?.errors ?? null;
         throw error;
       }

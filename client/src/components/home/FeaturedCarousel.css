@@ -18,9 +18,22 @@
   grid-area: dots;
 }
 
-.carousel__page {
+.carousel__viewport {
   grid-area: page;
-  animation: carousel-in 0.35s ease;
+  overflow: hidden;
+  margin-block: -0.5rem;
+  padding-block: 0.5rem;
+  touch-action: pan-y;
+}
+
+.carousel__track {
+  display: flex;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel__page {
+  flex: 0 0 100%;
+  min-width: 0;
 }
 
 .carousel__page .product-grid {
@@ -44,19 +57,8 @@
   }
 }
 
-@keyframes carousel-in {
-  from {
-    opacity: 0;
-    transform: translateX(0.75rem);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .carousel__page {
-    animation: none;
+  .carousel__track {
+    transition: none;
   }
 }

@@ -47,7 +47,6 @@ public class Product {
     @Builder.Default
     private Integer stock = 0;
 
-    // Foto principal (la primera de imageUrls). Se mantiene para carrito y pedidos.
     private String imageUrl;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -64,9 +63,6 @@ public class Product {
     @Column
     private Integer discountPercentage;
 
-    // Baja lógica: un producto inactivo no se ve en el catálogo ni se puede comprar,
-    // pero sigue existiendo para los pedidos que ya lo incluyen.
-    // El default de la columna evita que los productos viejos queden inactivos.
     @Column(nullable = false, columnDefinition = "boolean default true")
     @Builder.Default
     private boolean active = true;
