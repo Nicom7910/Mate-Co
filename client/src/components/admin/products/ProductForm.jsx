@@ -24,9 +24,22 @@ const ProductForm = ({
     toProductValues(product),
     onFieldChange,
   );
-  const images = useProductImages(getProductImages(product));
-  const errors = validateProduct(values);
-  const { shown, handleBlur } = useShownErrors(errors, fieldErrors);
+  const productImages = useProductImages(getProductImages(product));
+  const errors = validateProduct(values, productImages.items.length);
+  const { shown, handleBlur, touch } = useShownErrors(errors, fieldErrors);
+  // Al quitar una foto, si no queda ninguna se marca el error en rojo.
+  const images = {
+    ...productImages,
+    add: (files) => {
+      productImages.add(files);
+      onFieldChange?.("imageUrls");
+    },
+    remove: (key) => {
+      productImages.remove(key);
+      onFieldChange?.("imageUrls");
+      touch("imageUrls");
+    },
+  };
   const invalid = Object.keys(errors).length > 0;
 
   const handleSubmit = (event) => {
@@ -43,7 +56,7 @@ const ProductForm = ({
         onChange={handleChange}
         onBlur={handleBlur}
       />
-      <ImagePicker images={images} />
+      <ImagePicker images={images} error={shown.imageUrls} />
       <FormError message={error} />
       <SubmitHint show={invalid} />
       <SubmitButton

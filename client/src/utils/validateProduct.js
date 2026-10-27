@@ -1,12 +1,9 @@
 import isBlank from "./isBlank.js";
 
-const validateProduct = ({
-  name,
-  price,
-  stock,
-  categoryId,
-  discountPercentage,
-}) => {
+const validateProduct = (
+  { name, price, stock, categoryId, discountPercentage },
+  imageCount,
+) => {
   const errors = {};
 
   if (isBlank(name)) errors.name = "Ingresá el nombre del producto.";
@@ -15,6 +12,9 @@ const validateProduct = ({
   if (isBlank(stock) || Number(stock) < 0 || !Number.isInteger(Number(stock)))
     errors.stock = "Ingresá el stock: un número entero de 0 en adelante.";
   if (isBlank(categoryId)) errors.categoryId = "Elegí una categoría.";
+
+  if (imageCount === 0)
+    errors.imageUrls = "Subí al menos una foto del producto.";
 
   const discount = Number(discountPercentage);
   if (

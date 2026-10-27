@@ -130,6 +130,10 @@ public class ProductServiceImpl implements ProductService {
         if (request.getCategoryId() == null)
             errors.add("categoryId", "Elegí una categoría.");
 
+        // Un producto no se publica sin foto.
+        if (resolveImageUrls(request).isEmpty())
+            errors.add("imageUrls", "Subí al menos una foto del producto.");
+
         errors.throwIfAny();
     }
 

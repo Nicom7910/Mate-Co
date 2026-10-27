@@ -11,6 +11,9 @@ const useShownErrors = (errors, serverErrors = {}) => {
     setTouched((previous) => ({ ...previous, [name]: true }));
   };
 
+  const touch = (name) =>
+    setTouched((previous) => ({ ...previous, [name]: true }));
+
   const shown = {
     ...Object.fromEntries(
       Object.entries(errors).filter(([name]) => touched[name]),
@@ -18,7 +21,7 @@ const useShownErrors = (errors, serverErrors = {}) => {
     ...serverErrors,
   };
 
-  return { shown, handleBlur };
+  return { shown, handleBlur, touch };
 };
 
 export default useShownErrors;
