@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout.jsx";
-import { getToken, removeToken, saveToken } from "./utils/token.js";
+import { logout, selectToken } from "./redux/authSlice.js";
+import { fetchUser, selectIsAdmin, selectUser } from "./redux/userSlice.js";
 import Catalog from "./views/Catalog.jsx";
 import Home from "./views/Home.jsx";
 import Login from "./views/Login.jsx";
@@ -11,8 +13,6 @@ import useCart from "./hooks/useCart.js";
 import Cart from "./views/Cart.jsx";
 import Orders from "./views/Orders.jsx";
 import Profile from "./views/Profile.jsx";
-import useCurrentUser from "./hooks/useCurrentUser.js";
-import isAdmin from "./utils/isAdmin.js";
 import Admin from "./views/Admin.jsx";
 import AdminProducts from "./views/AdminProducts.jsx";
 import AdminProductEdit from "./views/AdminProductEdit.jsx";
@@ -24,34 +24,27 @@ import Checkout from "./views/Checkout.jsx";
 import AdminStats from "./views/AdminStats.jsx";
 
 const App = () => {
-  const [token, setToken] = useState(getToken);
-  const currentUser = useCurrentUser(token);
-  const admin = isAdmin(currentUser.user);
-  const cart = useCart(token, Boolean(currentUser.user) && !admin);
+  const dispatch = useDispatch();
+  const token = useSelector(selectToken);
+  const user = useSelector(selectUser);
+  const admin = useSelector(selectIsAdmin);
+  const cart = useCart(token, Boolean(user) && !admin);
 
-  const handleLogin = (newToken) => {
-    saveToken(newToken);
-    setToken(newToken);
-  };
+  useEffect(() => {
+    if (!token) return;
+    const request = dispatch(fetchUser());
+    return () => request.abort();
+  }, [token, dispatch]);
 
   const handleLogout = () => {
-    removeToken();
-    setToken(null);
+    dispatch(logout());
     cart.reset();
-    currentUser.reset();
   };
 
   return (
     <Routes>
       <Route
-        element={
-          <Layout
-            token={token}
-            onLogout={handleLogout}
-            cartCount={cart.count}
-            isAdmin={admin}
-          />
-        }
+        element={<Layout onLogout={handleLogout} cartCount={cart.count} />}
       >
         <Route path="/" element={<Home loggedIn={Boolean(token)} />} />
         <Route path="/products" element={<Catalog />} />
@@ -87,47 +80,13 @@ const App = () => {
             admin ? (
               <Navigate to="/" replace />
             ) : (
-              <Checkout
-                loggedIn={Boolean(token)}
-                user={currentUser.user}
-                loading={currentUser.loading}
-                cart={cart.cart}
-                onCheckout={cart.checkout}
-              />
+              <Checkout cart={cart.cart} onCheckout={cart.checkout} />
             )
           }
         />
-        <Route
-          path="/orders"
-          element={
-            <Orders
-              token={token}
-              user={currentUser.user}
-              loading={currentUser.loading}
-            />
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <Profile
-              token={token}
-              user={currentUser.user}
-              loading={currentUser.loading}
-              onSaved={currentUser.update}
-            />
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <Admin
-              token={token}
-              user={currentUser.user}
-              loading={currentUser.loading}
-            />
-          }
-        >
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/admin" element={<Admin />}>
           <Route index element={<Navigate to="/admin/products" replace />} />
           <Route path="products" element={<AdminProducts token={token} />} />
           <Route
@@ -152,8 +111,8 @@ const App = () => {
           />
           <Route path="stats" element={<AdminStats token={token} />} />
         </Route>
-        <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/register" element={<Register onLogin={handleLogin} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Route>
     </Routes>
   );

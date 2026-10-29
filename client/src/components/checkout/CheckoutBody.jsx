@@ -1,12 +1,18 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectToken } from "../../redux/authSlice.js";
+import { selectUser, selectUserLoading } from "../../redux/userSlice.js";
 import CartNotice from "../cart/CartNotice.jsx";
 import OrderConfirmed from "../cart/OrderConfirmed.jsx";
 import CheckoutDetail from "./CheckoutDetail.jsx";
 
-const CheckoutBody = ({ loggedIn, user, loading, cart, onCheckout }) => {
+const CheckoutBody = ({ cart, onCheckout }) => {
+  const token = useSelector(selectToken);
+  const user = useSelector(selectUser);
+  const loading = useSelector(selectUserLoading);
   const [confirmedOrder, setConfirmedOrder] = useState(null);
 
-  if (!loggedIn)
+  if (!token)
     return (
       <CartNotice
         text="Ingresá para finalizar tu compra."

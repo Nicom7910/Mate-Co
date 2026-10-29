@@ -1,8 +1,9 @@
 import { useState } from "react";
-import request from "../../api/request.js";
+import { useDispatch } from "react-redux";
 import useAction from "../../hooks/useAction.js";
 import useForm from "../../hooks/useForm.js";
 import useShownErrors from "../../hooks/useShownErrors.js";
+import { updateProfile } from "../../redux/userSlice.js";
 import validateProfile from "../../utils/validateProfile.js";
 import AuthForm from "../auth/AuthForm.jsx";
 import FormError from "../auth/FormError.jsx";
@@ -23,16 +24,12 @@ const FIELDS = [
   },
 ];
 
-const ProfileForm = ({ user, token, onSaved }) => {
+const ProfileForm = ({ user }) => {
+  const dispatch = useDispatch();
   const [saved, setSaved] = useState(false);
-  const save = (data) =>
-    request("/users/me", { method: "PUT", body: data, token });
   const { run, sending, error, fieldErrors, clearFieldError } = useAction(
-    save,
-    (updated) => {
-      onSaved(updated);
-      setSaved(true);
-    },
+    (data) => dispatch(updateProfile(data)).unwrap(),
+    () => setSaved(true),
   );
   const { values, handleChange } = useForm(
     {

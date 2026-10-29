@@ -1,6 +1,7 @@
 import useAuthRequest from "../../hooks/useAuthRequest.js";
 import useForm from "../../hooks/useForm.js";
 import useShownErrors from "../../hooks/useShownErrors.js";
+import { login } from "../../redux/authSlice.js";
 import validateLogin from "../../utils/validateLogin.js";
 import AuthForm from "./AuthForm.jsx";
 import FormError from "./FormError.jsx";
@@ -25,11 +26,10 @@ const FIELDS = [
   },
 ];
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = () => {
   const { values, handleChange } = useForm({ email: "", password: "" });
   const { send, error, sending } = useAuthRequest(
-    "/api/v1/auth/authenticate",
-    onLogin,
+    login,
     "Email o contraseña incorrectos.",
   );
 

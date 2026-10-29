@@ -1,6 +1,7 @@
 import useAuthRequest from "../../hooks/useAuthRequest.js";
 import useForm from "../../hooks/useForm.js";
 import useShownErrors from "../../hooks/useShownErrors.js";
+import { register } from "../../redux/authSlice.js";
 import validateRegister from "../../utils/validateRegister.js";
 import AuthForm from "./AuthForm.jsx";
 import FormError from "./FormError.jsx";
@@ -67,11 +68,10 @@ const INITIAL_VALUES = {
   address: "",
 };
 
-const RegisterForm = ({ onLogin }) => {
+const RegisterForm = () => {
   const { send, error, sending, fieldErrors, clearFieldError } =
     useAuthRequest(
-      "/api/v1/auth/register",
-      onLogin,
+      register,
       "No pudimos crear la cuenta. Probá de nuevo en unos minutos.",
     );
   const { values, handleChange } = useForm(INITIAL_VALUES, clearFieldError);

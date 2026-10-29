@@ -1,7 +1,16 @@
-import isAdmin from "../../utils/isAdmin.js";
+import { useSelector } from "react-redux";
+import { selectToken } from "../../redux/authSlice.js";
+import {
+  selectIsAdmin,
+  selectUserLoading,
+} from "../../redux/userSlice.js";
 import CartNotice from "../cart/CartNotice.jsx";
 
-const AdminGuard = ({ token, user, loading, children }) => {
+const AdminGuard = ({ children }) => {
+  const token = useSelector(selectToken);
+  const loading = useSelector(selectUserLoading);
+  const admin = useSelector(selectIsAdmin);
+
   if (!token) {
     return (
       <CartNotice
@@ -12,7 +21,7 @@ const AdminGuard = ({ token, user, loading, children }) => {
     );
   }
   if (loading) return <p className="message">Verificando permisos...</p>;
-  if (!isAdmin(user)) {
+  if (!admin) {
     return (
       <CartNotice
         text="No tenés permisos para ver esta sección."

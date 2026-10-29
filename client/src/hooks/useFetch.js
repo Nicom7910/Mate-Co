@@ -16,7 +16,7 @@ const useFetch = (path, token) => {
         setError(null);
       })
       .catch((err) => {
-        if (err.name !== "AbortError") setError(err.message);
+        if (!controller.signal.aborted) setError(err.message);
       })
       .finally(() => {
         if (!controller.signal.aborted) setLoading(false);

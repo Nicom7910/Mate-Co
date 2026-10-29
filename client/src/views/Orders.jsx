@@ -1,14 +1,15 @@
+import { useSelector } from "react-redux";
 import OrdersBody from "../components/orders/OrdersBody.jsx";
 import OrdersTitle from "../components/orders/OrdersTitle.jsx";
-import isAdmin from "../utils/isAdmin.js";
+import { selectIsAdmin } from "../redux/userSlice.js";
 
-const Orders = ({ token, user, loading }) => {
-  const admin = isAdmin(user);
+const Orders = () => {
+  const admin = useSelector(selectIsAdmin);
 
   return (
     <section className="container page">
       <OrdersTitle admin={admin} />
-      <OrdersBody token={token} admin={admin} loading={loading} />
+      <OrdersBody admin={admin} />
     </section>
   );
 };

@@ -1,14 +1,13 @@
+import { useSelector } from "react-redux";
+import { selectToken } from "../../redux/authSlice.js";
 import AuthSwitch from "../auth/AuthSwitch.jsx";
 import ProfileData from "./ProfileData.jsx";
 
-const ProfileBody = ({ token, user, loading, onSaved }) =>
-  token ? (
-    <ProfileData
-      token={token}
-      user={user}
-      loading={loading}
-      onSaved={onSaved}
-    />
+const ProfileBody = () => {
+  const token = useSelector(selectToken);
+
+  return token ? (
+    <ProfileData />
   ) : (
     <AuthSwitch
       text="Para ver tu perfil necesitás una cuenta."
@@ -16,5 +15,6 @@ const ProfileBody = ({ token, user, loading, onSaved }) =>
       to="/login"
     />
   );
+};
 
 export default ProfileBody;

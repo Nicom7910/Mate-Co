@@ -1,7 +1,13 @@
+import { useSelector } from "react-redux";
+import { selectToken } from "../../redux/authSlice.js";
+import { selectUserLoading } from "../../redux/userSlice.js";
 import CartNotice from "../cart/CartNotice.jsx";
 import OrdersList from "./OrdersList.jsx";
 
-const OrdersBody = ({ token, admin, loading }) => {
+const OrdersBody = ({ admin }) => {
+  const token = useSelector(selectToken);
+  const loading = useSelector(selectUserLoading);
+
   if (!token)
     return (
       <CartNotice

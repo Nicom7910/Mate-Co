@@ -3,10 +3,10 @@ import AdminGuard from "../components/admin/AdminGuard.jsx";
 import AdminNav from "../components/admin/AdminNav.jsx";
 import AdminTitle from "../components/admin/AdminTitle.jsx";
 
-const Admin = ({ token, user, loading }) => (
+const Admin = () => (
   <section className="container page">
     <AdminTitle />
-    <AdminGuard token={token} user={user} loading={loading}>
+    <AdminGuard>
       <AdminNav />
       <Outlet />
     </AdminGuard>

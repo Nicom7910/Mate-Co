@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { selectToken } from "../../redux/authSlice.js";
+import { selectIsAdmin } from "../../redux/userSlice.js";
 import AuthButton from "./AuthButton.jsx";
 import CartLink from "./CartLink.jsx";
 import HeaderNav from "./HeaderNav.jsx";
 import MenuToggle from "./MenuToggle.jsx";
 import "./Header.css";
 
-const Header = ({ token, onLogout, cartCount, isAdmin }) => {
+const Header = ({ onLogout, cartCount }) => {
+  const token = useSelector(selectToken);
+  const isAdmin = useSelector(selectIsAdmin);
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
 
