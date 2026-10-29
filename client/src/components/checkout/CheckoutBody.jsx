@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectToken } from "../../redux/authSlice.js";
+import { selectCart, selectCartLoading } from "../../redux/cartSlice.js";
 import { selectUser, selectUserLoading } from "../../redux/userSlice.js";
 import CartNotice from "../cart/CartNotice.jsx";
 import OrderConfirmed from "../cart/OrderConfirmed.jsx";
 import CheckoutDetail from "./CheckoutDetail.jsx";
 
-const CheckoutBody = ({ cart, onCheckout }) => {
+const CheckoutBody = () => {
   const token = useSelector(selectToken);
   const user = useSelector(selectUser);
-  const loading = useSelector(selectUserLoading);
+  const userLoading = useSelector(selectUserLoading);
+  const cart = useSelector(selectCart);
+  const cartLoading = useSelector(selectCartLoading);
   const [confirmedOrder, setConfirmedOrder] = useState(null);
 
   if (!token)
@@ -21,6 +24,8 @@ const CheckoutBody = ({ cart, onCheckout }) => {
       />
     );
   if (confirmedOrder) return <OrderConfirmed order={confirmedOrder} />;
+  if (userLoading || (cartLoading && !cart))
+    return <p className="message">Cargando tus datos...</p>;
   if (!cart || cart.items.length === 0) {
     return (
       <CartNotice
@@ -30,7 +35,6 @@ const CheckoutBody = ({ cart, onCheckout }) => {
       />
     );
   }
-  if (loading) return <p className="message">Cargando tus datos...</p>;
   if (!user)
     return (
       <CartNotice
@@ -40,14 +44,7 @@ const CheckoutBody = ({ cart, onCheckout }) => {
       />
     );
 
-  return (
-    <CheckoutDetail
-      cart={cart}
-      user={user}
-      onCheckout={onCheckout}
-      onPaid={setConfirmedOrder}
-    />
-  );
+  return <CheckoutDetail cart={cart} user={user} onPaid={setConfirmedOrder} />;
 };
 
 export default CheckoutBody;

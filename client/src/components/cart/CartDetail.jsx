@@ -3,18 +3,13 @@ import CartItems from "./CartItems.jsx";
 import CartSummary from "./CartSummary.jsx";
 import "./CartDetail.css";
 
-const CartDetail = ({ cart, onChangeQuantity, onRemove, onClear }) => (
+const CartDetail = ({ cart }) => (
   <div className="cart-detail">
-    <CartItems
-      items={cart.items}
-      onChangeQuantity={onChangeQuantity}
-      onRemove={onRemove}
-    />
+    <CartItems items={cart.items} />
     <CartSummary
       count={countUnits(cart)}
       total={cart.total}
       blocked={cart.items.some((item) => item.available === false)}
-      onClear={onClear}
     />
   </div>
 );

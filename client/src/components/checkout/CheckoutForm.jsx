@@ -1,6 +1,8 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import useAction from "../../hooks/useAction.js";
 import useCardForm from "../../hooks/useCardForm.js";
+import { checkout } from "../../redux/cartSlice.js";
 import formatPrice from "../../utils/formatPrice.js";
 import AuthForm from "../auth/AuthForm.jsx";
 import FormError from "../auth/FormError.jsx";
@@ -8,9 +10,13 @@ import SubmitButton from "../auth/SubmitButton.jsx";
 import BuyerData from "./BuyerData.jsx";
 import PaymentFields from "./PaymentFields.jsx";
 
-const CheckoutForm = ({ user, total, onPay, onPaid }) => {
+const CheckoutForm = ({ user, total, onPaid }) => {
+  const dispatch = useDispatch();
   const card = useCardForm();
-  const { run, sending, error } = useAction(onPay, onPaid);
+  const { run, sending, error } = useAction(
+    () => dispatch(checkout()).unwrap(),
+    onPaid,
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();

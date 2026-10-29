@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectToken } from "../../redux/authSlice.js";
+import { selectCartCount } from "../../redux/cartSlice.js";
 import { selectIsAdmin } from "../../redux/userSlice.js";
 import AuthButton from "./AuthButton.jsx";
 import CartLink from "./CartLink.jsx";
@@ -9,9 +10,10 @@ import HeaderNav from "./HeaderNav.jsx";
 import MenuToggle from "./MenuToggle.jsx";
 import "./Header.css";
 
-const Header = ({ onLogout, cartCount }) => {
+const Header = () => {
   const token = useSelector(selectToken);
   const isAdmin = useSelector(selectIsAdmin);
+  const cartCount = useSelector(selectCartCount);
   const [menuOpen, setMenuOpen] = useState(false);
   const closeMenu = () => setMenuOpen(false);
 
@@ -33,7 +35,7 @@ const Header = ({ onLogout, cartCount }) => {
             onNavigate={closeMenu}
           />
           <div className="header__auth" onClick={closeMenu}>
-            <AuthButton token={token} onLogout={onLogout} />
+            <AuthButton />
           </div>
         </div>
       </div>

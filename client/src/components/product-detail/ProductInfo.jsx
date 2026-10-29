@@ -3,7 +3,7 @@ import PurchaseActions from "./PurchaseActions.jsx";
 import StockBadge from "./StockBadge.jsx";
 import "./ProductInfo.css";
 
-const ProductInfo = ({ product, loggedIn, isAdmin, onAddToCart }) => {
+const ProductInfo = ({ product }) => {
   const { id, name, description, price, finalPrice, stock, category } = product;
 
   return (
@@ -14,13 +14,7 @@ const ProductInfo = ({ product, loggedIn, isAdmin, onAddToCart }) => {
       <p className="product-info__description">{description}</p>
       <StockBadge stock={stock} />
       <div className="product-info__purchase">
-        <PurchaseActions
-          productId={id}
-          stock={stock}
-          loggedIn={loggedIn}
-          isAdmin={isAdmin}
-          onAddToCart={onAddToCart}
-        />
+        <PurchaseActions productId={id} stock={stock} />
       </div>
     </div>
   );

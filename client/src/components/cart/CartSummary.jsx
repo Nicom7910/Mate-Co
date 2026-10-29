@@ -1,11 +1,14 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import useAction from "../../hooks/useAction.js";
+import { clearCart } from "../../redux/cartSlice.js";
 import formatPrice from "../../utils/formatPrice.js";
 import CartError from "./CartError.jsx";
 import "./CartSummary.css";
 
-const CartSummary = ({ count, total, blocked = false, onClear }) => {
-  const clear = useAction(onClear);
+const CartSummary = ({ count, total, blocked = false }) => {
+  const dispatch = useDispatch();
+  const clear = useAction(() => dispatch(clearCart()).unwrap());
 
   return (
     <aside className="cart-summary">

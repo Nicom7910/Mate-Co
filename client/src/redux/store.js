@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { removeToken, saveToken } from "../utils/token.js";
 import authReducer, { selectToken } from "./authSlice.js";
+import cartReducer from "./cartSlice.js";
 import userReducer from "./userSlice.js";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    cart: cartReducer,
     user: userReducer,
   },
 });

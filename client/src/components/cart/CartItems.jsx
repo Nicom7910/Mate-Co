@@ -1,11 +1,18 @@
+import { useDispatch } from "react-redux";
 import useAction from "../../hooks/useAction.js";
+import { changeQuantity, removeItem } from "../../redux/cartSlice.js";
 import CartError from "./CartError.jsx";
 import CartItemRow from "./CartItemRow.jsx";
 import "./CartItems.css";
 
-const CartItems = ({ items, onChangeQuantity, onRemove }) => {
-  const change = useAction(onChangeQuantity);
-  const remove = useAction(onRemove);
+const CartItems = ({ items }) => {
+  const dispatch = useDispatch();
+  const change = useAction((productId, quantity) =>
+    dispatch(changeQuantity({ productId, quantity })).unwrap(),
+  );
+  const remove = useAction((productId) =>
+    dispatch(removeItem(productId)).unwrap(),
+  );
 
   return (
     <div className="cart-items">

@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout.jsx";
-import { logout, selectToken } from "./redux/authSlice.js";
+import { selectToken } from "./redux/authSlice.js";
+import { fetchCart } from "./redux/cartSlice.js";
 import { fetchUser, selectIsAdmin, selectUser } from "./redux/userSlice.js";
 import Catalog from "./views/Catalog.jsx";
 import Home from "./views/Home.jsx";
 import Login from "./views/Login.jsx";
 import Register from "./views/Register.jsx";
 import Product from "./views/Product.jsx";
-import useCart from "./hooks/useCart.js";
 import Cart from "./views/Cart.jsx";
 import Orders from "./views/Orders.jsx";
 import Profile from "./views/Profile.jsx";
@@ -26,9 +26,9 @@ import AdminStats from "./views/AdminStats.jsx";
 const App = () => {
   const dispatch = useDispatch();
   const token = useSelector(selectToken);
-  const user = useSelector(selectUser);
+  const hasUser = Boolean(useSelector(selectUser));
   const admin = useSelector(selectIsAdmin);
-  const cart = useCart(token, Boolean(user) && !admin);
+  const canShop = hasUser && !admin;
 
   useEffect(() => {
     if (!token) return;
@@ -36,53 +36,25 @@ const App = () => {
     return () => request.abort();
   }, [token, dispatch]);
 
-  const handleLogout = () => {
-    dispatch(logout());
-    cart.reset();
-  };
+  useEffect(() => {
+    if (!canShop) return;
+    const request = dispatch(fetchCart());
+    return () => request.abort();
+  }, [canShop, dispatch]);
 
   return (
     <Routes>
-      <Route
-        element={<Layout onLogout={handleLogout} cartCount={cart.count} />}
-      >
-        <Route path="/" element={<Home loggedIn={Boolean(token)} />} />
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
         <Route path="/products" element={<Catalog />} />
-        <Route
-          path="/products/:id"
-          element={
-            <Product
-              loggedIn={Boolean(token)}
-              isAdmin={admin}
-              onAddToCart={cart.addItem}
-            />
-          }
-        />
+        <Route path="/products/:id" element={<Product />} />
         <Route
           path="/cart"
-          element={
-            admin ? (
-              <Navigate to="/" replace />
-            ) : (
-              <Cart
-                loggedIn={Boolean(token)}
-                cart={cart.cart}
-                onChangeQuantity={cart.changeQuantity}
-                onRemove={cart.removeItem}
-                onClear={cart.clear}
-              />
-            )
-          }
+          element={admin ? <Navigate to="/" replace /> : <Cart />}
         />
         <Route
           path="/checkout"
-          element={
-            admin ? (
-              <Navigate to="/" replace />
-            ) : (
-              <Checkout cart={cart.cart} onCheckout={cart.checkout} />
-            )
-          }
+          element={admin ? <Navigate to="/" replace /> : <Checkout />}
         />
         <Route path="/orders" element={<Orders />} />
         <Route path="/profile" element={<Profile />} />
