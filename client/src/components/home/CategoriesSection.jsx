@@ -1,11 +1,20 @@
-import useFetch from "../../hooks/useFetch.js";
-import toList from "../../utils/toList.js";
+import { useSelector } from "react-redux";
+import useLoad from "../../hooks/useLoad.js";
+import {
+  fetchCategories,
+  selectCategories,
+  selectCategoriesError,
+  selectCategoriesLoading,
+} from "../../redux/categoriesSlice.js";
 import CategoryList from "../categories/CategoryList.jsx";
 import FetchState from "../common/FetchState.jsx";
 import SectionTitle from "../common/SectionTitle.jsx";
 
 const CategoriesSection = () => {
-  const { data, loading, error } = useFetch("/categories");
+  useLoad(fetchCategories);
+  const categories = useSelector(selectCategories);
+  const loading = useSelector(selectCategoriesLoading);
+  const error = useSelector(selectCategoriesError);
 
   return (
     <section className="container section">
@@ -15,7 +24,7 @@ const CategoriesSection = () => {
         error={error}
         loadingText="Cargando categorías..."
       >
-        <CategoryList categories={toList(data)} />
+        <CategoryList categories={categories} />
       </FetchState>
     </section>
   );

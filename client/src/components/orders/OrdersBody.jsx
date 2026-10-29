@@ -18,7 +18,7 @@ const OrdersBody = ({ admin }) => {
     );
   if (loading) return <p className="message">Cargando pedidos...</p>;
 
-  return <OrdersList key={String(admin)} token={token} admin={admin} />;
+  return <OrdersList key={String(admin)} admin={admin} />;
 };
 
 export default OrdersBody;

@@ -7,20 +7,13 @@ import ShipOrderAction from "./ShipOrderAction.jsx";
 import ShippingInfo from "./ShippingInfo.jsx";
 import "./OrderCard.css";
 
-const OrderCard = ({
-  order,
-  showCustomer = false,
-  onCancel,
-  onCancelled,
-  onShip,
-  onShipped,
-}) => (
+const OrderCard = ({ order, admin = false }) => (
   <li className="order-card">
     <OrderHeader
       id={order.id}
       orderDate={order.orderDate}
       status={order.status}
-      customer={showCustomer ? order.userName : null}
+      customer={admin ? order.userName : null}
     />
     <ul className="order-card__lines">
       {order.items.map((item) => (
@@ -31,14 +24,11 @@ const OrderCard = ({
       Total <strong>{formatPrice(order.total)}</strong>
     </p>
     <ShippingInfo status={order.status} shippedDate={order.shippedDate} />
-    {onCancel && isCancellable(order.status, order.orderDate) && (
-      <CancelOrderAction
-        onCancel={() => onCancel(order.id)}
-        onCancelled={onCancelled}
-      />
+    {!admin && isCancellable(order.status, order.orderDate) && (
+      <CancelOrderAction orderId={order.id} />
     )}
-    {onShip && order.status === "PAID" && (
-      <ShipOrderAction onShip={() => onShip(order.id)} onShipped={onShipped} />
+    {admin && order.status === "PAID" && (
+      <ShipOrderAction orderId={order.id} />
     )}
   </li>
 );

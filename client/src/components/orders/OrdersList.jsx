@@ -1,21 +1,21 @@
-import request from "../../api/request.js";
-import useFetch from "../../hooks/useFetch.js";
+import { useSelector } from "react-redux";
+import useLoad from "../../hooks/useLoad.js";
+import {
+  fetchOrders,
+  selectOrders,
+  selectOrdersError,
+  selectOrdersLoading,
+} from "../../redux/ordersSlice.js";
 import confirmedOrders from "../../utils/confirmedOrders.js";
-import toList from "../../utils/toList.js";
 import FetchState from "../common/FetchState.jsx";
 import OrdersEmpty from "./OrdersEmpty.jsx";
 import OrdersResults from "./OrdersResults.jsx";
 
-const OrdersList = ({ token, admin }) => {
-  const { data, loading, error, reload } = useFetch(
-    admin ? "/orders" : "/orders/me",
-    token,
-  );
-  const orders = confirmedOrders(toList(data));
-  const cancelOrder = (id) =>
-    request(`/orders/${id}/cancel`, { method: "PATCH", token });
-  const shipOrder = (id) =>
-    request(`/orders/${id}/ship`, { method: "PATCH", token });
+const OrdersList = ({ admin }) => {
+  useLoad(fetchOrders, admin);
+  const orders = confirmedOrders(useSelector(selectOrders));
+  const loading = useSelector(selectOrdersLoading);
+  const error = useSelector(selectOrdersError);
 
   return (
     <FetchState
@@ -26,14 +26,7 @@ const OrdersList = ({ token, admin }) => {
       {orders.length === 0 ? (
         <OrdersEmpty admin={admin} />
       ) : (
-        <OrdersResults
-          orders={orders}
-          admin={admin}
-          onCancel={admin ? undefined : cancelOrder}
-          onCancelled={reload}
-          onShip={admin ? shipOrder : undefined}
-          onShipped={reload}
-        />
+        <OrdersResults orders={orders} admin={admin} />
       )}
     </FetchState>
   );

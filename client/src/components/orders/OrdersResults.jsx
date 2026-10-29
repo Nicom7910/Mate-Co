@@ -7,14 +7,7 @@ import "./OrdersList.css";
 
 const PAGE_SIZE = 10;
 
-const OrdersResults = ({
-  orders,
-  admin,
-  onCancel,
-  onCancelled,
-  onShip,
-  onShipped,
-}) => {
+const OrdersResults = ({ orders, admin }) => {
   const [page, setPage] = useState(1);
   const { items, totalPages, current } = paginate(orders, page, PAGE_SIZE);
   const { targetRef, changePage } = usePageChange(setPage);
@@ -23,15 +16,7 @@ const OrdersResults = ({
     <>
       <ul ref={targetRef} className="orders-list scroll-target">
         {items.map((order) => (
-          <OrderCard
-            key={order.id}
-            order={order}
-            showCustomer={admin}
-            onCancel={onCancel}
-            onCancelled={onCancelled}
-            onShip={onShip}
-            onShipped={onShipped}
-          />
+          <OrderCard key={order.id} order={order} admin={admin} />
         ))}
       </ul>
       <Pagination

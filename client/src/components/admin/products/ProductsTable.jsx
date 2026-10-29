@@ -1,7 +1,7 @@
 import ProductRow from "./ProductRow.jsx";
 import "../AdminTable.css";
 
-const ProductsTable = ({ products, onDelete, onDeleted, onDeleteError }) => (
+const ProductsTable = ({ products, onDeleted, onDeleteError }) => (
   <div className="admin-table-wrap">
     <table className="admin-table">
       <thead>
@@ -19,7 +19,6 @@ const ProductsTable = ({ products, onDelete, onDeleted, onDeleteError }) => (
           <ProductRow
             key={product.id}
             product={product}
-            onDelete={onDelete}
             onDeleted={onDeleted}
             onDeleteError={onDeleteError}
           />

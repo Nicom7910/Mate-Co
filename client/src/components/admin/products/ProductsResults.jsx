@@ -10,7 +10,6 @@ const ProductsResults = ({
   total,
   page,
   onPageChange,
-  onDelete,
   onDeleted,
   onDeleteError,
 }) => {
@@ -39,7 +38,6 @@ const ProductsResults = ({
         />
         <ProductsTable
           products={items}
-          onDelete={onDelete}
           onDeleted={onDeleted}
           onDeleteError={onDeleteError}
         />

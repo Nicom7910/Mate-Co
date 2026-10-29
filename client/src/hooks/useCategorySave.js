@@ -1,19 +1,16 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import request from "../api/request.js";
-import toCategoryBody from "../utils/toCategoryBody.js";
+import { saveCategory } from "../redux/categoriesSlice.js";
 import useAction from "./useAction.js";
 
-const useCategorySave = (token, categoryId) => {
+const useCategorySave = (categoryId) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const save = (values) =>
-    request(categoryId ? `/categories/${categoryId}` : "/categories", {
-      method: categoryId ? "PUT" : "POST",
-      body: toCategoryBody(values),
-      token,
-    });
-
-  return useAction(save, () => navigate("/admin/categories"));
+  return useAction(
+    (values) => dispatch(saveCategory({ id: categoryId, values })).unwrap(),
+    () => navigate("/admin/categories"),
+  );
 };
 
 export default useCategorySave;

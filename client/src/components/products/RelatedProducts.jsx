@@ -1,12 +1,18 @@
-import useFetch from "../../hooks/useFetch.js";
-import toList from "../../utils/toList.js";
+import { useSelector } from "react-redux";
+import useLoad from "../../hooks/useLoad.js";
+import {
+  fetchProductsByCategory,
+  selectProductsByCategory,
+} from "../../redux/productsSlice.js";
 import ProductSuggestions from "./ProductSuggestions.jsx";
 
 const RELATED_COUNT = 4;
 
 const RelatedProducts = ({ product }) => {
-  const { data } = useFetch(`/products/category/${product.category.id}`);
-  const related = toList(data)
+  const categoryId = product.category.id;
+  useLoad(fetchProductsByCategory, categoryId);
+  const sameCategory = useSelector(selectProductsByCategory(categoryId));
+  const related = sameCategory
     .filter(({ id }) => id !== product.id)
     .slice(0, RELATED_COUNT);
 
@@ -14,7 +20,7 @@ const RelatedProducts = ({ product }) => {
     <ProductSuggestions
       title="Productos relacionados"
       products={related}
-      linkTo={`/products?category=${product.category.id}`}
+      linkTo={`/products?category=${categoryId}`}
       linkText="Ver la categoría"
     />
   );

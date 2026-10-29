@@ -1,20 +1,28 @@
-import useFetch from "../../../hooks/useFetch.js";
+import { useSelector } from "react-redux";
+import useLoad from "../../../hooks/useLoad.js";
 import useProductSave from "../../../hooks/useProductSave.js";
-import toList from "../../../utils/toList.js";
+import {
+  fetchCategories,
+  selectCategories,
+  selectCategoriesError,
+  selectCategoriesLoading,
+} from "../../../redux/categoriesSlice.js";
 import FetchState from "../../common/FetchState.jsx";
 import ProductForm from "./ProductForm.jsx";
 import "./ProductEditor.css";
 
-const ProductEditor = ({ token, product }) => {
-  const { data, loading, error } = useFetch("/categories");
+const ProductEditor = ({ product }) => {
+  useLoad(fetchCategories);
+  const categories = useSelector(selectCategories);
+  const loading = useSelector(selectCategoriesLoading);
+  const error = useSelector(selectCategoriesError);
   const {
     run,
     sending,
     error: saveError,
     fieldErrors,
     clearFieldError,
-  } = useProductSave(token, product?.id);
-  const categories = toList(data);
+  } = useProductSave(product?.id);
 
   return (
     <div className="product-editor">

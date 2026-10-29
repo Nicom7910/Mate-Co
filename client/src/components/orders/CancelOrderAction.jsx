@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import useAction from "../../hooks/useAction.js";
+import { cancelOrder } from "../../redux/ordersSlice.js";
 import CancelOrderConfirm from "./CancelOrderConfirm.jsx";
 import "./CancelOrderAction.css";
 
-const CancelOrderAction = ({ onCancel, onCancelled }) => {
+const CancelOrderAction = ({ orderId }) => {
+  const dispatch = useDispatch();
   const [confirming, setConfirming] = useState(false);
-  const { run, sending, error } = useAction(onCancel, onCancelled, () =>
-    setConfirming(false),
+  const { run, sending, error } = useAction(
+    () => dispatch(cancelOrder(orderId)).unwrap(),
+    undefined,
+    () => setConfirming(false),
   );
 
   return (

@@ -1,10 +1,10 @@
 import SectionTitle from "../components/common/SectionTitle.jsx";
 import StatsPanel from "../components/admin/stats/StatsPanel.jsx";
 
-const AdminStats = ({ token }) => (
+const AdminStats = () => (
   <>
     <SectionTitle title="Estadísticas" />
-    <StatsPanel token={token} />
+    <StatsPanel />
   </>
 );
 

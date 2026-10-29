@@ -60,28 +60,13 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/admin" element={<Admin />}>
           <Route index element={<Navigate to="/admin/products" replace />} />
-          <Route path="products" element={<AdminProducts token={token} />} />
-          <Route
-            path="products/new"
-            element={<AdminProductNew token={token} />}
-          />
-          <Route
-            path="products/:id/edit"
-            element={<AdminProductEdit token={token} />}
-          />
-          <Route
-            path="categories"
-            element={<AdminCategories token={token} />}
-          />
-          <Route
-            path="categories/new"
-            element={<AdminCategoryNew token={token} />}
-          />
-          <Route
-            path="categories/:id/edit"
-            element={<AdminCategoryEdit token={token} />}
-          />
-          <Route path="stats" element={<AdminStats token={token} />} />
+          <Route path="products" element={<AdminProducts />} />
+          <Route path="products/new" element={<AdminProductNew />} />
+          <Route path="products/:id/edit" element={<AdminProductEdit />} />
+          <Route path="categories" element={<AdminCategories />} />
+          <Route path="categories/new" element={<AdminCategoryNew />} />
+          <Route path="categories/:id/edit" element={<AdminCategoryEdit />} />
+          <Route path="stats" element={<AdminStats />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

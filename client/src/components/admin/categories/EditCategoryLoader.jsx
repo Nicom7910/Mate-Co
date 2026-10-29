@@ -1,11 +1,21 @@
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch.js";
+import useLoad from "../../../hooks/useLoad.js";
+import {
+  fetchCategory,
+  selectCategory,
+  selectCategoryError,
+  selectCategoryLoading,
+} from "../../../redux/categoriesSlice.js";
 import FetchState from "../../common/FetchState.jsx";
 import CategoryEditor from "./CategoryEditor.jsx";
 
-const EditCategoryLoader = ({ token }) => {
+const EditCategoryLoader = () => {
   const { id } = useParams();
-  const { data: category, loading, error } = useFetch(`/categories/${id}`);
+  useLoad(fetchCategory, id);
+  const category = useSelector(selectCategory(id));
+  const loading = useSelector(selectCategoryLoading);
+  const error = useSelector(selectCategoryError);
 
   return (
     <FetchState
@@ -13,7 +23,7 @@ const EditCategoryLoader = ({ token }) => {
       error={error}
       loadingText="Cargando categoría..."
     >
-      {category && <CategoryEditor token={token} category={category} />}
+      {category && <CategoryEditor category={category} />}
     </FetchState>
   );
 };

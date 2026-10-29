@@ -1,9 +1,19 @@
+import { useSelector } from "react-redux";
 import useCatalogFilters from "../../hooks/useCatalogFilters.js";
-import useFetch from "../../hooks/useFetch.js";
+import useLoad from "../../hooks/useLoad.js";
 import usePageChange from "../../hooks/usePageChange.js";
+import {
+  fetchCategories,
+  selectCategories,
+} from "../../redux/categoriesSlice.js";
+import {
+  fetchProducts,
+  selectProducts,
+  selectProductsError,
+  selectProductsLoading,
+} from "../../redux/productsSlice.js";
 import filterProducts from "../../utils/filterProducts.js";
 import paginate from "../../utils/paginate.js";
-import toList from "../../utils/toList.js";
 import FetchState from "../common/FetchState.jsx";
 import CatalogFilters from "../filters/CatalogFilters.jsx";
 import SearchBar from "../filters/SearchBar.jsx";
@@ -15,19 +25,23 @@ import "./ProductCatalog.css";
 const PAGE_SIZE = 9;
 
 const ProductCatalog = () => {
-  const products = useFetch("/products");
-  const categories = useFetch("/categories");
+  useLoad(fetchProducts);
+  useLoad(fetchCategories);
+  const products = useSelector(selectProducts);
+  const loading = useSelector(selectProductsLoading);
+  const error = useSelector(selectProductsError);
+  const categories = useSelector(selectCategories);
   const { filters, setFilter, page, setPage } = useCatalogFilters();
-  const visible = filterProducts(toList(products.data), filters);
+  const visible = filterProducts(products, filters);
   const { items, totalPages, current } = paginate(visible, page, PAGE_SIZE);
   const { targetRef, changePage } = usePageChange(setPage);
 
   return (
     <>
-      <CatalogTitle count={products.data ? visible.length : null} />
+      <CatalogTitle count={loading ? null : visible.length} />
       <div className="catalog">
         <CatalogFilters
-          categories={toList(categories.data)}
+          categories={categories}
           filters={filters}
           onChange={setFilter}
         />
@@ -37,8 +51,8 @@ const ProductCatalog = () => {
             onChange={(value) => setFilter("search", value)}
           />
           <FetchState
-            loading={products.loading}
-            error={products.error}
+            loading={loading}
+            error={error}
             loadingText="Cargando productos..."
           >
             <div ref={targetRef} className="scroll-target">

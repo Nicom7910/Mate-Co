@@ -1,6 +1,6 @@
 import CategoryActions from "./CategoryActions.jsx";
 
-const CategoryRow = ({ category, onDelete, onDeleted, onDeleteError }) => {
+const CategoryRow = ({ category, onDeleted, onDeleteError }) => {
   const { id, name, description } = category;
 
   return (
@@ -10,7 +10,6 @@ const CategoryRow = ({ category, onDelete, onDeleted, onDeleteError }) => {
       <td>
         <CategoryActions
           id={id}
-          onDelete={onDelete}
           onDeleted={onDeleted}
           onDeleteError={(message) => onDeleteError(`${name}: ${message}`)}
         />

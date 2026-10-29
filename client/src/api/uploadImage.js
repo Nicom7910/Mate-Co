@@ -1,10 +1,8 @@
-import request from "./request.js";
-
-const uploadImage = (file, token) => {
+const uploadImage = (file, send) => {
   const form = new FormData();
   form.append("file", file);
 
-  return request("/images", { method: "POST", body: form, token }).then(
+  return send("/images", { method: "POST", body: form }).then(
     (data) => data.url,
   );
 };

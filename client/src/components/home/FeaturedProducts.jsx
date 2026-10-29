@@ -1,6 +1,12 @@
-import useFetch from "../../hooks/useFetch.js";
+import { useSelector } from "react-redux";
+import useLoad from "../../hooks/useLoad.js";
+import {
+  fetchProducts,
+  selectProducts,
+  selectProductsError,
+  selectProductsLoading,
+} from "../../redux/productsSlice.js";
 import featuredProducts from "../../utils/featuredProducts.js";
-import toList from "../../utils/toList.js";
 import FetchState from "../common/FetchState.jsx";
 import SectionTitle from "../common/SectionTitle.jsx";
 import FeaturedCarousel from "./FeaturedCarousel.jsx";
@@ -8,7 +14,10 @@ import FeaturedCarousel from "./FeaturedCarousel.jsx";
 const FEATURED_COUNT = 12;
 
 const FeaturedProducts = () => {
-  const { data, loading, error } = useFetch("/products");
+  useLoad(fetchProducts);
+  const products = useSelector(selectProducts);
+  const loading = useSelector(selectProductsLoading);
+  const error = useSelector(selectProductsError);
 
   return (
     <section className="container section section--last">
@@ -23,7 +32,7 @@ const FeaturedProducts = () => {
         loadingText="Cargando productos..."
       >
         <FeaturedCarousel
-          products={featuredProducts(toList(data), FEATURED_COUNT)}
+          products={featuredProducts(products, FEATURED_COUNT)}
         />
       </FetchState>
     </section>

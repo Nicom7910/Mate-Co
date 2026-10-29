@@ -1,7 +1,7 @@
 import formatPrice from "../../../utils/formatPrice.js";
 import ProductActions from "./ProductActions.jsx";
 
-const ProductRow = ({ product, onDelete, onDeleted, onDeleteError }) => {
+const ProductRow = ({ product, onDeleted, onDeleteError }) => {
   const { id, name, category, price, stock, discountPercentage } = product;
 
   return (
@@ -14,7 +14,6 @@ const ProductRow = ({ product, onDelete, onDeleted, onDeleteError }) => {
       <td>
         <ProductActions
           id={id}
-          onDelete={onDelete}
           onDeleted={onDeleted}
           onDeleteError={(message) => onDeleteError(`${name}: ${message}`)}
         />

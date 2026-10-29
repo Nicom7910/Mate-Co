@@ -10,7 +10,6 @@ const CategoriesResults = ({
   total,
   page,
   onPageChange,
-  onDelete,
   onDeleted,
   onDeleteError,
 }) => {
@@ -41,7 +40,6 @@ const CategoriesResults = ({
         />
         <CategoriesTable
           categories={items}
-          onDelete={onDelete}
           onDeleted={onDeleted}
           onDeleteError={onDeleteError}
         />

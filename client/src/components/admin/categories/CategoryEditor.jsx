@@ -2,9 +2,8 @@ import useCategorySave from "../../../hooks/useCategorySave.js";
 import CategoryForm from "./CategoryForm.jsx";
 import "../products/ProductEditor.css";
 
-const CategoryEditor = ({ token, category }) => {
+const CategoryEditor = ({ category }) => {
   const { run, sending, error, fieldErrors, clearFieldError } = useCategorySave(
-    token,
     category?.id,
   );
 

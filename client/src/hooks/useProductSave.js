@@ -1,29 +1,17 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import request from "../api/request.js";
-import uploadImage from "../api/uploadImage.js";
-import toProductBody from "../utils/toProductBody.js";
+import { saveProduct } from "../redux/productsSlice.js";
 import useAction from "./useAction.js";
 
-const useProductSave = (token, productId) => {
+const useProductSave = (productId) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const uploadAll = (images) =>
-    Promise.all(
-      images.map(({ url, file }) =>
-        file ? uploadImage(file, token) : Promise.resolve(url),
-      ),
-    );
-
-  const save = (values, images) =>
-    uploadAll(images).then((imageUrls) =>
-      request(productId ? `/products/${productId}` : "/products", {
-        method: productId ? "PUT" : "POST",
-        body: toProductBody({ ...values, imageUrls }),
-        token,
-      }),
-    );
-
-  return useAction(save, () => navigate("/admin/products"));
+  return useAction(
+    (values, images) =>
+      dispatch(saveProduct({ id: productId, values, images })).unwrap(),
+    () => navigate("/admin/products"),
+  );
 };
 
 export default useProductSave;

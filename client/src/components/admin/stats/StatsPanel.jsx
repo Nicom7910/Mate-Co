@@ -1,10 +1,20 @@
-import useFetch from "../../../hooks/useFetch.js";
+import { useSelector } from "react-redux";
+import useLoad from "../../../hooks/useLoad.js";
+import {
+  fetchStats,
+  selectStats,
+  selectStatsError,
+  selectStatsLoading,
+} from "../../../redux/statsSlice.js";
 import FetchState from "../../common/FetchState.jsx";
 import StatsCards from "./StatsCards.jsx";
 import TopProducts from "./TopProducts.jsx";
 
-const StatsPanel = ({ token }) => {
-  const { data, loading, error } = useFetch("/stats", token);
+const StatsPanel = () => {
+  useLoad(fetchStats);
+  const stats = useSelector(selectStats);
+  const loading = useSelector(selectStatsLoading);
+  const error = useSelector(selectStatsError);
 
   return (
     <FetchState
@@ -12,10 +22,10 @@ const StatsPanel = ({ token }) => {
       error={error}
       loadingText="Cargando estadísticas..."
     >
-      {data && (
+      {stats && (
         <>
-          <StatsCards stats={data} />
-          <TopProducts products={data.topProducts} />
+          <StatsCards stats={stats} />
+          <TopProducts products={stats.topProducts} />
         </>
       )}
     </FetchState>

@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import useAction from "../../hooks/useAction.js";
+import { shipOrder } from "../../redux/ordersSlice.js";
 import ShipOrderConfirm from "./ShipOrderConfirm.jsx";
 import "./ShipOrderAction.css";
 
-const ShipOrderAction = ({ onShip, onShipped }) => {
+const ShipOrderAction = ({ orderId }) => {
+  const dispatch = useDispatch();
   const [confirming, setConfirming] = useState(false);
-  const { run, sending, error } = useAction(onShip, onShipped, () =>
-    setConfirming(false),
+  const { run, sending, error } = useAction(
+    () => dispatch(shipOrder(orderId)).unwrap(),
+    undefined,
+    () => setConfirming(false),
   );
 
   return (

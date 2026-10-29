@@ -1,12 +1,7 @@
 import CategoryRow from "./CategoryRow.jsx";
 import "../AdminTable.css";
 
-const CategoriesTable = ({
-  categories,
-  onDelete,
-  onDeleted,
-  onDeleteError,
-}) => (
+const CategoriesTable = ({ categories, onDeleted, onDeleteError }) => (
   <div className="admin-table-wrap">
     <table className="admin-table">
       <thead>
@@ -21,7 +16,6 @@ const CategoriesTable = ({
           <CategoryRow
             key={category.id}
             category={category}
-            onDelete={onDelete}
             onDeleted={onDeleted}
             onDeleteError={onDeleteError}
           />

@@ -1,5 +1,12 @@
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import useFetch from "../../hooks/useFetch.js";
+import useLoad from "../../hooks/useLoad.js";
+import {
+  fetchProduct,
+  selectProduct,
+  selectProductError,
+  selectProductLoading,
+} from "../../redux/productsSlice.js";
 import getProductImages from "../../utils/getProductImages.js";
 import FetchState from "../common/FetchState.jsx";
 import RelatedProducts from "../products/RelatedProducts.jsx";
@@ -10,7 +17,10 @@ import "./ProductDetail.css";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { data: product, loading, error } = useFetch(`/products/${id}`);
+  useLoad(fetchProduct, id);
+  const product = useSelector(selectProduct(id));
+  const loading = useSelector(selectProductLoading);
+  const error = useSelector(selectProductError);
 
   return (
     <FetchState

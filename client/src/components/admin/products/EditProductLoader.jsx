@@ -1,11 +1,21 @@
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import useFetch from "../../../hooks/useFetch.js";
+import useLoad from "../../../hooks/useLoad.js";
+import {
+  fetchProduct,
+  selectProduct,
+  selectProductError,
+  selectProductLoading,
+} from "../../../redux/productsSlice.js";
 import FetchState from "../../common/FetchState.jsx";
 import ProductEditor from "./ProductEditor.jsx";
 
-const EditProductLoader = ({ token }) => {
+const EditProductLoader = () => {
   const { id } = useParams();
-  const { data: product, loading, error } = useFetch(`/products/${id}`);
+  useLoad(fetchProduct, id);
+  const product = useSelector(selectProduct(id));
+  const loading = useSelector(selectProductLoading);
+  const error = useSelector(selectProductError);
 
   return (
     <FetchState
@@ -13,7 +23,7 @@ const EditProductLoader = ({ token }) => {
       error={error}
       loadingText="Cargando producto..."
     >
-      {product && <ProductEditor token={token} product={product} />}
+      {product && <ProductEditor product={product} />}
     </FetchState>
   );
 };
