@@ -8,7 +8,8 @@ const useCategorySave = (categoryId) => {
   const navigate = useNavigate();
 
   return useAction(
-    (values) => dispatch(saveCategory({ id: categoryId, values })).unwrap(),
+    (values, image) =>
+      dispatch(saveCategory({ id: categoryId, values, image })).unwrap(),
     () => navigate("/admin/categories"),
   );
 };

@@ -1,4 +1,4 @@
-import balancedColumns from "../../utils/balancedColumns.js";
+import rowColumns from "../../utils/rowColumns.js";
 import CategoryCard from "./CategoryCard.jsx";
 import "./CategoryList.css";
 
@@ -7,16 +7,23 @@ const CategoryList = ({ categories }) => {
     return <p className="message">Todavía no hay categorías.</p>;
   }
 
-  const columns = {
-    "--cols-2": balancedColumns(categories.length, 2),
-    "--cols-3": balancedColumns(categories.length, 3),
-    "--cols-4": balancedColumns(categories.length, 4),
-  };
+  const total = categories.length;
+  const columns2 = rowColumns(total, 2);
+  const columns3 = rowColumns(total, 3);
+  const columns4 = rowColumns(total, 4);
 
   return (
-    <div className="category-list" style={columns}>
-      {categories.map((category) => (
-        <CategoryCard key={category.id} category={category} />
+    <div className="category-list">
+      {categories.map((category, index) => (
+        <CategoryCard
+          key={category.id}
+          category={category}
+          style={{
+            "--cols-2": columns2[index],
+            "--cols-3": columns3[index],
+            "--cols-4": columns4[index],
+          }}
+        />
       ))}
     </div>
   );

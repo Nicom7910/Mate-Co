@@ -6,6 +6,7 @@ const CategoriesTable = ({ categories, onDeleted, onDeleteError }) => (
     <table className="admin-table">
       <thead>
         <tr>
+          <th>Foto</th>
           <th>Nombre</th>
           <th>Descripción</th>
           <th>Acciones</th>

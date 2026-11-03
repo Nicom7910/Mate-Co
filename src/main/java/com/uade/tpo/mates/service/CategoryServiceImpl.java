@@ -32,9 +32,10 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findById(categoryId);
     }
 
-    public Category createCategory(String name, String description) throws CategoryDuplicateException {
-        validateName(name, null);
-        return categoryRepository.save(new Category(name.trim(), description));
+    public Category createCategory(String name, String description, String imageUrl)
+            throws CategoryDuplicateException {
+        validate(name, imageUrl, null);
+        return categoryRepository.save(new Category(name.trim(), description, imageUrl.trim()));
     }
 
     public void deleteCategory(Long categoryId) throws CategoryNotFoundException, CategoryHasProductsException {
@@ -47,21 +48,23 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.delete(category);
     }
 
-    public Category updateCategory(Long categoryId, String name, String description)
+    public Category updateCategory(Long categoryId, String name, String description, String imageUrl)
             throws CategoryNotFoundException, CategoryDuplicateException {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(CategoryNotFoundException::new);
 
-        validateName(name, categoryId);
+        validate(name, imageUrl, categoryId);
 
         category.setName(name.trim());
         category.setDescription(description);
+        category.setImageUrl(imageUrl.trim());
         return categoryRepository.save(category);
     }
 
-    private void validateName(String name, Long currentId) {
+    private void validate(String name, String imageUrl, Long currentId) {
         FieldErrors errors = new FieldErrors()
-                .requireText("name", name, "Ingresá el nombre de la categoría.");
+                .requireText("name", name, "Ingresá el nombre de la categoría.")
+                .requireText("imageUrl", imageUrl, "Subí una foto de la categoría.");
 
         if (!errors.has("name")) {
             Optional<Category> existing = categoryRepository.findByName(name.trim());

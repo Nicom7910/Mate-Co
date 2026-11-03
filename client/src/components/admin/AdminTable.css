@@ -48,3 +48,11 @@
   font-weight: 700;
   color: var(--danger);
 }
+
+.admin-table__thumb {
+  display: block;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.5rem;
+  object-fit: cover;
+}

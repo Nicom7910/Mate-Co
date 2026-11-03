@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import uploadImage from "../api/uploadImage.js";
 import toCategoryBody from "../utils/toCategoryBody.js";
 import toList from "../utils/toList.js";
 import createApiThunk from "./createApiThunk.js";
@@ -26,11 +27,14 @@ export const fetchCategory = createApiThunk(
 
 export const saveCategory = createApiThunk(
   "categories/saveCategory",
-  ({ id, values }, { send }) =>
-    send(id ? `/categories/${id}` : "/categories", {
+  async ({ id, values, image }, { send }) => {
+    const imageUrl = image.file ? await uploadImage(image.file, send) : image.url;
+
+    return send(id ? `/categories/${id}` : "/categories", {
       method: id ? "PUT" : "POST",
-      body: toCategoryBody(values),
-    }),
+      body: toCategoryBody({ ...values, imageUrl }),
+    });
+  },
 );
 
 export const deleteCategory = createApiThunk(

@@ -32,12 +32,16 @@ public class Category {
     @Column
     private String description;
 
+    @Column
+    private String imageUrl;
+
     @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<Product> products;
 
-    public Category(String name, String description) {
+    public Category(String name, String description, String imageUrl) {
         this.name = name;
         this.description = description;
+        this.imageUrl = imageUrl;
     }
 }

@@ -16,10 +16,10 @@ public interface CategoryService {
 
     Optional<Category> getCategoryById(Long categoryId);
 
-    Category createCategory(String name, String description) throws CategoryDuplicateException;
+    Category createCategory(String name, String description, String imageUrl) throws CategoryDuplicateException;
 
     void deleteCategory(Long categoryId) throws CategoryNotFoundException, CategoryHasProductsException;
 
-    Category updateCategory(Long categoryId, String name, String description)
+    Category updateCategory(Long categoryId, String name, String description, String imageUrl)
             throws CategoryNotFoundException, CategoryDuplicateException;
 }
