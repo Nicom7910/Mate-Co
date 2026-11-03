@@ -1,3 +1,4 @@
+import AdminThumb from "../AdminThumb.jsx";
 import CategoryActions from "./CategoryActions.jsx";
 
 const CategoryRow = ({ category, onDeleted, onDeleteError }) => {
@@ -6,11 +7,7 @@ const CategoryRow = ({ category, onDeleted, onDeleteError }) => {
   return (
     <tr>
       <td>
-        {imageUrl ? (
-          <img src={imageUrl} alt="" className="admin-table__thumb" />
-        ) : (
-          <span className="admin-table__tag">Sin foto</span>
-        )}
+        <AdminThumb src={imageUrl} />
       </td>
       <td>{name}</td>
       <td>{description || "—"}</td>

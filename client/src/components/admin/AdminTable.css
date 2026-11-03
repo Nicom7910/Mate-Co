@@ -15,7 +15,7 @@
 .admin-table td {
   padding: 0.875rem 1rem;
   border-bottom: 1px solid var(--border);
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .admin-table th {
@@ -53,6 +53,22 @@
   display: block;
   width: 3.5rem;
   height: 3.5rem;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
+  background: var(--tan);
   object-fit: cover;
+}
+
+.admin-table__thumb--contain {
+  background: var(--field);
+  object-fit: contain;
+}
+
+.admin-table__thumb--placeholder {
+  padding: 0.5rem;
+  object-fit: contain;
+}
+
+.admin-table__row--inactive .admin-table__thumb {
+  opacity: 0.5;
 }

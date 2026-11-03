@@ -8,16 +8,16 @@
 
 .order-status--paid,
 .order-status--delivered {
-  background: #dfe9d8;
+  background: var(--green-soft);
   color: var(--green);
 }
 
 .order-status--cancelled {
-  background: #f1d9cf;
+  background: var(--danger-soft);
   color: var(--danger);
 }
 
 .order-status--shipped {
-  background: #f3e6c9;
+  background: var(--sand-soft);
   color: var(--copper);
 }

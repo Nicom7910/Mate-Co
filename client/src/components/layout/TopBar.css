@@ -1,0 +1,22 @@
+.topbar {
+  background: var(--ink);
+  color: var(--tan);
+  font-size: 0.8125rem;
+}
+
+.topbar__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem 2rem;
+  margin: 0 auto;
+  padding-block: 0.5rem;
+  list-style: none;
+}
+
+@media (max-width: 48rem) {
+  .topbar__item:not(:first-child) {
+    display: none;
+  }
+}

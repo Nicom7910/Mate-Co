@@ -3,7 +3,7 @@
   padding: 0 1rem;
   border: 1.5px solid var(--input-border);
   border-radius: 0.75rem;
-  background: #fff;
+  background: var(--field);
   font-family: inherit;
   font-size: 1rem;
   color: var(--ink);

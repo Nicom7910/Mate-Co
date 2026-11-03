@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import useLoad from "../../hooks/useLoad.js";
 import {
@@ -18,9 +19,13 @@ const FeaturedProducts = () => {
   const products = useSelector(selectProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
+  const featured = useMemo(
+    () => featuredProducts(products, FEATURED_COUNT),
+    [products],
+  );
 
   return (
-    <section className="container section section--last">
+    <section className="container section">
       <SectionTitle
         title="Productos destacados"
         linkTo="/products"
@@ -31,9 +36,7 @@ const FeaturedProducts = () => {
         error={error}
         loadingText="Cargando productos..."
       >
-        <FeaturedCarousel
-          products={featuredProducts(products, FEATURED_COUNT)}
-        />
+        <FeaturedCarousel products={featured} />
       </FetchState>
     </section>
   );

@@ -1,0 +1,44 @@
+.category-nav {
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+
+.category-nav__inner {
+  display: flex;
+  gap: 0.25rem 1.75rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.category-nav__inner::-webkit-scrollbar {
+  display: none;
+}
+
+.category-nav__link {
+  flex-shrink: 0;
+  padding: 0.875rem 0;
+  box-shadow: inset 0 -3px 0 transparent;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.category-nav__link:first-child {
+  margin-left: auto;
+}
+
+.category-nav__link:last-child {
+  margin-right: auto;
+}
+
+.category-nav__link:hover {
+  color: var(--copper);
+  opacity: 1;
+}
+
+.category-nav__link--active {
+  color: var(--copper);
+  box-shadow: inset 0 -3px 0 var(--copper);
+}

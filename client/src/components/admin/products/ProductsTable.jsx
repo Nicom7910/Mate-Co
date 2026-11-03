@@ -6,6 +6,7 @@ const ProductsTable = ({ products, onDeleted, onDeleteError }) => (
     <table className="admin-table">
       <thead>
         <tr>
+          <th>Foto</th>
           <th>Nombre</th>
           <th>Categoría</th>
           <th>Precio</th>

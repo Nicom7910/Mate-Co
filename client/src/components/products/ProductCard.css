@@ -34,9 +34,9 @@
 
 .product-card__prices {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0 0.5rem;
-  flex-wrap: wrap;
 }
 
 .product-card__price {

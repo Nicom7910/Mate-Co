@@ -10,13 +10,13 @@ const AuthButton = () => {
   return token ? (
     <button
       type="button"
-      className="btn btn--outline-green btn--small auth-button"
+      className="btn btn--outline-light btn--small auth-button"
       onClick={() => dispatch(logout())}
     >
       Salir
     </button>
   ) : (
-    <LinkButton to="/login" variant="outline-green" small>
+    <LinkButton to="/login" variant="outline-light" small>
       Ingresar
     </LinkButton>
   );

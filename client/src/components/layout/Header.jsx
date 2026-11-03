@@ -6,8 +6,11 @@ import { selectCartCount } from "../../redux/cartSlice.js";
 import { selectIsAdmin } from "../../redux/userSlice.js";
 import AuthButton from "./AuthButton.jsx";
 import CartLink from "./CartLink.jsx";
+import CategoryNav from "./CategoryNav.jsx";
 import HeaderNav from "./HeaderNav.jsx";
+import HeaderSearch from "./HeaderSearch.jsx";
 import MenuToggle from "./MenuToggle.jsx";
+import TopBar from "./TopBar.jsx";
 import "./Header.css";
 
 const Header = () => {
@@ -19,26 +22,31 @@ const Header = () => {
 
   return (
     <header className="header">
-      <div className="container header__inner">
-        <Link to="/" className="header__logo" onClick={closeMenu}>
-          Mate&amp;Co
-        </Link>
-        {!isAdmin && <CartLink count={cartCount} />}
-        <MenuToggle open={menuOpen} onClick={() => setMenuOpen(!menuOpen)} />
-        <div
-          id="header-menu"
-          className={`header__menu ${menuOpen ? "header__menu--open" : ""}`}
-        >
-          <HeaderNav
-            loggedIn={Boolean(token)}
-            isAdmin={isAdmin}
-            onNavigate={closeMenu}
-          />
-          <div className="header__auth" onClick={closeMenu}>
-            <AuthButton />
+      <TopBar />
+      <div className="header__main">
+        <div className="container header__inner">
+          <Link to="/" className="header__logo" onClick={closeMenu}>
+            Mate&amp;Co
+          </Link>
+          {!isAdmin && <CartLink count={cartCount} />}
+          <MenuToggle open={menuOpen} onClick={() => setMenuOpen(!menuOpen)} />
+          <div
+            id="header-menu"
+            className={`header__menu ${menuOpen ? "header__menu--open" : ""}`}
+          >
+            <HeaderNav
+              loggedIn={Boolean(token)}
+              isAdmin={isAdmin}
+              onNavigate={closeMenu}
+            />
+            <HeaderSearch onSearch={closeMenu} />
+            <div className="header__auth" onClick={closeMenu}>
+              <AuthButton />
+            </div>
           </div>
         </div>
       </div>
+      <CategoryNav />
     </header>
   );
 };

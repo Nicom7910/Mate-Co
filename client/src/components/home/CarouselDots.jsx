@@ -9,9 +9,7 @@ const CarouselDots = ({ total, current, onChange }) => {
         <button
           key={number}
           type="button"
-          className={`carousel-dot ${
-            number === current ? "carousel-dot--active" : ""
-          }`}
+          className={`carousel-dot ${number === current ? "carousel-dot--active" : ""}`}
           onClick={() => onChange(number)}
           aria-label={`Ir al grupo ${number} de ${total}`}
           aria-current={number === current ? "true" : undefined}
