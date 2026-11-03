@@ -10,7 +10,7 @@ public class OrderDeliveryScheduler {
     @Autowired
     private OrderService orderService;
 
-    @Scheduled(initialDelay = 15000, fixedDelay = 60000)
+    @Scheduled(initialDelay = 15000, fixedDelay = 3600000)
     public void deliverShippedOrders() {
         orderService.deliverShippedOrders();
     }

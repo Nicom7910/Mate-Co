@@ -15,17 +15,11 @@ const PurchaseActions = ({ productId, stock }) => {
   const loggedIn = Boolean(useSelector(selectToken));
   const isAdmin = useSelector(selectIsAdmin);
   const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
-  const { run, sending, error } = useAction(
-    (id, units) =>
-      dispatch(addToCart({ productId: id, quantity: units })).unwrap(),
-    () => setAdded(true),
+  const { run, sending, error } = useAction((id, units) =>
+    dispatch(addToCart({ productId: id, quantity: units })).unwrap(),
   );
 
-  const handleAdd = () => {
-    setAdded(false);
-    run(productId, quantity);
-  };
+  const handleAdd = () => run(productId, quantity);
 
   return (
     <>
@@ -43,7 +37,7 @@ const PurchaseActions = ({ productId, stock }) => {
           onClick={handleAdd}
         />
       </div>
-      <AddToCartMessage error={error} added={added} />
+      <AddToCartMessage error={error} />
       <PurchaseHint stock={stock} isAdmin={isAdmin} />
     </>
   );

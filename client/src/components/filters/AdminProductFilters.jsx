@@ -1,4 +1,5 @@
 import AdminFilters from "./AdminFilters.jsx";
+import FilterCheckbox from "./FilterCheckbox.jsx";
 import FilterSelect from "./FilterSelect.jsx";
 import SearchBar from "./SearchBar.jsx";
 
@@ -22,6 +23,11 @@ const AdminProductFilters = ({ filters, categories, onChange }) => {
         onChange={(value) => onChange("category", value)}
         options={categoryOptions}
         allLabel="Todas las categorías"
+      />
+      <FilterCheckbox
+        label="Mostrar eliminados"
+        checked={filters.showDeleted}
+        onChange={(value) => onChange("showDeleted", value)}
       />
     </AdminFilters>
   );

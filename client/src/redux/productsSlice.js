@@ -1,24 +1,42 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import uploadImage from "../api/uploadImage.js";
+import isProductActive from "../utils/isProductActive.js";
 import toList from "../utils/toList.js";
 import toProductBody from "../utils/toProductBody.js";
+import { logout } from "./authSlice.js";
+import { checkout } from "./cartSlice.js";
+import { saveCategory } from "./categoriesSlice.js";
 import createApiThunk from "./createApiThunk.js";
 import addFetchCases from "./fetchCases.js";
+import { cancelOrder } from "./ordersSlice.js";
+
+const isLoaded = ({ scope }, includeInactive) =>
+  scope === "all" || (!includeInactive && scope === "public");
+
+const findProduct = ({ current, items, scope }, id) => {
+  if (current?.id === Number(id)) return current;
+  if (!scope) return null;
+  return items.find((product) => product.id === Number(id)) ?? null;
+};
 
 export const fetchProducts = createApiThunk(
   "products/fetchProducts",
-  (_, { send }) => send("/products").then(toList),
+  (includeInactive, { send }) =>
+    send(includeInactive ? "/products?includeInactive=true" : "/products").then(
+      toList,
+    ),
+  {
+    condition: (includeInactive, { getState }) =>
+      !isLoaded(getState().products, includeInactive),
+  },
 );
 
 export const fetchProduct = createApiThunk(
   "products/fetchProduct",
   (id, { send }) => send(`/products/${id}`),
-);
-
-export const fetchProductsByCategory = createApiThunk(
-  "products/fetchProductsByCategory",
-  (categoryId, { send }) =>
-    send(`/products/category/${categoryId}`).then(toList),
+  {
+    condition: (id, { getState }) => !findProduct(getState().products, id),
+  },
 );
 
 export const saveProduct = createApiThunk(
@@ -35,58 +53,113 @@ export const saveProduct = createApiThunk(
   },
 );
 
-export const deactivateProduct = createApiThunk(
-  "products/deactivateProduct",
-  (id, { send }) =>
-    send(`/products/${id}/status`, { method: "PATCH", body: { active: false } }),
+export const setProductActive = createApiThunk(
+  "products/setProductActive",
+  ({ id, active }, { send }) =>
+    send(`/products/${id}/status`, { method: "PATCH", body: { active } }),
 );
 
-const noProducts = [];
+const upsert = (items, product) => {
+  const index = items.findIndex(({ id }) => id === product.id);
+  if (index === -1) items.push(product);
+  else items[index] = product;
+};
+
+const keepProduct = (state, action) => {
+  const product = action.payload;
+  if (state.scope) upsert(state.items, product);
+  if (state.current?.id === product.id) state.current = product;
+};
+
+const refreshCategory = (state, action) => {
+  const category = action.payload;
+  [...state.items, state.current].forEach((product) => {
+    if (product?.category?.id === category.id) product.category = category;
+  });
+};
+
+const invalidate = (state) => {
+  state.scope = null;
+  state.current = null;
+};
 
 const productsSlice = createSlice({
   name: "products",
   initialState: {
     items: [],
+    scope: null,
     loading: true,
     error: null,
     current: null,
-    currentLoading: true,
     currentError: null,
-    byCategory: {},
+    notFoundId: null,
   },
   reducers: {},
   extraReducers: (builder) => {
-    addFetchCases(builder, fetchProducts);
+    addFetchCases(builder, fetchProducts, {
+      onFulfilled: (state, action) => {
+        state.scope = action.meta.arg ? "all" : "public";
+      },
+    });
     addFetchCases(builder, fetchProduct, {
       data: "current",
-      loading: "currentLoading",
+      loading: null,
       error: "currentError",
       emptyValue: null,
+      onPending: (state) => {
+        state.notFoundId = null;
+      },
+      onRejected: (state, action) => {
+        if (action.payload?.status === 404)
+          state.notFoundId = Number(action.meta.arg);
+      },
     });
     builder
-      .addCase(fetchProductsByCategory.fulfilled, (state, action) => {
-        state.byCategory[action.meta.arg] = action.payload;
-      })
-      .addCase(deactivateProduct.fulfilled, (state, action) => {
-        state.items = state.items.filter(({ id }) => id !== action.meta.arg);
+      .addCase(saveProduct.fulfilled, keepProduct)
+      .addCase(setProductActive.fulfilled, keepProduct)
+      .addCase(saveCategory.fulfilled, refreshCategory)
+      .addCase(checkout.fulfilled, invalidate)
+      .addCase(cancelOrder.fulfilled, invalidate)
+      .addCase(logout, (state) => {
+        state.items = state.items.filter(isProductActive);
+        if (state.scope === "all") state.scope = "public";
+        if (state.current && !isProductActive(state.current))
+          state.current = null;
       });
   },
 });
 
-export const selectProducts = (state) => state.products.items;
+const selectAllProducts = (state) => state.products.items;
 
-export const selectProductsLoading = (state) => state.products.loading;
+const selectProducts = createSelector([selectAllProducts], (items) =>
+  items.filter(isProductActive),
+);
 
-export const selectProductsError = (state) => state.products.error;
+const selectProductsLoading = (state) => state.products.loading;
 
-export const selectProduct = (id) => (state) =>
-  state.products.current?.id === Number(id) ? state.products.current : null;
+const selectProductsError = (state) => state.products.error;
 
-export const selectProductLoading = (state) => state.products.currentLoading;
+const selectProduct = (id) => (state) => findProduct(state.products, id);
 
-export const selectProductError = (state) => state.products.currentError;
+const selectProductLoading = (id) => (state) =>
+  !findProduct(state.products, id) && !state.products.currentError;
 
-export const selectProductsByCategory = (categoryId) => (state) =>
-  state.products.byCategory[categoryId] ?? noProducts;
+const selectProductError = (id) => (state) =>
+  findProduct(state.products, id) ? null : state.products.currentError;
+
+const selectProductNotFound = (id) => (state) =>
+  state.products.notFoundId === Number(id) &&
+  !findProduct(state.products, id);
+
+export {
+  selectAllProducts,
+  selectProducts,
+  selectProductsLoading,
+  selectProductsError,
+  selectProduct,
+  selectProductLoading,
+  selectProductError,
+  selectProductNotFound,
+};
 
 export default productsSlice.reducer;

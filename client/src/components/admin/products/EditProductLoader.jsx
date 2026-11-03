@@ -14,8 +14,8 @@ const EditProductLoader = () => {
   const { id } = useParams();
   useLoad(fetchProduct, id);
   const product = useSelector(selectProduct(id));
-  const loading = useSelector(selectProductLoading);
-  const error = useSelector(selectProductError);
+  const loading = useSelector(selectProductLoading(id));
+  const error = useSelector(selectProductError(id));
 
   return (
     <FetchState

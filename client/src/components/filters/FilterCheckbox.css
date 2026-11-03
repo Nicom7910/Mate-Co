@@ -1,0 +1,14 @@
+.filter-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--body);
+  cursor: pointer;
+}
+
+.filter-checkbox input {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--green);
+}

@@ -1,0 +1,35 @@
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--cream);
+}
+
+.review-form__comment {
+  padding-block: 0.75rem;
+  resize: vertical;
+}
+
+.review-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.review-form__button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.review-form__button.btn--primary {
+  background-color: var(--green);
+}
+
+.review-form__button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

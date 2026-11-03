@@ -1,0 +1,14 @@
+.star-rating {
+  display: inline-flex;
+  gap: 0.125rem;
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.star-rating__star {
+  color: var(--border);
+}
+
+.star-rating__star--on {
+  color: var(--copper);
+}

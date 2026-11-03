@@ -1,5 +1,6 @@
 import formatPrice from "../../utils/formatPrice.js";
 import isCancellable from "../../utils/isCancellable.js";
+import isReviewable from "../../utils/isReviewable.js";
 import CancelOrderAction from "./CancelOrderAction.jsx";
 import OrderHeader from "./OrderHeader.jsx";
 import OrderLine from "./OrderLine.jsx";
@@ -17,7 +18,11 @@ const OrderCard = ({ order, admin = false }) => (
     />
     <ul className="order-card__lines">
       {order.items.map((item) => (
-        <OrderLine key={item.productId} item={item} />
+        <OrderLine
+          key={item.productId}
+          item={item}
+          reviewable={!admin && isReviewable(order.status)}
+        />
       ))}
     </ul>
     <p className="order-card__total">

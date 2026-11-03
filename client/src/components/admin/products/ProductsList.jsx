@@ -7,10 +7,11 @@ import {
 } from "../../../redux/categoriesSlice.js";
 import {
   fetchProducts,
-  selectProducts,
+  selectAllProducts,
   selectProductsError,
   selectProductsLoading,
 } from "../../../redux/productsSlice.js";
+import isProductActive from "../../../utils/isProductActive.js";
 import filterProducts from "../../../utils/filterProducts.js";
 import FetchState from "../../common/FetchState.jsx";
 import AdminProductFilters from "../../filters/AdminProductFilters.jsx";
@@ -18,13 +19,17 @@ import DeleteError from "../DeleteError.jsx";
 import ProductsResults from "./ProductsResults.jsx";
 
 const ProductsList = () => {
-  useLoad(fetchProducts);
+  useLoad(fetchProducts, true);
   useLoad(fetchCategories);
-  const products = useSelector(selectProducts);
+  const products = useSelector(selectAllProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
   const categories = useSelector(selectCategories);
-  const [filters, setFilters] = useState({ search: "", category: "" });
+  const [filters, setFilters] = useState({
+    search: "",
+    category: "",
+    showDeleted: false,
+  });
   const [page, setPage] = useState(1);
   const [deleteError, setDeleteError] = useState(null);
 
@@ -32,6 +37,10 @@ const ProductsList = () => {
     setFilters((previous) => ({ ...previous, [name]: value }));
     setPage(1);
   };
+
+  const total = filters.showDeleted
+    ? products.length
+    : products.filter(isProductActive).length;
 
   return (
     <>
@@ -48,7 +57,7 @@ const ProductsList = () => {
       >
         <ProductsResults
           products={filterProducts(products, filters)}
-          total={products.length}
+          total={total}
           page={page}
           onPageChange={setPage}
           onDeleted={() => setDeleteError(null)}

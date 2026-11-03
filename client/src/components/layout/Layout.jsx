@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import Toasts from "../notifications/Toasts.jsx";
 import Footer from "./Footer.jsx";
 import Header from "./Header.jsx";
 import "./Layout.css";
@@ -10,6 +11,7 @@ const Layout = () => (
       <Outlet />
     </main>
     <Footer />
+    <Toasts />
   </div>
 );
 

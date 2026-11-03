@@ -3,13 +3,3 @@
   margin-top: 1rem;
   font-weight: 700;
 }
-
-.add-to-cart-message--ok {
-  color: var(--green);
-}
-
-.add-to-cart-message a {
-  margin-left: 0.25rem;
-  color: var(--copper);
-  text-decoration: underline;
-}

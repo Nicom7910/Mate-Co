@@ -33,7 +33,9 @@ public class GlobalExceptionHandler {
             CancellationPeriodExpiredException.class,
             InvalidImageException.class,
             ImageStorageException.class,
-            OrderNotShippableException.class
+            OrderNotShippableException.class,
+            ReviewNotAllowedException.class,
+            ReviewAlreadyExistsException.class
     })
     public ResponseEntity<ErrorResponse> handleKnownExceptions(Exception ex) {
         ResponseStatus responseStatus = ex.getClass().getAnnotation(ResponseStatus.class);

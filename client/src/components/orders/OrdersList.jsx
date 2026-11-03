@@ -6,6 +6,7 @@ import {
   selectOrdersError,
   selectOrdersLoading,
 } from "../../redux/ordersSlice.js";
+import { fetchMyReviews } from "../../redux/reviewsSlice.js";
 import confirmedOrders from "../../utils/confirmedOrders.js";
 import FetchState from "../common/FetchState.jsx";
 import OrdersEmpty from "./OrdersEmpty.jsx";
@@ -13,6 +14,7 @@ import OrdersResults from "./OrdersResults.jsx";
 
 const OrdersList = ({ admin }) => {
   useLoad(fetchOrders, admin);
+  useLoad(fetchMyReviews, admin);
   const orders = confirmedOrders(useSelector(selectOrders));
   const loading = useSelector(selectOrdersLoading);
   const error = useSelector(selectOrdersError);

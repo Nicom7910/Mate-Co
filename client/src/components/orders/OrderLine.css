@@ -1,9 +1,17 @@
 .order-line {
+  padding-block: 0.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.order-line__row {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding-block: 0.75rem;
-  border-top: 1px solid var(--border);
+}
+
+.order-line__review {
+  margin-top: 0.625rem;
+  padding-left: 4.5rem;
 }
 
 .order-line__name {
@@ -37,4 +45,11 @@
 .order-line__info {
   flex: 1;
   min-width: 0;
+}
+
+.order-line__unavailable {
+  margin-left: 0.625rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--danger);
 }

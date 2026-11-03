@@ -14,8 +14,8 @@ const EditCategoryLoader = () => {
   const { id } = useParams();
   useLoad(fetchCategory, id);
   const category = useSelector(selectCategory(id));
-  const loading = useSelector(selectCategoryLoading);
-  const error = useSelector(selectCategoryError);
+  const loading = useSelector(selectCategoryLoading(id));
+  const error = useSelector(selectCategoryError(id));
 
   return (
     <FetchState

@@ -33,3 +33,18 @@
 .admin-table__nowrap {
   white-space: nowrap;
 }
+
+.admin-table__row--inactive td {
+  color: var(--muted);
+}
+
+.admin-table__tag {
+  display: inline-block;
+  margin-left: 0.625rem;
+  padding: 0.125rem 0.625rem;
+  border: 1px solid var(--danger);
+  border-radius: 50rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--danger);
+}

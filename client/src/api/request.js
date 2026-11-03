@@ -17,6 +17,7 @@ const request = (path, { method = "GET", body, token, signal } = {}) => {
         : "No pudimos conectar con el servidor.";
       const failure = new Error(data?.message ?? fallback);
       failure.fields = data?.errors ?? null;
+      failure.status = error.response?.status ?? null;
       throw failure;
     });
 };

@@ -1,0 +1,43 @@
+.star-picker {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.star-picker__legend {
+  margin-bottom: 0.5rem;
+  padding: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.star-picker__stars {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.star-picker__star {
+  position: relative;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--border);
+  cursor: pointer;
+}
+
+.star-picker__star--on {
+  color: var(--copper);
+}
+
+.star-picker__input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.star-picker__star:has(.star-picker__input:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}

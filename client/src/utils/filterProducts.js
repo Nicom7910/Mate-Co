@@ -1,6 +1,14 @@
+import isProductActive from "./isProductActive.js";
+
 const filterProducts = (
   products,
-  { category = "", search = "", minPrice = "", maxPrice = "" },
+  {
+    category = "",
+    search = "",
+    minPrice = "",
+    maxPrice = "",
+    showDeleted = false,
+  },
 ) =>
   products.filter((product) => {
     const price = product.finalPrice ?? product.price;
@@ -12,7 +20,9 @@ const filterProducts = (
     const matchesMin = minPrice === "" || price >= Number(minPrice);
     const matchesMax = maxPrice === "" || price <= Number(maxPrice);
 
-    return matchesCategory && matchesSearch && matchesMin && matchesMax;
+    const matchesActive = showDeleted || isProductActive(product);
+
+    return matchesActive && matchesCategory && matchesSearch && matchesMin && matchesMax;
   });
 
 export default filterProducts;
