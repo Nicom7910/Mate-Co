@@ -1,18 +1,21 @@
 :root {
-  --cream: #f6efe2;
-  --card: #fbf7ee;
+  --cream: #f5efe3;
+  --card: #fbf8f1;
   --border: #e1d4ba;
   --tan: #e8dcc4;
-  --ink: #2b2118;
+  --ink: #28251f;
   --body: #5a4a3a;
   --muted: #6b5b4a;
   --input-border: #cdbe9f;
-  --green: #3f5b3a;
-  --copper: #a4561f;
+  --green: #294832;
+  --green-dark: #1d3022;
+  --green-mid: #3d5940;
+  --copper: #8b5e3c;
+  --gold: #b89a63;
   --danger: #8c3b1c;
   --field: #fffdf8;
-  --night: #0d0405;
-  --copper-light: #d9a066;
+  --night: #2a1c17;
+  --copper-light: #d2b27d;
   --green-soft: #dfe9d8;
   --sand-soft: #f3e6c9;
   --danger-soft: #f1d9cf;
@@ -107,10 +110,10 @@ a:hover {
 
 .btn--light {
   background: var(--cream);
-  color: var(--ink);
+  color: var(--night);
 }
 
 .btn--outline-light {
-  border-color: rgb(255 255 255 / 0.7);
-  color: #fff;
+  border-color: var(--cream);
+  color: var(--cream);
 }

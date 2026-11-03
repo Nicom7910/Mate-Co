@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import useLoad from "../../hooks/useLoad.js";
 import {
-  fetchProducts,
   selectProducts,
   selectProductsError,
   selectProductsLoading,
@@ -15,7 +13,6 @@ import FeaturedCarousel from "./FeaturedCarousel.jsx";
 const FEATURED_COUNT = 12;
 
 const FeaturedProducts = () => {
-  useLoad(fetchProducts);
   const products = useSelector(selectProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
@@ -30,6 +27,7 @@ const FeaturedProducts = () => {
         title="Productos destacados"
         linkTo="/products"
         linkText="Ver todos"
+        centered
       />
       <FetchState
         loading={loading}

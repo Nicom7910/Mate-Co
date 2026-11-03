@@ -13,7 +13,13 @@ const CategoryCard = ({ category, style }) => {
       className="category-card"
       style={style}
     >
-      <div className="category-card__media">
+      <div
+        className={
+          hasImage
+            ? "category-card__media"
+            : "category-card__media category-card__media--empty"
+        }
+      >
         {hasImage ? (
           <img
             src={category.imageUrl}
@@ -32,9 +38,6 @@ const CategoryCard = ({ category, style }) => {
       </div>
       <div className="category-card__footer">
         <span className="category-card__name">{category.name}</span>
-        <span className="category-card__arrow" aria-hidden="true">
-          →
-        </span>
       </div>
     </Link>
   );

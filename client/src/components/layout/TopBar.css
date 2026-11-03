@@ -1,7 +1,8 @@
 .topbar {
-  background: var(--ink);
-  color: var(--tan);
+  background: var(--night);
+  color: var(--cream);
   font-size: 0.8125rem;
+  letter-spacing: 0.02em;
 }
 
 .topbar__list {
@@ -9,10 +10,24 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem 2rem;
   margin: 0 auto;
-  padding-block: 0.5rem;
+  padding-block: 0.625rem;
   list-style: none;
+}
+
+.topbar__item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-inline: 1.5rem;
+}
+
+.topbar__item + .topbar__item {
+  border-left: 1px solid rgb(245 239 227 / 0.4);
+}
+
+.topbar__icon {
+  flex-shrink: 0;
 }
 
 @media (max-width: 48rem) {

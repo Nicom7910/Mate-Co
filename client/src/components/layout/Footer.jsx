@@ -1,11 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import useLoad from "../../hooks/useLoad.js";
 import { selectToken } from "../../redux/authSlice.js";
-import {
-  fetchCategories,
-  selectCategories,
-} from "../../redux/categoriesSlice.js";
+import { selectCategories } from "../../redux/categoriesSlice.js";
 import { selectIsAdmin } from "../../redux/userSlice.js";
 import FooterColumn from "./FooterColumn.jsx";
 import "./Footer.css";
@@ -18,7 +14,6 @@ const HOW_TO_BUY = [
 ];
 
 const Footer = () => {
-  useLoad(fetchCategories);
   const categories = useSelector(selectCategories);
   const loggedIn = Boolean(useSelector(selectToken));
   const isAdmin = useSelector(selectIsAdmin);

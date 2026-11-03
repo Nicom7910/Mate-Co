@@ -64,7 +64,7 @@
     justify-content: center;
     gap: 1.75rem;
     padding-bottom: 2rem;
-    background: var(--night);
+    background: #0d0405;
     color: var(--cream);
   }
 }

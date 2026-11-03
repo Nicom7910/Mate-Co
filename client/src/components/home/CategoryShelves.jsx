@@ -1,12 +1,7 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
-import useLoad from "../../hooks/useLoad.js";
+import { selectCategories } from "../../redux/categoriesSlice.js";
 import {
-  fetchCategories,
-  selectCategories,
-} from "../../redux/categoriesSlice.js";
-import {
-  fetchProducts,
   selectProducts,
   selectProductsError,
   selectProductsLoading,
@@ -19,8 +14,6 @@ import "./CategoryShelves.css";
 const SHELF_SIZE = 4;
 
 const CategoryShelves = () => {
-  useLoad(fetchCategories);
-  useLoad(fetchProducts);
   const categories = useSelector(selectCategories);
   const products = useSelector(selectProducts);
   const loading = useSelector(selectProductsLoading);
@@ -52,6 +45,7 @@ const CategoryShelves = () => {
               title={category.name}
               linkTo={`/products?category=${category.id}`}
               linkText="Ver más"
+              centered
             />
             <ProductGrid products={items} />
           </section>
