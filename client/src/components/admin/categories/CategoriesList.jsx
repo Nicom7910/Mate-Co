@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import useLoad from "../../../hooks/useLoad.js";
 import {
-  fetchCategories,
   selectCategories,
   selectCategoriesError,
   selectCategoriesLoading,
@@ -14,7 +12,6 @@ import DeleteError from "../DeleteError.jsx";
 import CategoriesResults from "./CategoriesResults.jsx";
 
 const CategoriesList = () => {
-  useLoad(fetchCategories);
   const categories = useSelector(selectCategories);
   const loading = useSelector(selectCategoriesLoading);
   const error = useSelector(selectCategoriesError);

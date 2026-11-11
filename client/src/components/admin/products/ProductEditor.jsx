@@ -1,8 +1,6 @@
 import { useSelector } from "react-redux";
-import useLoad from "../../../hooks/useLoad.js";
 import useProductSave from "../../../hooks/useProductSave.js";
 import {
-  fetchCategories,
   selectCategories,
   selectCategoriesError,
   selectCategoriesLoading,
@@ -12,7 +10,6 @@ import ProductForm from "./ProductForm.jsx";
 import "./ProductEditor.css";
 
 const ProductEditor = ({ product }) => {
-  useLoad(fetchCategories);
   const categories = useSelector(selectCategories);
   const loading = useSelector(selectCategoriesLoading);
   const error = useSelector(selectCategoriesError);

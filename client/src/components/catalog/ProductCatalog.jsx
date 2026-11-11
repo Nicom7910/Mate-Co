@@ -2,10 +2,7 @@ import { useSelector } from "react-redux";
 import useCatalogFilters from "../../hooks/useCatalogFilters.js";
 import useLoad from "../../hooks/useLoad.js";
 import usePageChange from "../../hooks/usePageChange.js";
-import {
-  fetchCategories,
-  selectCategories,
-} from "../../redux/categoriesSlice.js";
+import { selectCategories } from "../../redux/categoriesSlice.js";
 import {
   fetchProducts,
   selectProducts,
@@ -26,7 +23,6 @@ const PAGE_SIZE = 9;
 
 const ProductCatalog = () => {
   useLoad(fetchProducts);
-  useLoad(fetchCategories);
   const products = useSelector(selectProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);

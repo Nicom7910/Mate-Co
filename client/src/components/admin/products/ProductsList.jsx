@@ -1,10 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import useLoad from "../../../hooks/useLoad.js";
-import {
-  fetchCategories,
-  selectCategories,
-} from "../../../redux/categoriesSlice.js";
+import { selectCategories } from "../../../redux/categoriesSlice.js";
 import {
   fetchProducts,
   selectAllProducts,
@@ -20,7 +17,6 @@ import ProductsResults from "./ProductsResults.jsx";
 
 const ProductsList = () => {
   useLoad(fetchProducts, true);
-  useLoad(fetchCategories);
   const products = useSelector(selectAllProducts);
   const loading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
