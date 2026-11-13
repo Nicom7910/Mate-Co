@@ -12,7 +12,7 @@ const useAuthRequest = (thunk, errorText) => {
 
   return {
     send: run,
-    error: error && errorText,
+    error: error && (errorText ?? error),
     sending,
     fieldErrors,
     clearFieldError,

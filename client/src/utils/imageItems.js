@@ -24,8 +24,8 @@ export const revokeItem = (item) => {
 
 export const getAddError = (chosen, valid, accepted) => {
   if (valid.length < chosen.length)
-    return "Alguna imagen pesa más de 5 MB y no se agregó";
+    return "Alguna imagen pesa más de 5 MB y no se agregó.";
   if (accepted.length < valid.length)
-    return `Se pueden cargar hasta ${MAX_IMAGES} imágenes`;
+    return `Se pueden cargar hasta ${MAX_IMAGES} imágenes.`;
   return null;
 };

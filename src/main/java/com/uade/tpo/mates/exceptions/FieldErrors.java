@@ -32,6 +32,12 @@ public class FieldErrors {
         return this;
     }
 
+    public FieldErrors requireMaxLength(String field, String label, String value, int max) {
+        if (value != null && value.length() > max)
+            add(field, label + " puede tener hasta " + max + " caracteres. Ahora tiene " + value.length() + ".");
+        return this;
+    }
+
     public FieldErrors requirePhone(String phone) {
         if (!StringUtils.hasText(phone))
             return add("phone", "Ingresá tu teléfono.");

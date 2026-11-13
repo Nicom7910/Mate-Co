@@ -28,10 +28,7 @@ const FIELDS = [
 
 const LoginForm = () => {
   const { values, handleChange } = useForm({ email: "", password: "" });
-  const { send, error, sending } = useAuthRequest(
-    login,
-    "Email o contraseña incorrectos.",
-  );
+  const { send, error, sending } = useAuthRequest(login);
 
   const errors = validateLogin(values);
   const { shown, handleBlur } = useShownErrors(errors);

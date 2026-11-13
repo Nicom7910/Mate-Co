@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Category createCategory(String name, String description, String imageUrl)
             throws CategoryDuplicateException {
-        validate(name, imageUrl, null);
+        validate(name, description, imageUrl, null);
         return categoryRepository.save(new Category(name.trim(), description, imageUrl.trim()));
     }
 
@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(CategoryNotFoundException::new);
 
-        validate(name, imageUrl, categoryId);
+        validate(name, description, imageUrl, categoryId);
 
         category.setName(name.trim());
         category.setDescription(description);
@@ -61,10 +61,12 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.save(category);
     }
 
-    private void validate(String name, String imageUrl, Long currentId) {
+    private void validate(String name, String description, String imageUrl, Long currentId) {
         FieldErrors errors = new FieldErrors()
                 .requireText("name", name, "Ingresá el nombre de la categoría.")
-                .requireText("imageUrl", imageUrl, "Subí una foto de la categoría.");
+                .requireText("imageUrl", imageUrl, "Subí una foto de la categoría.")
+                .requireMaxLength("name", "El nombre", name, 255)
+                .requireMaxLength("description", "La descripción", description, 255);
 
         if (!errors.has("name")) {
             Optional<Category> existing = categoryRepository.findByName(name.trim());

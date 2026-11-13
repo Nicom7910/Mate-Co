@@ -115,7 +115,9 @@ public class ProductServiceImpl implements ProductService {
 
     private void validateProductData(ProductRequest request) {
         FieldErrors errors = new FieldErrors()
-                .requireText("name", request.getName(), "Ingresá el nombre del producto.");
+                .requireText("name", request.getName(), "Ingresá el nombre del producto.")
+                .requireMaxLength("name", "El nombre", request.getName(), 255)
+                .requireMaxLength("description", "La descripción", request.getDescription(), 1000);
 
         if (request.getPrice() == null || request.getPrice().compareTo(BigDecimal.ZERO) <= 0)
             errors.add("price", "Ingresá un precio mayor a 0.");

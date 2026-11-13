@@ -24,7 +24,7 @@ const useSingleImage = (initialUrl) => {
     setInputKey((key) => key + 1);
     if (!file) return;
     if (file.size > MAX_SIZE) {
-      setError("La imagen pesa más de 5 MB y no se agregó");
+      setError("La imagen pesa más de 5 MB y no se agregó.");
       return;
     }
     revokeItem(item);

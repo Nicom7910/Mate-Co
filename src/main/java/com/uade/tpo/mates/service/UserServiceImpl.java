@@ -26,6 +26,9 @@ public class UserServiceImpl implements UserService {
                 .requireText("lastName", request.getLastName(), "Ingresá tu apellido.")
                 .requirePhone(request.getPhone())
                 .requireText("address", request.getAddress(), "Ingresá tu dirección.")
+                .requireMaxLength("name", "El nombre", request.getName(), 255)
+                .requireMaxLength("lastName", "El apellido", request.getLastName(), 255)
+                .requireMaxLength("address", "La dirección", request.getAddress(), 255)
                 .throwIfAny();
 
         user.setName(request.getName().trim());

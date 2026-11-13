@@ -64,7 +64,7 @@ public class CartServiceImpl implements CartService {
         int requestedTotalQuantity = request.getQuantity() + existingItem.map(OrderDetail::getQuantity).orElse(0);
 
         if (product.getStock() < requestedTotalQuantity)
-            throw new InsufficientStockException();
+            throw new InsufficientStockException(product.getName(), product.getStock());
 
         if (existingItem.isPresent()) {
             existingItem.get().setQuantity(requestedTotalQuantity);
@@ -98,7 +98,7 @@ public class CartServiceImpl implements CartService {
             cart.getItems().remove(item);
         } else {
             if (item.getProduct().getStock() < quantity)
-                throw new InsufficientStockException();
+                throw new InsufficientStockException(item.getProduct().getName(), item.getProduct().getStock());
             item.setQuantity(quantity);
         }
 
@@ -143,7 +143,7 @@ public class CartServiceImpl implements CartService {
 
         for (OrderDetail item : cart.getItems()) {
             if (item.getProduct().getStock() < item.getQuantity())
-                throw new InsufficientStockException();
+                throw new InsufficientStockException(item.getProduct().getName(), item.getProduct().getStock());
         }
 
         for (OrderDetail item : cart.getItems()) {

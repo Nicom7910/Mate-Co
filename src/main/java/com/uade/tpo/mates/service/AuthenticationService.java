@@ -40,7 +40,12 @@ public class AuthenticationService {
                 .requireText("username", request.getUsername(), "Ingresá un nombre de usuario.")
                 .requireText("email", request.getEmail(), "Ingresá tu email.")
                 .requirePhone(request.getPhone())
-                .requireText("address", request.getAddress(), "Ingresá tu dirección.");
+                .requireText("address", request.getAddress(), "Ingresá tu dirección.")
+                .requireMaxLength("name", "El nombre", request.getName(), 255)
+                .requireMaxLength("lastName", "El apellido", request.getLastName(), 255)
+                .requireMaxLength("username", "El nombre de usuario", request.getUsername(), 255)
+                .requireMaxLength("email", "El email", request.getEmail(), 255)
+                .requireMaxLength("address", "La dirección", request.getAddress(), 255);
 
         if (!errors.has("email") && !EMAIL_PATTERN.matcher(request.getEmail().trim()).matches())
             errors.add("email", "Ingresá un email válido, por ejemplo nombre@mail.com.");

@@ -3,6 +3,6 @@ package com.uade.tpo.mates.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "No se encontro el producto")
+@ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "No encontramos el producto.")
 public class ProductNotFoundException extends Exception {
 }

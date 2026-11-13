@@ -1,12 +1,24 @@
 import isBlank from "./isBlank.js";
+import lengthError from "./lengthError.js";
+import { MAX_NAME_LENGTH, MAX_PRODUCT_DESCRIPTION_LENGTH } from "./limits.js";
 
 const validateProduct = (
-  { name, price, stock, categoryId, discountPercentage },
+  { name, description, price, stock, categoryId, discountPercentage },
   imageCount,
 ) => {
   const errors = {};
 
   if (isBlank(name)) errors.name = "Ingresá el nombre del producto.";
+  else {
+    const nameError = lengthError("El nombre", name.trim(), MAX_NAME_LENGTH);
+    if (nameError) errors.name = nameError;
+  }
+  const descriptionError = lengthError(
+    "La descripción",
+    (description ?? "").trim(),
+    MAX_PRODUCT_DESCRIPTION_LENGTH,
+  );
+  if (descriptionError) errors.description = descriptionError;
   if (isBlank(price) || Number(price) <= 0)
     errors.price = "Ingresá un precio mayor a 0.";
   if (isBlank(stock) || Number(stock) < 0 || !Number.isInteger(Number(stock)))

@@ -7,7 +7,7 @@ public class InvalidFieldsException extends RuntimeException {
     private final Map<String, String> errors;
 
     public InvalidFieldsException(Map<String, String> errors) {
-        super("Revisá los datos ingresados");
+        super("Revisá los datos ingresados.");
         this.errors = errors;
     }
 

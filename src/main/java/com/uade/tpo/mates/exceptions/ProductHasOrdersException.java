@@ -3,6 +3,6 @@ package com.uade.tpo.mates.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(code = HttpStatus.CONFLICT, reason = "No se puede eliminar un producto que ya tiene compras u ordenes asociadas")
+@ResponseStatus(code = HttpStatus.CONFLICT, reason = "No se puede eliminar el producto porque ya figura en compras o carritos.")
 public class ProductHasOrdersException extends Exception {
 }
